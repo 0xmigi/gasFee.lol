@@ -10,9 +10,9 @@ export default function Home(props) {
 
   return (
     <div >
-       <p>The time is {new Date(time).toLocaleTimeString()}</p>
+       {/* <p>The time is {new Date(time).toLocaleTimeString()}</p>
        <p>The component is {active ? 'active' : 'NOT active'}</p>
-       {props.children}
+       {props.children} */}
     </div>
     
   );
@@ -20,14 +20,14 @@ export default function Home(props) {
 
 
 
-Home.defaultProps = {
-  time: Date.now() 
-}
-Home.propTypes = {
-  time: PropTypes.number,
-  active: PropTypes.bool,
-  children: PropTypes.arrayOf(PropTypes.element),
-};
+// Home.defaultProps = {
+//   time: Date.now() 
+// }
+// Home.propTypes = {
+//   time: PropTypes.number,
+//   active: PropTypes.bool,
+//   children: PropTypes.arrayOf(PropTypes.element),
+// };
 
 
     

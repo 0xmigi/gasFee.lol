@@ -6,6 +6,7 @@ import { ReactComponent as CaretIcon } from '../../assets/icons/caret.svg';
 import { ReactComponent as McPepeIcon } from '../../assets/icons/mcPepeSmol.svg';
 import twitterLogo from '../../assets/twitter-logo.svg';
 import githubLogo from '../../assets/github-mark.svg';
+import mcPepe from '../../assets/icons/mcPepeSmol.png';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 
@@ -87,15 +88,17 @@ export default function App(props) {
       return (
         <div className="plus-ultra">
           <div className="plus-ultra-panel">
-            <p className="plus-ultra-text">+Ultra NFTs coming soon, a generative NFT based on your unfortunate transaction history</p>
-          <input 
+            <p className="plus-ultra-text">+Ultra NFTs coming soon, a generative svg NFT based on your unfortunate transaction history on Optimism or Polygon</p>
+          {/* <input 
              className="paste-bar"
              type="text"
              placeholder={inputAddress}
             //  autoFocus="autoFocus"
             //  value={value}
              onChange={displayAddress}
-          />
+          /> */}
+          <img src={mcPepe} alt="McPepe"/>
+          <p className="sub-ultra-text">meanwhile donate to McPepe: 0x2b3Ca2178e0dF323f413a8402eEF04Df8E5b8e3C  <br></br>any EVM chain</p>
           </div>
         </div>
       );

@@ -166,7 +166,7 @@ const chainSwitchCelo = () => (
 );
 
 const chainSwitchOp = () => (
-        <Link to="/optimisum">
+        <Link to="/optimism">
           <button
             onClick={() => setNewChain("0xa")}
             className="nav-cta-button mint-button"
@@ -301,7 +301,7 @@ const chainSwitchSol = () => (
             if (chainId === "0x1") {
               console.log("connected to ethereum", { chainId });
             } else if (chainId === "0xa") {
-              console.log("connected to optimisum", {chainId});
+              console.log("connected to optimism", {chainId});
             } else if (chainId === "0x38") {
               console.log("connected to bsc", {chainId});
             } else if (chainId === "0x89") {
@@ -557,7 +557,7 @@ const phantomConnect = () => (
 
 
 const PasteAddressConnect = () => {
-  const [inputAddress, setInputAddress] = useState("paste");
+  const [inputAddress, setInputAddress] = useState("paste   address/ENS");
 
   let displayAddress = (event) => {
     const newValue = event.target.value;
@@ -628,7 +628,7 @@ const PasteAddressConnect = () => {
           <DropdownItem
             leftIcon={<OpIcon />}
             rightIcon={<ChevronIcon />}
-            goToMenu="Optimisum"
+            goToMenu="Optimism"
             >
             <h2>{chainSwitchOp()}</h2>
           </DropdownItem>
@@ -730,7 +730,7 @@ const PasteAddressConnect = () => {
             rightIcon={<ChevronIcon />}
             goToMenu="evmChains" 
             >
-            <h2>EVM chains</h2>
+              <h3>Settings</h3>
           </DropdownItem>
 
         </div>
@@ -744,7 +744,7 @@ const PasteAddressConnect = () => {
         onEnter={calcHeight}>
         <div className="menu">
           <DropdownItem goToMenu="main" leftIcon={<ArrowIcon />}>
-            <h2>choose a wallet</h2>
+              <h3>chains</h3>
           </DropdownItem>
           <DropdownItem leftIcon={<MmIcon />} >{metaMaskConnect()}</DropdownItem>
           <DropdownItem leftIcon={<WalletConnectIcon />}>{<WalletConnectButton />}</DropdownItem>
@@ -755,7 +755,7 @@ const PasteAddressConnect = () => {
       </CSSTransition>
 
       <CSSTransition
-        in={activeMenu === 'Optimisum'}
+        in={activeMenu === 'Optimism'}
         timeout={500}
         classNames="menu-secondary"
         unmountOnExit

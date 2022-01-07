@@ -774,12 +774,13 @@ useEffect(() => {
         <div className="small-panel">avarage transaction cost: <p className="small-panel-feed">{avarageGweiTotal}</p></div>
         <div className="small-panel">transactions failed: <p className="small-panel-feed">{failedNumTransactions}</p></div>
         <div className="small-panel">failed cost: <p className="small-panel-feed">{usdFailedTotal}</p></div>
-        <div className="small-panel">number of connected addresses: <p className="small-panel-feed">{props.recentAccount.userBalance}eth</p></div>
+        <div className="small-panel">number of connected addresses: <p className="small-panel-feed">{props.recentAccount.userBalance}</p></div>
         <div className="small-panel">most recent address: <p >{props.recentAccount.newAccount}</p> </div>
         </div>
         <h6 >
-        <p>You've spent {nativeGasFeeTotal} on gas. Right now, that's $ {usdGasFeeTotal}.</p>
+        {/* <p>You've spent {nativeGasFeeTotal} on gas. Right now, that's $ {usdGasFeeTotal}.</p>
         <p>You used {gweiTotal} gas to send {sentNumTransactions} transactions, with an average price of {avarageGweiTotal} gwei. {failedNumTransactions} of them failed, costing you {usdFailedTotal}.</p>
+         */}
         {/* <p>You've spent <span id="gasFeeTotal">&#x1F914</span> on gas. Right now, that's <span id="tokenusd">&#x1F914</span>.</p> */}
         {/* <p>You used <span id="gasUsedTotal">&#x1F914</span> gas to send <span id="nOut">&#x1F914</span> transactions, with an average price of  */}
         {/* <span id="gasPricePerTx">&#x1F914</span> gwei. <span id="nOutFail">&#x1F914</span> of them failed, costing you <span id="gasFeeTotalFail">&#x1F914</span>.</p> */}
@@ -796,7 +797,7 @@ useEffect(() => {
           <Route path="/xdai" element={<Xdai />} />
           <Route path="/polygon" element={<Polygon />} />
           <Route path="/fantom" element={<Fantom />} />
-          <Route path="/optimisum" element={<Optimism/>} />
+          <Route path="/optimism" element={<Optimism/>} />
           <Route path="/arbitrum" element={<Arbitrum />} />
           <Route path="/avalanche" element={<Avalanche />} />
           <Route path="/celo" element={<Celo />} />
