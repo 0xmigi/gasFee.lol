@@ -557,7 +557,7 @@ const phantomConnect = () => (
 
 
 const PasteAddressConnect = () => {
-  const [inputAddress, setInputAddress] = useState("paste   address/ENS");
+  const [inputAddress, setInputAddress] = useState("paste address/ENS");
 
   let displayAddress = (event) => {
     const newValue = event.target.value;
