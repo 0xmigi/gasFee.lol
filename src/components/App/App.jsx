@@ -1,6 +1,5 @@
 import React, { useCallback, useState, useEffect, useRef } from 'react';
 import  Nav  from '../Nav/Nav';
-import DoughnutChart from '../Charts/DoughnutChart';
 import './App.css';
 
 import { ReactComponent as CaretIcon } from '../../assets/icons/caret.svg';
@@ -9,7 +8,6 @@ import twitterLogo from '../../assets/twitter-logo.svg';
 import githubLogo from '../../assets/github-mark.svg';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
-import mcPepeSmol from '../../assets/icons/mcPepeSmol.png'
 
 
 

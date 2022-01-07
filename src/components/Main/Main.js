@@ -1,8 +1,6 @@
 import './main.css';
 import React, { useEffect, useState } from 'react';
-import { ethers } from 'ethers';
 import { Routes, Route } from 'react-router-dom';
-import { PropTypes } from 'prop-types';
 import $ from 'jquery';
 import DoughnutChart from '../Charts/DoughnutChart';
 

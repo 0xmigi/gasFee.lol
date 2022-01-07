@@ -1,8 +1,6 @@
 import './charts.css';
 import React, { useState, useEffect, useRef } from 'react';
 import { Line } from 'react-chartjs-2';
-import { use } from 'chai';
-import { defaults } from 'chart.js';
 
 
 

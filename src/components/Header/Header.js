@@ -1,5 +1,4 @@
 import './header.css';
-import Nav from '../Nav/Nav';
 import { Link } from 'react-router-dom';
 
 

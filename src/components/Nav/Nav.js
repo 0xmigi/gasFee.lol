@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import PropTypes from "prop-types";
 import _ from 'lodash';
 
 
