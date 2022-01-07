@@ -1,0 +1,13 @@
+ 
+  .header {
+    font-size: 3vh;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    --button-size: calc(var(--nav-size) * 0.5);
+    height: var(--button-size);
+    padding: 5px;
+    /* margin: 10px; */
+  }

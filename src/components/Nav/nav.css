@@ -1,0 +1,68 @@
+
+  .nav-cta-button {
+    height: 40px;
+    display: flex;
+    border: 0;
+    width: 100%;
+    margin-left: 10px;
+    padding-left: 20px;
+    padding-right: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    background: rgb(53, 53, 53);
+    background-size: 200% 200%;
+    transition: 0.3s;
+    width: 235px;
+    align-items: center;
+  }
+  
+  .address-display {
+    height: 40px;
+    display: flex;
+    border: 0;
+    width: 100%;
+    margin-left: 10px;
+    padding-left: 20px;
+    padding-right: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    background: rgb(53, 53, 53);
+    background-size: 200% 200%;
+    transition: 0.3s;
+    width: 235px;
+    align-items: center;
+  }
+
+  .address-display:hover {
+    background-color: rgb(180, 180, 180);
+  }
+
+  .paste-bar {
+    height: 20px;
+    display: flex;
+    border: 0;
+    margin-left: 5px;
+    padding-left: 20px;
+    padding-right: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+    cursor: text;
+    font-size: 16px;
+    font-weight: bold;
+    background: rgb(53, 53, 53);
+    background-size: 200% 200%;
+    transition: 0.3s;
+    width: 225px;
+    align-items: center;
+  }
+
+ 
