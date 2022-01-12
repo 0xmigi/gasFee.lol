@@ -1,7 +1,7 @@
 export default function Polygon(props) {
-    return (
-      <div>
-        <p>check out this boy, it can fit SOO many smart contracts</p>
-      </div>
-    );
-  }
+  return (
+    <div className="about-chain">
+      Optimisum history
+    </div>
+  );
+}

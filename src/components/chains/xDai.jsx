@@ -1,7 +1,7 @@
-export default function xDai(props) {
-    return (
-      <div>
-        <p>buh xdai is fcked up</p>
-      </div>
-    );
-  }
+export default function Polygon(props) {
+  return (
+    <div className="about-chain">
+      xDai history
+    </div>
+  );
+}

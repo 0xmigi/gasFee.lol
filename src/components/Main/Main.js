@@ -22,11 +22,14 @@ import Polkadot from '../chains/Polkadot';
 import Algorand from '../chains/Algorand';
 import Cardano from '../chains/Cardano';
 import Fantom from '../chains/Fantom';
+import Moonriver from '../chains/Moonriver';
+import Aurora from '../chains/Aurora';
 
 import Home from '../Home/Home';
 import Sub from '../Sub/Sub';
 import Sub1 from '../Sub/Sub1';
 import LineChart from '../Charts/LineChart';
+import { chain } from 'lodash';
 
 export const ETHERSCAN_KEY = "KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD";
 export const OPTISCAN_KEY = "84EIKB5YSF17UHZK2778T1HM3Q8DPN6F29";
@@ -82,46 +85,159 @@ export default function Main(props) {
   const [failedNumTransactions, setFailedNumTransactions] = useState(0);
   const [usdFailedTotal, setUsdFailedTotal] = useState("nothing");
 
+  const [totalSentTransactions, setTotalSentTransactions] = useState(0);
+  const [totalFailedNumTransactions, setTotalFailedNumTransactions] = useState(0);
+
+  const [normalGasUsd, setNormalGasUsd] = useState(0);
+  const [fastGasUsd, setFastGasUsd] = useState(0);
+  const [instantGasUsd, setInstantGasUsd] = useState(0);
+  // const [chainName, setChainName] = useState("ethereum");
+  const [normalGas, setNormalGas] = useState();
+  const [fastGas, setFastGas] = useState();
+  const [instantGas, setInstantGas] = useState();
+
   let address = props.recentAccount.newAccount;
   let chainId = props.recentAccount.activeChain;
 
-  const [ethUsd, setEthUsd] = useState();
-  const [opUsd, setOpUsd] = useState();
-  const [bscUsd, setBscUsd] = useState();
-  const [maticUsd, setMaticUsd] = useState();
-  const [arbiUsd, setArbiUsd] = useState();
-  const [xdaiUsd, setXdaiUsd] = useState();
-  const [avaxUsd, setAvaxUsd] = useState();
-  const [ftmUsd, setFtmUsd] = useState();
-  const [celoUsd, setCeloUsd] = useState();
-  const [oneUsd, setOneUsd] = useState();
-  const [movrUsd, setMovrUsd] = useState();
-  const [auroraUsd, setAuroraUsd] = useState();
-  const [rEthUsd, setRethUsd] = useState();
+  const [ethUsd, setEthUsd] = useState(0);
+  const [opUsd, setOpUsd] = useState(0);
+  const [bscUsd, setBscUsd] = useState(0);
+  const [maticUsd, setMaticUsd] = useState(0);
+  const [arbiUsd, setArbiUsd] = useState(0);
+  const [xdaiUsd, setXdaiUsd] = useState(0);
+  const [avaxUsd, setAvaxUsd] = useState(0);
+  const [ftmUsd, setFtmUsd] = useState(0);
+  const [celoUsd, setCeloUsd] = useState(0);
+  const [oneUsd, setOneUsd] = useState(0);
+  const [movrUsd, setMovrUsd] = useState(0);
+  const [auroraUsd, setAuroraUsd] = useState(0);
+  const [rEthUsd, setRethUsd] = useState(0);
+
+
+  // const gasOdometer = async() => {
+  //   const gasChain = [{}]
+  //   gasChain[''] = {zapperName: "ethereum"};
+  //   gasChain['0x1'] = {zapperName: "ethereum"};
+  //   gasChain['0x38'] = {zapperName: "binance-smart-chain"}
+  //   gasChain['0xa'] = {zapperName: "optimism"}
+  //   gasChain['0x89'] = {zapperName: "polygon"}
+  //   gasChain['0xa86a'] = {zapperName: "avalanche"}
+  //   gasChain['0xfa'] = {zapperName: "fantom"}
+  //   gasChain['0x505'] = {zapperName: "moonriver"}
+  //   gasChain['0xa41b'] = {zapperName: "arbitrum"}
+  //   gasChain['0x64'] = {zapperName: "xdai"}
+  //   gasChain['0xa4ec'] = {zapperName: "celo"}
+  //   gasChain['0x63564c40'] = {zapperName: "harmony"}
+  //   gasChain['0x4e45152'] = {zapperName: "aurora"}
+  //   gasChain['0x4'] = {zapperName: "rinkeby-ethereum"}
+
+
+  //   function testNum(isEth) {
+  //     let eip1559;
+  //     if (isEth === 'ethereum') {
+  //       eip1559 = 'true';
+  //     } else {
+  //       eip1559 = 'false';
+  //     }
+  //     return (
+  //       eip1559
+  //       );
+  //   }
+
+  //   let chainName = gasChain[chainId].zapperName;
+  //   const postLondon = testNum(chainName);
+  //   console.log(postLondon);
+    
+  //   let connectedGasPrice = `https://api.zapper.fi/v1/gas-price?network=${chainName}&eip1559=${postLondon}&api_key=96e0cc51-a62e-42ca-acee-910ea7d2a241`;
+
+  //   // const getGasPrice = async() => {
+  //     const chainGasPrice = await fetch(connectedGasPrice)
+  //     .then(response => {return response.json()})
+  //     .catch(err => {console.log('Error', err)});
+  //     console.log(chainName);
+  //     // setActiveGasPrice(chainGasPrice);
+  //     setNormalGas(postLondon === "true" ? chainGasPrice.standard.maxFeePerGas : chainGasPrice.standard);
+  //     setFastGas(postLondon === "true" ? chainGasPrice.fast.maxFeePerGas : chainGasPrice.fast);
+  //     setInstantGas(postLondon === "true" ? chainGasPrice.instant.maxFeePerGas : chainGasPrice.instant);
+
+  // }
+  
+
 
   
   const getTransactions = async(address) => {
+
+    // const gasOdometer = async() => {
+      const gasChain = [{}]
+      gasChain[''] = {zapperName: "ethereum"};
+      gasChain['0x1'] = {zapperName: "ethereum"};
+      gasChain['0x38'] = {zapperName: "binance-smart-chain"}
+      gasChain['0xa'] = {zapperName: "optimism"}
+      gasChain['0x89'] = {zapperName: "polygon"}
+      gasChain['0xa86a'] = {zapperName: "avalanche"}
+      gasChain['0xfa'] = {zapperName: "fantom"}
+      gasChain['0x505'] = {zapperName: "moonriver"}
+      gasChain['0xa41b'] = {zapperName: "arbitrum"}
+      gasChain['0x64'] = {zapperName: "xdai"}
+      gasChain['0xa4ec'] = {zapperName: "celo"}
+      gasChain['0x63564c40'] = {zapperName: "harmony"}
+      gasChain['0x4e45152'] = {zapperName: "aurora"}
+      gasChain['0x4'] = {zapperName: "rinkeby-ethereum"}
+  
+  
+      function testNum(isEth) {
+        let eip1559;
+        if (isEth === 'ethereum') {
+          eip1559 = 'true';
+        } else {
+          eip1559 = 'false';
+        }
+        return (
+          eip1559
+          );
+      }
+  
+      let chainName = gasChain[chainId].zapperName;
+      const postLondon = testNum(chainName);
+      console.log(postLondon);
+      
+      let connectedGasPrice = `https://api.zapper.fi/v1/gas-price?network=${chainName}&eip1559=${postLondon}&api_key=96e0cc51-a62e-42ca-acee-910ea7d2a241`;
+  
+      // const getGasPrice = async() => {
+        const chainGasPrice = await fetch(connectedGasPrice)
+        .then(response => {return response.json()})
+        .catch(err => {console.log('Error', err)});
+        console.log(chainName);
+        // setActiveGasPrice(chainGasPrice);
+        setNormalGas((postLondon === "true" ? chainGasPrice.standard.baseFeePerGas : chainGasPrice.standard) + " gwei");
+        setFastGas((postLondon === "true" ? chainGasPrice.fast.baseFeePerGas : chainGasPrice.fast) + " gwei");
+        setInstantGas((postLondon === "true" ? chainGasPrice.instant.baseFeePerGas : chainGasPrice.instant) + " gwei");
+
+        let standardgas = (postLondon === "true" ? chainGasPrice.standard.baseFeePerGas : chainGasPrice.standard);
+        let fastgas = (postLondon === "true" ? chainGasPrice.fast.baseFeePerGas : chainGasPrice.fast);
+        let instantgas = (postLondon === "true" ? chainGasPrice.instant.baseFeePerGas : chainGasPrice.instant);
+  
+        console.log(chainGasPrice.standard);
+
     const chainConfig = [{}]
 
-    chainConfig['0x1'] = {id: '0x1', shortname: 'eth', name:'Ethereum', symbol: 'eth', coingecko_name: 'ethereum', token: 'Ξ', color: '#582a2a', explorer_uri: 'https://api.etherscan.io', key: `${ETHERSCAN_KEY}`}
-    chainConfig['0x38'] = {id: '0x38', shortname: 'bsc', name:'Binance Smart Chain', symbol: 'bnb', coingecko_name: 'binancecoin', token: 'Ḇ', color: "#f4ce03", explorer_uri: 'https://api.bscscan.com', key: `${BSCSCAN_KEY}`}
-    chainConfig['0x64'] = {id: '0x64', shortname: 'xdai', name:'xDai', symbol: 'xdai', coingecko_name: 'xdai', token: 'Ẍ', color: '#48a9a6', explorer_uri: 'https://blockscout.com/xdai/mainnet', key: ''}
-    chainConfig['0x89'] = {id: '0x89', shortname: 'matic', name:'Polygon', symbol: 'matic', coingecko_name: 'matic-network', token: 'M̃', color: '#9d03f4', explorer_uri: 'https://api.polygonscan.com', key: `${POLYGONSCAN_KEY}`}
+    chainConfig['0x1'] = {id: '0x1', shortname: 'eth', name:'Ethereum', symbol: 'eth', coingecko_name: 'ethereum', token: 'ETH', color: '#582a2a', explorer_uri: 'https://api.etherscan.io', key: `${ETHERSCAN_KEY}`}
+    chainConfig['0x38'] = {id: '0x38', shortname: 'bsc', name:'Binance Smart Chain', symbol: 'bnb', coingecko_name: 'binancecoin', token: 'BSC', color: "#f4ce03", explorer_uri: 'https://api.bscscan.com', key: `${BSCSCAN_KEY}`}
+    chainConfig['0x64'] = {id: '0x64', shortname: 'xdai', name:'xDai', symbol: 'xdai', coingecko_name: 'xdai', token: 'GNO', color: '#48a9a6', explorer_uri: 'https://blockscout.com/xdai/mainnet', key: ''}
+    chainConfig['0x89'] = {id: '0x89', shortname: 'matic', name:'Polygon', symbol: 'matic', coingecko_name: 'matic-network', token: 'MATIC', color: '#9d03f4', explorer_uri: 'https://api.polygonscan.com', key: `${POLYGONSCAN_KEY}`}
     chainConfig['0xfa'] = {id: '0xfa', shortname: 'ftm', name:'Fantom', symbol: 'ftm', coingecko_name: 'fantom', token: 'ƒ', color: '#00dbff', explorer_uri: 'https://api.ftmscan.com', key: `${FTMSCAN_KEY}`}
     chainConfig['0xa86a'] = {id: '0xa86a', shortname: 'avax', name:'Avalanche', symbol: 'avax', coingecko_name: 'avalanche-2', token: 'Ã', color: '#ec1616', explorer_uri: 'https://api.snowtrace.io', key: `${SNOWTRACE_KEY}`}
     chainConfig['0x63564c40'] = {id: '0x63564c40', shortname: 'one', name:'Harmoney One', symbol: 'one', coingecko_name: 'harmony', token: 'Ã', color: '#ec1616', explorer_uri: 'https://api.harmony.one', key: ''}
     chainConfig['0xa4ec'] = {id: '0xa4ec', shortname: 'celo', name:'Celo', symbol: 'celo', coingecko_name: 'celo', token: 'C', color: '#ec1616', explorer_uri: 'https://api.snowtrace.io', key: ''}
     chainConfig['0xa4b1'] = {id: '0xa4b1', shortname: 'arbi', name:'Arbitrum', symbol: 'aeth', coingecko_name: 'ethereum', token: 'aΞ', color: '#ec1616', explorer_uri: 'https://api.arbiscan.io', key: `${ARBISCAN_KEY}`}
     chainConfig['0x505'] = {id: '0x505', shortname: 'movr', name:'Moonriver', symbol: 'movr', coingecko_name: 'moonriver', token: 'M', color: '#ec1690', explorer_uri: 'https://api-moonriver.moonscan.io', key: `${MOONSCAN_KEY}`}
-    chainConfig['0x4e45152'] = {id: '0x4e45152', shortname: 'aurora', name:'Aurora', symbol: 'oeth', coingecko_name: 'ethereum', token: 'oΞ', color: '#ec1616', explorer_uri: 'https://api.optimistic.etherscan.io', key: '84EIKB5YSF17UHZK2778T1HM3Q8DPN6F29'}
+    chainConfig['0x4e45152'] = {id: '0x4e45152', shortname: 'aurora', name:'Aurora', symbol: 'aurora', coingecko_name: 'aurora-near', token: 'Au', color: '#ec1616', explorer_uri: 'https://explorer.mainnet.aurora.dev/api', key: ''}
     chainConfig['0xa'] = {id: '0xa', shortname: 'op', name:'Optimism', symbol: 'oeth', coingecko_name: 'ethereum', token: 'oΞ', color: '#ec8816', explorer_uri: 'https://api-optimistic.etherscan.io', key: `${OPTISCAN_KEY}`}
     // chainConfig['0xa'] = {id: '0xa', shortname: 'op', name:'Optimism', symbol: 'oeth', coingecko_name: 'opEthereum', token: 'oΞ', color: '#ec1616', explorer_uri: 'https://api.optimistic.etherscan.io', key: '84EIKB5YSF17UHZK2778T1HM3Q8DPN6F29'}
 
     //testnets
     chainConfig['0x4'] = {id: '0x4', shortname: 'eth', name:'Rinkeby', symbol: 'eth', coingecko_name: 'ethereum', token: 'Ξ', color: '#03a9f4', explorer_uri: 'https://api-rinkeby.etherscan.io', key: 'KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD'}
 
-    const chainId = props.recentAccount.activeChain;
-    console.log(chainId);
     
     let coingeckoSymbol = chainConfig[chainId].coingecko_name;
     let tokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids='+coingeckoSymbol+'&vs_currencies=usd')
@@ -651,9 +767,6 @@ export default function Main(props) {
       var gasFee = multiply(gasPrice, gasUsed);
       var ftmGasFeeTotal = gasFee.reduce((partial_sum, a) => partial_sum + a,0); 
     } 
-        
-
-
 
 
 
@@ -665,7 +778,13 @@ export default function Main(props) {
     setFailedNumTransactions(comma(nOutFail));
     setUsdFailedTotal(chainConfig[chainId].token + (gasFeeTotalFail / 1e18).toFixed(3));
 
+    setTotalSentTransactions(+eOut + +bscOut + +opOut + +maticOut + +avaxOut + +arbiOut + +ftmOut);
+    setTotalFailedNumTransactions(+eOutFail + +bscOutFail + +opOutFail + +maticOutFail + +avaxOutFail + +arbiOutFail + +ftmOutFail);
 
+    setNormalGasUsd("$" + comma(formatter((tokenusd * standardgas * 65000 / 1e9).toFixed(2))));
+    setFastGasUsd("$" + comma(formatter((tokenusd * fastgas * 65000 / 1e9).toFixed(2))));
+    setInstantGasUsd("$" + comma(formatter((tokenusd * instantgas * 65000 / 1e9).toFixed(2))));
+    
 
     //  <<<<-------------------------------------------------------
     setEthUsd(comma(formatter((ethtokenusd * ethGasFeeTotal / 1e18).toFixed(2))));
@@ -675,67 +794,27 @@ export default function Main(props) {
     setAvaxUsd(comma(formatter((avaxtokenusd * avaxGasFeeTotal / 1e18).toFixed(2))));
     setArbiUsd(comma(formatter((arbitokenusd * arbiGasFeeTotal / 1e18).toFixed(2))));
     setFtmUsd(comma(formatter((ftmtokenusd * ftmGasFeeTotal / 1e18).toFixed(2))));
-
-    if (chainId === "0x1") {
-      setEthUsd(comma(formatter((ethtokenusd * ethGasFeeTotal / 1e18).toFixed(2))));
-    } else if (chainId === "0xa") {
-      setOpUsd(comma(formatter((tokenusd * gasFeeTotal / 1e18).toFixed(2))));
-    } else if (chainId === "0x38") {
-      setBscUsd(comma(formatter((tokenusd * gasFeeTotal / 1e18).toFixed(2))));
-    } else if (chainId === "0x89") {
-      setMaticUsd(comma(formatter((tokenusd * gasFeeTotal / 1e18).toFixed(2))));
-    } else if (chainId === "0xa4b1") {
-      setArbiUsd(comma(formatter((tokenusd * gasFeeTotal / 1e18).toFixed(2))));
-    } else if (chainId === "0x64") {
-      setXdaiUsd(comma(formatter((tokenusd * gasFeeTotal / 1e18).toFixed(2))));
-    } else if (chainId === "0xa86a") {
-      setAvaxUsd(comma(formatter((tokenusd * gasFeeTotal / 1e18).toFixed(2))));
-    } else if (chainId === "0xfa") {
-      setFtmUsd(comma(formatter((tokenusd * gasFeeTotal / 1e18).toFixed(2))));
-    } else if (chainId === "0xa4ec") {
-      setCeloUsd(comma(formatter((tokenusd * gasFeeTotal / 1e18).toFixed(2))));
-    } else if (chainId === "0x63564c40") {
-      setOneUsd(comma(formatter((tokenusd * gasFeeTotal / 1e18).toFixed(2))));
-    } else if (chainId === "0x505") {
-      setMovrUsd(comma(formatter((tokenusd * gasFeeTotal / 1e18).toFixed(2))));
-    } else if (chainId === "0x4e45152") {
-      setAuroraUsd(comma(formatter((tokenusd * gasFeeTotal / 1e18).toFixed(2))));  
-    } 
-
-      else if (chainId === "0x4") {                         // testnets <<<<<<<<--------------------------------------------------
-      setRethUsd(comma(formatter((tokenusd * gasFeeTotal / 1e18).toFixed(2))));
-    } else {
-      console.log("non EVM chain");
-    }
-
-    console.log('color::', chainConfig[chainId].color)
-    console.log('jQ::', $('body span').css('color'))
-
-    $('body span').css('color', chainConfig[chainId].color)
-
-    console.log('jQ::', $('body span').css('color'))
-
+    // setXdaiUsd(comma(formatter((xdaitokenusd * xdaigasFeeTotal / 1e18).toFixed(2))));
+    // setCeloUsd(comma(formatter((celotokenusd * celogasFeeTotal / 1e18).toFixed(2))));
+    // setOneUsd(comma(formatter((onetokenusd * onegasFeeTotal / 1e18).toFixed(2))));
+    // setMovrUsd(comma(formatter((movrtokenusd * movrgasFeeTotal / 1e18).toFixed(2))));
+    // setAuroraUsd(comma(formatter((auroratokenusd * auroragasFeeTotal / 1e18).toFixed(2))));
+    
 }
 
+ 
 
-useEffect(() => {
-  if (address !== undefined) {
-    // getTransactions(address);
-    console.log('Getting transactions for ' + address);
-  } else {
-    console.log("address hasn't cum yet AAah")
-  }
-  return () => {
-    
-  }
-}, [props.recentAccount.newAccount]);
+const totalGasFeeTotal = ((+ethUsd + +bscUsd + +opUsd + +maticUsd + +avaxUsd + +ftmUsd).toFixed(2));
+
+console.log(totalGasFeeTotal);
+console.log("a gwei currently is ", normalGasUsd);
+
 
 useEffect(() => {
   if (chainId !== undefined) {
     getTransactions(address);
-    console.log('Your most recent chainID is ' + chainId);
   } else {
-    console.log("chainID hasn't cum either damnit")
+    console.log("chainID hasn't cum yet")
   }
   return () => {
     
@@ -745,46 +824,42 @@ useEffect(() => {
 
 
 
+
   
 
   return (
     <div className="panels-container">
       <div className="left-panel">
-      <div className="allConnectedChains-page">
-        <DoughnutChart
-          setEth={ethUsd}
-          setOp={opUsd}
-          setBsc={bscUsd}
-          setMatic={maticUsd}
-          setArbi={arbiUsd}
-          setXdai={xdaiUsd}
-          setAvax={avaxUsd}
-          setFtm={ftmUsd}
-          setCelo={celoUsd}
-          setOne={oneUsd}
-          setMovr={movrUsd}
-          setAurora={auroraUsd}
-          setReth={rEthUsd}
-           />
-        </div>
-        <div className="usage-panels">
-        <div className="small-panel">spent in native token: <p className="small-panel-feed">{nativeGasFeeTotal}</p></div>
-        <div className="small-panel">spent on gas: <p className="small-panel-feed">$ {usdGasFeeTotal}</p></div>
-        <div className="small-panel">transactions made: <p className="small-panel-feed">{sentNumTransactions}</p></div>
-        <div className="small-panel">avarage transaction cost: <p className="small-panel-feed">{avarageGweiTotal}</p></div>
-        <div className="small-panel">transactions failed: <p className="small-panel-feed">{failedNumTransactions}</p></div>
-        <div className="small-panel">failed cost: <p className="small-panel-feed">{usdFailedTotal}</p></div>
-        <div className="small-panel">number of connected addresses: <p className="small-panel-feed">{props.recentAccount.userBalance}</p></div>
-        <div className="small-panel">most recent address: <p >{props.recentAccount.newAccount}</p> </div>
-        </div>
-        <h6 >
-        {/* <p>You've spent {nativeGasFeeTotal} on gas. Right now, that's $ {usdGasFeeTotal}.</p>
-        <p>You used {gweiTotal} gas to send {sentNumTransactions} transactions, with an average price of {avarageGweiTotal} gwei. {failedNumTransactions} of them failed, costing you {usdFailedTotal}.</p>
-         */}
-        {/* <p>You've spent <span id="gasFeeTotal">&#x1F914</span> on gas. Right now, that's <span id="tokenusd">&#x1F914</span>.</p> */}
-        {/* <p>You used <span id="gasUsedTotal">&#x1F914</span> gas to send <span id="nOut">&#x1F914</span> transactions, with an average price of  */}
-        {/* <span id="gasPricePerTx">&#x1F914</span> gwei. <span id="nOutFail">&#x1F914</span> of them failed, costing you <span id="gasFeeTotalFail">&#x1F914</span>.</p> */}
-        </h6>
+          <div className="allConnectedChains-page">
+            <DoughnutChart
+              setEth={ethUsd}
+              setOp={opUsd}
+              setBsc={bscUsd}
+              setMatic={maticUsd}
+              setArbi={arbiUsd}
+              setXdai={xdaiUsd}
+              setAvax={avaxUsd}
+              setFtm={ftmUsd}
+              setCelo={celoUsd}
+              setOne={oneUsd}
+              setMovr={movrUsd}
+              setAurora={auroraUsd}
+              setReth={rEthUsd}
+              />
+            <div className="about-chain">
+              Net history
+            </div>
+          </div>
+          <div className="usage-panels">
+            <div className="small-panel">paid fee token types: <p className="small-panel-feed">{nativeGasFeeTotal}</p></div>
+            <div className="small-panel">total spent on gas: <p className="small-panel-feed">$ {totalGasFeeTotal}</p></div>
+            <div className="small-panel">total transactions made: <p className="small-panel-feed">{totalSentTransactions}</p></div>
+            <div className="small-panel">avarage transaction cost: <p className="small-panel-feed">{avarageGweiTotal}</p></div>
+            <div className="small-panel">total transactions failed: <p className="small-panel-feed">{totalFailedNumTransactions}</p></div>
+            <div className="small-panel">failed cost: <p className="small-panel-feed">{usdFailedTotal}</p></div>
+            <div className="small-panel">gas prices: <p className="small-panel-feed"></p></div>
+            <div className="small-panel">most recent address: <p >{props.recentAccount.newAccount}</p> </div>
+          </div>
       </div>
 
       <div className="right-panel">
@@ -809,6 +884,8 @@ useEffect(() => {
           <Route path="/polkadot" element={<Polkadot />} />
           <Route path="/waves" element={<Waves />} />
           <Route path="/algo" element={<Algorand />} />
+          <Route path="/moonriver" element={<Moonriver />} />
+          <Route path="/aurora" element={<Aurora />} />
           <Route 
               path="/home" 
               exact
@@ -821,9 +898,19 @@ useEffect(() => {
           />
           </Routes>
         </div>
-          {/* <div className="chainFee-explanation">
-          0xb789adbb6143038c5048fbf4f410c7e69c6fced6
-          </div> */}
+        <div className="usage-panels">
+          <div className="live-gas-panel">
+            <div className="small-gas">normal: 🐌 <div className="small-gas-feed"><div className="normal-gas">{normalGas}</div> || <div className="usd-gas">{normalGasUsd}</div></div> </div>
+            <div className="small-gas">fast: 🏎️ <div className="small-gas-feed"><div className="fast-gas">{fastGas}</div>  || <div className="usd-gas">{fastGasUsd}</div></div></div>
+            <div className="small-gas">instant: 🚀 <div className="small-gas-feed"><div className="instant-gas">{instantGas}</div>  || <div className="usd-gas">{instantGasUsd}</div></div> </div>
+          </div>
+        <div className="small-panel">spent in native token: <p className="small-panel-feed">{nativeGasFeeTotal}</p></div>
+        <div className="small-panel">spent on gas: <p className="small-panel-feed">$ {usdGasFeeTotal}</p></div>
+        <div className="small-panel">transactions made: <p className="small-panel-feed">{sentNumTransactions}</p></div>
+        <div className="small-panel">avarage transaction cost: <p className="small-panel-feed">{avarageGweiTotal}</p></div>
+        <div className="small-panel">transactions failed: <p className="small-panel-feed">{failedNumTransactions}</p></div>
+        <div className="small-panel">failed cost: <p className="small-panel-feed">{usdFailedTotal}</p></div>
+        </div>
       </div>
     </div>
   );

@@ -32,6 +32,8 @@ import { ReactComponent as OpIcon } from '../../assets/icons/optimism.caeb9392.s
 import { ReactComponent as ArbiIcon } from '../../assets/icons/arbitrum.svg';
 import { ReactComponent as BscIcon } from '../../assets/icons/bsc.svg';
 import { ReactComponent as XdaiIcon } from '../../assets/icons/xdai.svg';
+import { ReactComponent as MovrIcon } from '../../assets/icons/moonriver.svg';
+import { ReactComponent as AuroraIcon } from '../../assets/icons/aurora-near.svg';
 import { ReactComponent as EthIcon } from '../../../node_modules/cryptocurrency-icons/svg/color/eth.svg';
 import { ReactComponent as MaticIcon } from '../../../node_modules/cryptocurrency-icons/svg/color/matic.svg';
 import { ReactComponent as AtomIcon } from '../../../node_modules/cryptocurrency-icons/svg/color/atom.svg';
@@ -67,7 +69,8 @@ export default function Nav(props) {
   const [menuHeight, setMenuHeight] = useState(null);
   const dropdownRef = useRef(null);
 
-  const [newChain, setNewChain] = useState({});
+  const [newChain, setNewChain] = useState();
+  const [chainName, setChainName] = useState();
   const [errorMessage, setErrorMessage] = useState("MetaMask");
   const [defaultAccount, setDefaultAccount] = useState("MetaMask");
   const [errorMessageR, setErrorMessageR] = useState("Rabby");
@@ -92,6 +95,7 @@ const chainSwitchBsc = () => (
         <Link to="/binance">
           <button
             onClick={() => setNewChain("0x38")}
+
             className="nav-cta-button mint-button"
             >
                BSC
@@ -250,6 +254,28 @@ const chainSwitchArbi = () => (
         </Link>
 );
 
+const chainSwitchMovr = () => (
+  <Link to="/moonriver">
+    <button
+      onClick={() => setNewChain("0x505")}
+      className="nav-cta-button mint-button"
+      >
+         Moonriver
+    </button>
+  </Link>
+);
+
+const chainSwitchAurora = () => (
+  <Link to="/aurora">
+    <button
+      onClick={() => setNewChain("0x4e45152")}
+      className="nav-cta-button mint-button"
+      >
+         Aurora
+    </button>
+  </Link>
+);
+
 const chainSwitchSol = () => (
         <Link to="/solana">
           <button
@@ -296,44 +322,11 @@ const chainSwitchSol = () => (
             
             
             console.log(newAccount);
-            // props.setRecentAccount({ newAccount });
-    
-            if (chainId === "0x1") {
-              console.log("connected to ethereum", { chainId });
-            } else if (chainId === "0xa") {
-              console.log("connected to optimism", {chainId});
-            } else if (chainId === "0x38") {
-              console.log("connected to bsc", {chainId});
-            } else if (chainId === "0x89") {
-              console.log("connected to polygon", {chainId});
-            } else if (chainId === "0xa4b1") {
-              console.log("connected to arbitrum", {chainId});
-            } else if (chainId === "0x64") {
-              console.log("connected to xDAi", {chainId});
-            } else if (chainId === "0xa86a") {
-              console.log("connected to avalanche", {chainId});
-            } else if (chainId === "0xfa") {
-              console.log("connected to fantom", {chainId});
-            } else if (chainId === "0xa4ec") {
-              console.log("connected to celo", {chainId});
-            } else if (chainId === "0x63564c40") {
-              console.log("connected to harmony", {chainId});
-            } else if (chainId === "0x505") {
-              console.log("connected to moonriver", {chainId});
-            } else if (chainId === "0x4e45152") {
-              console.log("connected to aurora", {chainId});   
-            } 
-            
-              else if (chainId === "0x4") {                         // testnets <<<<<<<<--------------------------------------------------
-              console.log("connected to rinkeby", {chainId});
-            } else {
-              console.log({chainId});
-              console.log({chain});
-            }
+      
             activeChain = newChain;
             props.setRecentAccount({ activeChain, newAccount });
       
-            console.log(chainId)
+            console.log(chainId);
           }
         } else {
 
@@ -548,7 +541,7 @@ const phantomConnect = () => (
       <button
          onClick={connectWallet}
          className="address-display"
-      >
+      > 
            Phantom
       </button>
 
@@ -673,6 +666,18 @@ const PasteAddressConnect = () => {
             goToMenu="evmChains"
             >
             <h2>{chainSwitchOne()}</h2>
+          </DropdownItem>
+          <DropdownItem
+            leftIcon={<MovrIcon />}
+            goToMenu="evmChains"
+            >
+            <h2>{chainSwitchMovr()}</h2>
+          </DropdownItem>
+          <DropdownItem
+            leftIcon={<AuroraIcon />}
+            goToMenu="evmChains"
+            >
+            <h2>{chainSwitchAurora()}</h2>
           </DropdownItem>
           <DropdownItem
             leftIcon={<AtomIcon />}

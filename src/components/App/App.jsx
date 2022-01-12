@@ -4,6 +4,7 @@ import './App.css';
 
 import { ReactComponent as CaretIcon } from '../../assets/icons/caret.svg';
 import { ReactComponent as McPepeIcon } from '../../assets/icons/mcPepeSmol.svg';
+import { ReactComponent as ZapIcon } from '../../assets/icons/powered_by_zap_purple.svg';
 import twitterLogo from '../../assets/twitter-logo.svg';
 import githubLogo from '../../assets/github-mark.svg';
 import mcPepe from '../../assets/icons/mcPepeSmol.png';
@@ -127,18 +128,18 @@ export default function App(props) {
              <Main recentAccount={recentAccount} />
          </main>
          <div className="footer-container">
-              <a
+              <div
                className="footer-text"
                href={GITHUB_LINK}
                target={githubLogo}
                rel="noreferrer"
-               >{<img alt="Github Logo" className="github-logo" src={githubLogo} />}</a>
-              <a
+               >{<img alt="Github Logo" className="github-logo" src={githubLogo} />}</div>
+              <div
                className="footer-text"
                href={TWITTER_LINK}
                target={twitterLogo}
                rel="noreferrer"
-               >{<img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />}</a>
+               >{<img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />}</div>
            </div>
     </div>
    </div>

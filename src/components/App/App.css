@@ -149,16 +149,79 @@
   overflow: hidden;
   transition: height var(--speed) ease;
   /* text-align: left; */
-  font-size: 14px;
-  font-weight: bold;
-  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgb(160, 160, 160);
   z-index: 990;
   /* flex-direction: column; */
 }
 
 .small-panel-feed {
-  font-size: 26px;
+  font-size: 22px;
+  font-weight: 600;
   margin-top: 18px;
+}
+
+.live-gas-panel {
+  width: auto;
+  display: flex;
+  max-width: 800px;
+  min-width: fit-content;
+  flex-grow: 1;
+  flex-basis: 800px;
+}
+
+.small-gas {
+  width: auto;
+  height: 80px;
+  margin: 5px;
+  padding: 10px;
+  max-width: 800px;
+  min-width: fit-content;
+  flex-grow: 1;
+  flex-basis: 200px;
+  background-color: var(--bg);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  transition: height var(--speed) ease;
+  font-size: 14px;
+  font-weight: bold;
+  color: rgb(160, 160, 160);
+  z-index: 990;
+}
+
+.small-gas-feed {
+  display: flex;
+  font-size: 22px;
+  font-weight: 600;
+  margin-top: 18px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: baseline;
+}
+
+.normal-gas {
+  font-size: 18px;
+  padding-right: 10px;
+  color: #00c9a7;
+}
+
+.fast-gas {
+  font-size: 18px;
+  padding-right: 10px;
+  color: #3498db;
+}
+
+.instant-gas {
+  font-size: 18px;
+  padding-right: 10px;
+  color: #982a2c;
+}
+
+.usd-gas {
+  font-size: 18px;
+  padding-left: 10px;
+  font-weight: 500;
 }
 
 .chainSpecific-page {
@@ -318,10 +381,10 @@
 
 /* <ul> */
 .navbar-nav {
-  max-width: 100%;
+  /* max-width: 100%; */
   height: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 /* <li> */
@@ -333,10 +396,10 @@
 }
 
 .nav-item-nft {
-  width: auto;
+  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 .plus-ultra {
@@ -346,7 +409,7 @@
   top: 0;
   bottom: 0;
   width: 100%;
-  /* min-width: fit-content; */
+  min-width: fit-content;
   z-index: 999;
   justify-content: center;
   align-items: center;
@@ -355,9 +418,12 @@
 .plus-ultra-panel {
   display: flex;
   width: 100%;
-  padding: 100px;
+  padding: 10px;
   max-width: 400px;
-  height: 300px;
+  height: auto;
+  flex-grow: 1;
+  flex-basis: 0;
+  margin: 20px;
   background-color: rgb(155, 53, 53);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
@@ -414,7 +480,11 @@
 
 .icon-button-nft {
   --button-size: calc(var(--nav-size) * 0.45);
-  width: calc(var(--button-size) * 5.5);
+  max-width: calc(var(--button-size) * 5.5);
+  width: 100%;
+  min-width: 65px;
+  flex-grow: 1;
+  flex-basis: 80px;
   height: var(--button-size);
   background-color: rgb(46, 28, 28);
   --text-color: rgb(155, 53, 53);
@@ -570,3 +640,12 @@
 /* .wallet-error {
   --text-color: red;
 } */
+
+.about-chain {
+  display: flex;
+  padding: 10px 10px 20px 10px;
+  flex-direction: column;
+  margin-top: 30px;
+  border-top: 1px solid #353535;
+  align-items: flex-start;
+}

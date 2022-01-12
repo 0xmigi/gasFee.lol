@@ -1,7 +1,7 @@
 export default function Polygon(props) {
-    return (
-      <div>
-        <p>ur matic gas history</p>
-      </div>
-    );
-  }
+  return (
+    <div className="about-chain">
+      Avalanche history
+    </div>
+  );
+}
