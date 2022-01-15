@@ -72,7 +72,7 @@ export function WalletConnectButton() {
 
    
     if (!isAuthenticated && !user) {
-      console.log(user);
+      // console.log(user);
       return (
         <div>
           <button

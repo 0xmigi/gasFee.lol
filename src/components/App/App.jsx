@@ -89,17 +89,9 @@ export default function App(props) {
       return (
         <div className="plus-ultra">
           <div className="plus-ultra-panel">
-            <p className="plus-ultra-text">+Ultra NFTs coming soon, a generative svg NFT based on your unfortunate transaction history on Optimism or Polygon</p>
-          {/* <input 
-             className="paste-bar"
-             type="text"
-             placeholder={inputAddress}
-            //  autoFocus="autoFocus"
-            //  value={value}
-             onChange={displayAddress}
-          /> */}
+            <p className="plus-ultra-text">+Ultra NFTs coming soon, a generative svg NFT based on your unfortunate transaction history served fresh on Optimism or Polygon</p>
           <img src={mcPepe} alt="McPepe"/>
-          <p className="sub-ultra-text">meanwhile donate to McPepe: 0x2b3Ca2178e0dF323f413a8402eEF04Df8E5b8e3C  <br></br>any EVM chain</p>
+          <p className="sub-ultra-text">meanwhile show McPepe your support: 0x2b3Ca2178e0dF323f413a8402eEF04Df8E5b8e3C  <br></br>any EVM chain</p>
           </div>
         </div>
       );

@@ -139,7 +139,7 @@ const chainSwitchFtm = () => (
 const chainSwitchOne = () => (
         <Link to="/harmony">
           <button
-            onClick={() => setNewChain("0x63654c40")}
+            onClick={() => setNewChain("0x63564c40")}
             className="nav-cta-button mint-button"
             >
                Harmony One

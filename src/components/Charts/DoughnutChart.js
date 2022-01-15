@@ -48,7 +48,7 @@ const DoughnutChart = (props) => {
     setRethGasFees(props.setReth);
 
     return () => {
-      console.log("gas fee data recieved", props.setEth);
+      // console.log("gas fee data recieved", props.setEth);
     }
   })
 
@@ -56,7 +56,7 @@ const DoughnutChart = (props) => {
   const data = () => {
     setChartData({
       type: 'doughnut',
-      labels: ['Ethereum', 'BSC', 'Polygon', 'Optimism', 'Arbitrum', 'xDai', 'Avalanche', 'Fantom', 'Celo', 'Harmony One', 'Cosmos', 'Solana', 'Luna', 'Cardano', 'Polkadot', 'Waves', 'Algorand'],
+      labels: ['Ethereum', 'BSC', 'Polygon', 'Optimism', 'Arbitrum', 'xDai', 'Avalanche', 'Fantom', 'Celo', 'Harmony One', 'Moonriver', 'Aurora', 'Cosmos', 'Solana', 'Luna', 'Cardano', 'Polkadot', 'Waves', 'Algorand'],
       datasets: [{
         label: '$ gas spent',
         data: [(ethGasFees), (bscGasFees), (maticGasFees), (opGasFees), (arbiGasFees), (xdaiGasFees), (avaxGasFees), (ftmGasFees), (celoGasFees), (oneGasFees), (movrGasFees), (auroraGasFees), (rethGasFees), (atomGasFees), (solGasFees), (lunaGasFees), (adaGasFees)],
@@ -78,6 +78,8 @@ const DoughnutChart = (props) => {
           '#00898a',
           '#176877',
           '#2a4858',
+          '#213c5d',
+          '#322a58',
         ],
         borderWidth: 0.5,
         borderColor: [
@@ -98,10 +100,11 @@ const DoughnutChart = (props) => {
           '#141414',
           '#141414',
           '#141414',
+          '#141414',
+          '#141414',
         ],
     }],
     })
-    console.log(props.usdGasFee);
   }
 
   useEffect(() => {

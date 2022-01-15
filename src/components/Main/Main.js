@@ -2,6 +2,7 @@ import './main.css';
 import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import $ from 'jquery';
+import converter from 'bech32-converting';
 import DoughnutChart from '../Charts/DoughnutChart';
 
 
@@ -113,61 +114,110 @@ export default function Main(props) {
   const [auroraUsd, setAuroraUsd] = useState(0);
   const [rEthUsd, setRethUsd] = useState(0);
 
+  
+  const [harmonyTest, setHarmonyTest] = useState();
+  
 
-  // const gasOdometer = async() => {
-  //   const gasChain = [{}]
-  //   gasChain[''] = {zapperName: "ethereum"};
-  //   gasChain['0x1'] = {zapperName: "ethereum"};
-  //   gasChain['0x38'] = {zapperName: "binance-smart-chain"}
-  //   gasChain['0xa'] = {zapperName: "optimism"}
-  //   gasChain['0x89'] = {zapperName: "polygon"}
-  //   gasChain['0xa86a'] = {zapperName: "avalanche"}
-  //   gasChain['0xfa'] = {zapperName: "fantom"}
-  //   gasChain['0x505'] = {zapperName: "moonriver"}
-  //   gasChain['0xa41b'] = {zapperName: "arbitrum"}
-  //   gasChain['0x64'] = {zapperName: "xdai"}
-  //   gasChain['0xa4ec'] = {zapperName: "celo"}
-  //   gasChain['0x63564c40'] = {zapperName: "harmony"}
-  //   gasChain['0x4e45152'] = {zapperName: "aurora"}
-  //   gasChain['0x4'] = {zapperName: "rinkeby-ethereum"}
+  // const getHarmonyTxnData = async () => {
+
+  //   const address = '0x84163c655c9e20150f81c1038686a8bc9c15a8d4';
+
+  //   var myHeaders = new Headers();
+  //   myHeaders.append("Content-Type", "application/json");
+
+  //   let onetokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=harmony&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
+  //   onetokenusd = onetokenusd["harmony"].usd;
+
+  //   var raw = JSON.stringify({
+  //     jsonrpc: "2.0",
+  //     id: 1,
+  //     method: "hmyv2_getTransactionsHistory",
+  //     params: [
+  //       {
+  //         address: converter('one').toBech32(address),
+  //         pageIndex: 0,
+  //         fullTx: true,
+  //         txType: "ALL",
+  //         order: "ASC"
+  //       }
+  //     ]
+  //   });
+
+  //   var requestOptions = {
+  //     method: "POST",
+  //     headers: myHeaders,
+  //     body: raw,
+  //     redirect: "follow"
+  //   };
+
+  //   const response = await fetch("https://rpc.s0.t.hmny.io", requestOptions);
+
+  //   console.log(response);
+  //   let result = await response.json([]);
+  //   const arr = await result;
+
+  //   let txs = arr.result.transactions;
+  //   console.log('txs is ', txs);
+  //   let n = txs.length;
+  //   console.log("n is", n);
+  //   let from, txs2;
+
+  //   let zeresponse;
 
 
-  //   function testNum(isEth) {
-  //     let eip1559;
-  //     if (isEth === 'ethereum') {
-  //       eip1559 = 'true';
-  //     } else {
-  //       eip1559 = 'false';
-  //     }
-  //     return (
-  //       eip1559
-  //       );
+
+  //   let txsOut = $.grep(txs, function(v) {
+  //     return v.from === converter('one').toBech32(address).toLowerCase();
+  //   });
+  //   txsOut = txsOut.map(({ confirmations, ...item }) => item);
+  //   console.log('txsOut is ', txsOut);
+  //   txsOut = new Set(txsOut.map(JSON.stringify));
+  //   txsOut = Array.from(txsOut).map(JSON.parse);
+  //   console.log('All outgoing txs:', txsOut)
+
+  //   var oneOut = txsOut.length;
+  //   var txsOutFail = $.grep(txsOut, function(v) {
+  //       return v.isError === '1';
+  //   });
+
+  //   var oneOutFail = txsOutFail.length;
+  //   console.log('Failed outgoing txs:', txsOutFail);
+
+   
+  //   if (oneOut > 0) {
+  //     var gasUsed = txsOut.map(value => parseInt(value.gasUsed));
+  //     console.log("gasUsed is", gasUsed);
+  //     var gasUsedTotal = gasUsed.reduce((partial_sum, a) => partial_sum + a,0); 
+  //     var gasPrice = txsOut.map(value => parseInt(value.gasPrice));
+  //     // console.log("gasPrice is", gasPrice);
+  //     var gasPriceMin = Math.min(...gasPrice);
+  //     var gasPriceMax = Math.max(...gasPrice);
+  //     var gasPriceTotal = gasPrice.reduce((partial_sum, a) => partial_sum + a,0);
+  //     var gasFee = multiply(gasPrice, gasUsed);
+  //     // console.log("gasFee is", gasFee);
+  //     var oneGasFeeTotal = gasFee.reduce((partial_sum, a) => partial_sum + a,0); 
+  //     var gasUsedFail = txsOutFail.map(value => parseInt(value.gasUsed));
+  //     var gasPriceFail = txsOutFail.map(value => parseInt(value.gasPrice));
+  //     var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
+  //     var gasFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
   //   }
 
-  //   let chainName = gasChain[chainId].zapperName;
-  //   const postLondon = testNum(chainName);
-  //   console.log(postLondon);
-    
-  //   let connectedGasPrice = `https://api.zapper.fi/v1/gas-price?network=${chainName}&eip1559=${postLondon}&api_key=96e0cc51-a62e-42ca-acee-910ea7d2a241`;
+  //   setNativeGasFeeTotal("ONE" + comma((oneGasFeeTotal / 1e18).toFixed(3)));
+  //   setUsdGasFeeTotal(comma(formatter((onetokenusd * oneGasFeeTotal / 1e18).toFixed(2))));
+  //   setSentNumTransactions(comma(oneOut));
+  //       // setGweiTotal(comma(formatter(gasUsedTotal)));
+  //   setAvarageGweiTotal(comma((gasPriceTotal / oneOut / 1e9).toFixed(1)));
+  //   setFailedNumTransactions(comma(oneOutFail));
+  //   setUsdFailedTotal("ONE" + (gasFeeTotalFail / 1e18).toFixed(3));
 
-  //   // const getGasPrice = async() => {
-  //     const chainGasPrice = await fetch(connectedGasPrice)
-  //     .then(response => {return response.json()})
-  //     .catch(err => {console.log('Error', err)});
-  //     console.log(chainName);
-  //     // setActiveGasPrice(chainGasPrice);
-  //     setNormalGas(postLondon === "true" ? chainGasPrice.standard.maxFeePerGas : chainGasPrice.standard);
-  //     setFastGas(postLondon === "true" ? chainGasPrice.fast.maxFeePerGas : chainGasPrice.fast);
-  //     setInstantGas(postLondon === "true" ? chainGasPrice.instant.maxFeePerGas : chainGasPrice.instant);
+  //   setOneUsd(comma(formatter((onetokenusd * oneGasFeeTotal / 1e18).toFixed(2))))
 
-  // }
-  
+  // };
 
 
   
   const getTransactions = async(address) => {
 
-    // const gasOdometer = async() => {
       const gasChain = [{}]
       gasChain[''] = {zapperName: "ethereum"};
       gasChain['0x1'] = {zapperName: "ethereum"};
@@ -199,7 +249,7 @@ export default function Main(props) {
   
       let chainName = gasChain[chainId].zapperName;
       const postLondon = testNum(chainName);
-      console.log(postLondon);
+      console.log("postLondon gas >", postLondon);
       
       let connectedGasPrice = `https://api.zapper.fi/v1/gas-price?network=${chainName}&eip1559=${postLondon}&api_key=96e0cc51-a62e-42ca-acee-910ea7d2a241`;
   
@@ -246,6 +296,9 @@ export default function Main(props) {
       console.log('Error', err);
     })
 
+    console.log("tokenusd is officailly", tokenusd);
+    console.log(chainConfig[chainId].token);
+
     tokenusd = tokenusd[coingeckoSymbol].usd;
     console.log(chainConfig[chainId].symbol.toUpperCase()+' USD: $' + tokenusd);
 
@@ -264,8 +317,11 @@ export default function Main(props) {
     }
 
     let txs = json['result'];
+    console.log("txs is", txs);
     let n = txs.length;
+    console.log("n is", n);
     let from, txs2;
+
 
     while (n===10000) {
       from = txs[txs.length - 1].blockNumber
@@ -284,12 +340,12 @@ export default function Main(props) {
       txs.push.apply(txs, txs2)
     }
 
-    console.log("u is ", u)
     let txsOut = $.grep(txs, function(v) {
       return v.from === address.toLowerCase();
     });
 
     txsOut = txsOut.map(({ confirmations, ...item }) => item);
+    console.log('txsOut is ', txsOut);
     txsOut = new Set(txsOut.map(JSON.stringify));
     txsOut = Array.from(txsOut).map(JSON.parse);
         // remove duplicates
@@ -806,13 +862,17 @@ export default function Main(props) {
 
 const totalGasFeeTotal = ((+ethUsd + +bscUsd + +opUsd + +maticUsd + +avaxUsd + +ftmUsd).toFixed(2));
 
-console.log(totalGasFeeTotal);
-console.log("a gwei currently is ", normalGasUsd);
+// console.log(totalGasFeeTotal);
+// console.log("a gwei currently is ", normalGasUsd);
 
 
 useEffect(() => {
   if (chainId !== undefined) {
-    getTransactions(address);
+    if (chainId === "0x63564c40") {
+      // getHarmonyTxnData(address);
+    } else {
+      getTransactions(address);
+    }
   } else {
     console.log("chainID hasn't cum yet")
   }

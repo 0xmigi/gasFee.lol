@@ -14,7 +14,7 @@ const LineChart = (props) => {
         setPoints(props.setPoint);
     
         return () => {
-          console.log("gas fee data recieved", props.setPoint);
+          // console.log("gas fee data recieved", props.setPoint);
         }
       })
 
@@ -31,20 +31,20 @@ const LineChart = (props) => {
             labels: labels,
             datasets: [
                 {
-                label: 'Cubic interpolation (monotone)',
+                label: 'gas price feed',
                 data: datapoints,
                 borderColor: '#582a2a',
                 fill: false,
                 cubicInterpolationMode: 'monotone',
                 tension: 0.4
                 }, {
-                label: 'Cubic interpolation',
+                label: 'coming',
                 data: datapoints,
                 borderColor: '#6f3832',
                 fill: false,
-                tension: 0.4
+                tension: 0.8
                 }, {
-                label: 'Linear interpolation (default)',
+                label: 'soon',
                 data: datapoints,
                 borderColor: '#864838',
                 fill: false
