@@ -77,17 +77,17 @@ export default function Main(props) {
     return parts.join(".");
   }
 
-  const [balanceTotal, setBalanceTotal] = useState(0);
-  const [nativeGasFeeTotal, setNativeGasFeeTotal] = useState(0);
-  const [usdGasFeeTotal, setUsdGasFeeTotal] = useState(0);
-  const [gweiTotal, setGweiTotal] = useState(0);
-  const [sentNumTransactions, setSentNumTransactions] = useState(0);
-  const [avarageGweiTotal, setAvarageGweiTotal] = useState(0);
-  const [failedNumTransactions, setFailedNumTransactions] = useState(0);
-  const [usdFailedTotal, setUsdFailedTotal] = useState("nothing");
+  const [balanceTotal, setBalanceTotal] = useState();
+  const [nativeGasFeeTotal, setNativeGasFeeTotal] = useState();
+  const [usdGasFeeTotal, setUsdGasFeeTotal] = useState();
+  const [gweiTotal, setGweiTotal] = useState();
+  const [sentNumTransactions, setSentNumTransactions] = useState();
+  const [avarageGweiTotal, setAvarageGweiTotal] = useState();
+  const [failedNumTransactions, setFailedNumTransactions] = useState();
+  const [usdFailedTotal, setUsdFailedTotal] = useState();
 
-  const [totalSentTransactions, setTotalSentTransactions] = useState(0);
-  const [totalFailedNumTransactions, setTotalFailedNumTransactions] = useState(0);
+  const [totalSentTransactions, setTotalSentTransactions] = useState();
+  const [totalFailedNumTransactions, setTotalFailedNumTransactions] = useState();
 
   const [normalGasUsd, setNormalGasUsd] = useState(0);
   const [fastGasUsd, setFastGasUsd] = useState(0);
@@ -227,7 +227,7 @@ export default function Main(props) {
       gasChain['0xa86a'] = {zapperName: "avalanche"}
       gasChain['0xfa'] = {zapperName: "fantom"}
       gasChain['0x505'] = {zapperName: "moonriver"}
-      gasChain['0xa41b'] = {zapperName: "arbitrum"}
+      gasChain['0xa4b1'] = {zapperName: "arbitrum"}
       gasChain['0x64'] = {zapperName: "xdai"}
       gasChain['0xa4ec'] = {zapperName: "celo"}
       gasChain['0x63564c40'] = {zapperName: "harmony"}
@@ -739,26 +739,12 @@ export default function Main(props) {
     });
     //  <<<<-------------------------------------------------------
     var eOutFail = etxsOutFail.length;
-    $('#nOutFail').text(comma(eOutFail));
-    console.log('Failed outgoing txs:', etxsOutFail);
     var bscOutFail = bsctxsOutFail.length;
-    $('#nOutFail').text(comma(bscOutFail));
-    console.log('Failed outgoing txs:', bsctxsOutFail);
     var opOutFail = optxsOutFail.length;
-    $('#nOutFail').text(comma(opOutFail));
-    console.log('Failed outgoing txs:', optxsOutFail);
     var maticOutFail = matictxsOutFail.length;
-    $('#nOutFail').text(comma(maticOutFail));
-    console.log('Failed outgoing txs:', matictxsOutFail);
     var avaxOutFail = avaxtxsOutFail.length;
-    $('#nOutFail').text(comma(avaxOutFail));
-    console.log('Failed outgoing txs:', avaxtxsOutFail);
     var arbiOutFail = arbitxsOutFail.length;
-    $('#nOutFail').text(comma(arbiOutFail));
-    console.log('Failed outgoing txs:', arbitxsOutFail);
     var ftmOutFail = ftmtxsOutFail.length;
-    $('#nOutFail').text(comma(ftmOutFail));
-    console.log('Failed outgoing txs:', ftmtxsOutFail);
         
     if (eOut > 0) {
       var gasUsed = etxsOut.map(value => parseInt(value.gasUsed));
@@ -860,7 +846,7 @@ export default function Main(props) {
 
  
 
-const totalGasFeeTotal = ((+ethUsd + +bscUsd + +opUsd + +maticUsd + +avaxUsd + +ftmUsd).toFixed(2));
+const totalGasFeeTotal = ((+ethUsd + +bscUsd + +opUsd + +maticUsd + +avaxUsd + +ftmUsd + +arbiUsd).toFixed(2));
 
 // console.log(totalGasFeeTotal);
 // console.log("a gwei currently is ", normalGasUsd);
