@@ -580,11 +580,11 @@ const PasteAddressConnect = () => {
 
   function DropdownItem(props) {
     return (
-      <a href="#" className="menu-item" onClick={() => props.goToMenu && setActiveMenu(props.goToMenu)}>
+      <div href="#" className="menu-item" onClick={() => props.goToMenu && setActiveMenu(props.goToMenu)}>
         <span className="icon-button-chain">{props.leftIcon}</span>
         {props.children}
         
-      </a>
+      </div>
     );
   }
 

@@ -11,9 +11,9 @@ export default function Header(props) {
               <span
                 className="header"
                 >
-                    <a className="header-icon" >
+                    <div className="header-icon" >
                         {props.icon}
-                    </a>
+                    </div>
                     { props.domain }
               </span>
             </Link>
