@@ -125,7 +125,10 @@ const DoughnutChart = (props) => {
             position: 'left',
             align: 'start',
             labels: {
-              fontColor: "white"
+              fontColor: "grey",
+              fontSize: 12,
+              boxWidth: 30,
+              padding: 3,
             }
           }
         }}

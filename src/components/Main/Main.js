@@ -88,6 +88,7 @@ export default function Main(props) {
 
   const [totalSentTransactions, setTotalSentTransactions] = useState();
   const [totalFailedNumTransactions, setTotalFailedNumTransactions] = useState();
+  const [totalUsdFailedTotal, setTotalUsdFailedTotal] = useState();
 
   const [normalGasUsd, setNormalGasUsd] = useState(0);
   const [fastGasUsd, setFastGasUsd] = useState(0);
@@ -308,6 +309,7 @@ export default function Main(props) {
     if (chainConfig[chainId].key) { u += `&apikey=${key}` }
 
     let response = await fetch(u);
+    console.log("u is", response);
 
 
     if (response.ok) { // if HTTP-status is 200-299
@@ -754,6 +756,12 @@ export default function Main(props) {
       var gasPriceMax = Math.max(...gasPrice);
       var gasFee = multiply(gasPrice, gasUsed);
       var ethGasFeeTotal = gasFee.reduce((partial_sum, a) => partial_sum + a,0); 
+
+      var gasUsedFail = etxsOutFail.map(value => parseInt(value.gasUsed));
+      var gasPriceFail = etxsOutFail.map(value => parseInt(value.gasPrice));
+      var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
+      var eFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
+      var eUsdFeeFail = (eFeeTotalFail * ethtokenusd / 1e18)
     } 
     if (bscOut > 0) {
       var gasUsed = bsctxsOut.map(value => parseInt(value.gasUsed));
@@ -763,6 +771,12 @@ export default function Main(props) {
       var gasPriceMax = Math.max(...gasPrice);
       var gasFee = multiply(gasPrice, gasUsed);
       var bscGasFeeTotal = gasFee.reduce((partial_sum, a) => partial_sum + a,0); 
+
+      var gasUsedFail = bsctxsOutFail.map(value => parseInt(value.gasUsed));
+      var gasPriceFail = bsctxsOutFail.map(value => parseInt(value.gasPrice));
+      var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
+      var bscFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
+      var bscUsdFeeFail = (bscFeeTotalFail * bsctokenusd / 1e18)
     } 
     if (opOut > 0) {
       var gasUsed = optxsOut.map(value => parseInt(value.gasUsed));
@@ -772,6 +786,12 @@ export default function Main(props) {
       var gasPriceMax = Math.max(...gasPrice);
       var gasFee = multiply(gasPrice, gasUsed);
       var opGasFeeTotal = gasFee.reduce((partial_sum, a) => partial_sum + a,0); 
+
+      var gasUsedFail = optxsOutFail.map(value => parseInt(value.gasUsed));
+      var gasPriceFail = optxsOutFail.map(value => parseInt(value.gasPrice));
+      var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
+      var opFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
+      var opUsdFeeFail = (opFeeTotalFail * optokenusd / 1e18)
     } 
     if (maticOut > 0) {
       var gasUsed = matictxsOut.map(value => parseInt(value.gasUsed));
@@ -781,6 +801,12 @@ export default function Main(props) {
       var gasPriceMax = Math.max(...gasPrice);
       var gasFee = multiply(gasPrice, gasUsed);
       var maticGasFeeTotal = gasFee.reduce((partial_sum, a) => partial_sum + a,0); 
+
+      var gasUsedFail = matictxsOutFail.map(value => parseInt(value.gasUsed));
+      var gasPriceFail = matictxsOutFail.map(value => parseInt(value.gasPrice));
+      var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
+      var maticFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
+      var maticUsdFeeFail = (maticFeeTotalFail * matictokenusd / 1e18)
     } 
     if (avaxOut > 0) {
       var gasUsed = avaxtxsOut.map(value => parseInt(value.gasUsed));
@@ -790,6 +816,12 @@ export default function Main(props) {
       var gasPriceMax = Math.max(...gasPrice);
       var gasFee = multiply(gasPrice, gasUsed);
       var avaxGasFeeTotal = gasFee.reduce((partial_sum, a) => partial_sum + a,0); 
+
+      var gasUsedFail = avaxtxsOutFail.map(value => parseInt(value.gasUsed));
+      var gasPriceFail = avaxtxsOutFail.map(value => parseInt(value.gasPrice));
+      var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
+      var avaxFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
+      var avaxUsdFeeFail = (avaxFeeTotalFail * avaxtokenusd / 1e18)
     } 
     if (arbiOut > 0) {
       var gasUsed = arbitxsOut.map(value => parseInt(value.gasUsed));
@@ -799,6 +831,12 @@ export default function Main(props) {
       var gasPriceMax = Math.max(...gasPrice);
       var gasFee = multiply(gasPrice, gasUsed);
       var arbiGasFeeTotal = gasFee.reduce((partial_sum, a) => partial_sum + a,0); 
+
+      var gasUsedFail = arbitxsOutFail.map(value => parseInt(value.gasUsed));
+      var gasPriceFail = arbitxsOutFail.map(value => parseInt(value.gasPrice));
+      var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
+      var arbiFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
+      var arbiUsdFeeFail = (arbiFeeTotalFail * arbitokenusd / 1e18)
     } 
     if (ftmOut > 0) {
       var gasUsed = ftmtxsOut.map(value => parseInt(value.gasUsed));
@@ -808,6 +846,12 @@ export default function Main(props) {
       var gasPriceMax = Math.max(...gasPrice);
       var gasFee = multiply(gasPrice, gasUsed);
       var ftmGasFeeTotal = gasFee.reduce((partial_sum, a) => partial_sum + a,0); 
+
+      var gasUsedFail = ftmtxsOutFail.map(value => parseInt(value.gasUsed));
+      var gasPriceFail = ftmtxsOutFail.map(value => parseInt(value.gasPrice));
+      var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
+      var ftmFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
+      var ftmUsdFeeFail = (ftmFeeTotalFail * ftmtokenusd / 1e18)
     } 
 
 
@@ -822,6 +866,8 @@ export default function Main(props) {
 
     setTotalSentTransactions(+eOut + +bscOut + +opOut + +maticOut + +avaxOut + +arbiOut + +ftmOut);
     setTotalFailedNumTransactions(+eOutFail + +bscOutFail + +opOutFail + +maticOutFail + +avaxOutFail + +arbiOutFail + +ftmOutFail);
+    setTotalUsdFailedTotal("$" + (+eUsdFeeFail + +bscUsdFeeFail + +opUsdFeeFail + +maticUsdFeeFail + +avaxUsdFeeFail + +arbiUsdFeeFail + +ftmUsdFeeFail).toFixed(3));
+    
 
     setNormalGasUsd("$" + comma(formatter((tokenusd * standardgas * 65000 / 1e9).toFixed(2))));
     setFastGasUsd("$" + comma(formatter((tokenusd * fastgas * 65000 / 1e9).toFixed(2))));
@@ -902,7 +948,7 @@ useEffect(() => {
             <div className="small-panel">total transactions made: <p className="small-panel-feed">{totalSentTransactions}</p></div>
             <div className="small-panel">avarage transaction cost: <p className="small-panel-feed">{avarageGweiTotal}</p></div>
             <div className="small-panel">total transactions failed: <p className="small-panel-feed">{totalFailedNumTransactions}</p></div>
-            <div className="small-panel">failed cost: <p className="small-panel-feed">{usdFailedTotal}</p></div>
+            <div className="small-panel">failed cost: <p className="small-panel-feed">{totalUsdFailedTotal}</p></div>
             <div className="small-panel">gas prices: <p className="small-panel-feed"></p></div>
             <div className="small-panel">most recent address: <p >{props.recentAccount.newAccount}</p> </div>
           </div>

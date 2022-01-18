@@ -700,13 +700,13 @@ const PasteAddressConnect = () => {
             >
             <h2>{chainSwitchLuna()}</h2>
           </DropdownItem>
-          <DropdownItem
+          {/* <DropdownItem
             leftIcon={<AdaIcon />}
             rightIcon={<ChevronIcon />}
             goToMenu="evmChains"
             >
             <h2>{chainSwitchAda()}</h2>
-          </DropdownItem>
+          </DropdownItem> */}
           <DropdownItem
             leftIcon={<DotIcon />}
             rightIcon={<ChevronIcon />}
@@ -714,7 +714,7 @@ const PasteAddressConnect = () => {
             >
             <h2>{chainSwitchDot()}</h2>
           </DropdownItem>
-          <DropdownItem
+          {/* <DropdownItem
             leftIcon={<WaveIcon />}
             rightIcon={<ChevronIcon />}
             goToMenu="evmChains"
@@ -727,7 +727,7 @@ const PasteAddressConnect = () => {
             goToMenu="evmChains"
             >
             <h2>{chainSwitchAlgo()}</h2>
-          </DropdownItem>
+          </DropdownItem> */}
 
 
           <DropdownItem
