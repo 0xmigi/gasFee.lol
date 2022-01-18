@@ -1,8 +1,8 @@
 import './main.css';
 import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import converter from "bech32-converting";
 import $ from 'jquery';
-import converter from 'bech32-converting';
 import DoughnutChart from '../Charts/DoughnutChart';
 
 
@@ -100,6 +100,7 @@ export default function Main(props) {
 
   let address = props.recentAccount.newAccount;
   let chainId = props.recentAccount.activeChain;
+  let x = 0;
 
   const [ethUsd, setEthUsd] = useState(0);
   const [opUsd, setOpUsd] = useState(0);
@@ -115,108 +116,9 @@ export default function Main(props) {
   const [auroraUsd, setAuroraUsd] = useState(0);
   const [rEthUsd, setRethUsd] = useState(0);
 
-  
-  const [harmonyTest, setHarmonyTest] = useState();
-  
-
-  // const getHarmonyTxnData = async () => {
-
-  //   const address = '0x84163c655c9e20150f81c1038686a8bc9c15a8d4';
-
-  //   var myHeaders = new Headers();
-  //   myHeaders.append("Content-Type", "application/json");
-
-  //   let onetokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=harmony&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
-  //   onetokenusd = onetokenusd["harmony"].usd;
-
-  //   var raw = JSON.stringify({
-  //     jsonrpc: "2.0",
-  //     id: 1,
-  //     method: "hmyv2_getTransactionsHistory",
-  //     params: [
-  //       {
-  //         address: converter('one').toBech32(address),
-  //         pageIndex: 0,
-  //         fullTx: true,
-  //         txType: "ALL",
-  //         order: "ASC"
-  //       }
-  //     ]
-  //   });
-
-  //   var requestOptions = {
-  //     method: "POST",
-  //     headers: myHeaders,
-  //     body: raw,
-  //     redirect: "follow"
-  //   };
-
-  //   const response = await fetch("https://rpc.s0.t.hmny.io", requestOptions);
-
-  //   console.log(response);
-  //   let result = await response.json([]);
-  //   const arr = await result;
-
-  //   let txs = arr.result.transactions;
-  //   console.log('txs is ', txs);
-  //   let n = txs.length;
-  //   console.log("n is", n);
-  //   let from, txs2;
-
-  //   let zeresponse;
-
-
-
-  //   let txsOut = $.grep(txs, function(v) {
-  //     return v.from === converter('one').toBech32(address).toLowerCase();
-  //   });
-  //   txsOut = txsOut.map(({ confirmations, ...item }) => item);
-  //   console.log('txsOut is ', txsOut);
-  //   txsOut = new Set(txsOut.map(JSON.stringify));
-  //   txsOut = Array.from(txsOut).map(JSON.parse);
-  //   console.log('All outgoing txs:', txsOut)
-
-  //   var oneOut = txsOut.length;
-  //   var txsOutFail = $.grep(txsOut, function(v) {
-  //       return v.isError === '1';
-  //   });
-
-  //   var oneOutFail = txsOutFail.length;
-  //   console.log('Failed outgoing txs:', txsOutFail);
-
-   
-  //   if (oneOut > 0) {
-  //     var gasUsed = txsOut.map(value => parseInt(value.gasUsed));
-  //     console.log("gasUsed is", gasUsed);
-  //     var gasUsedTotal = gasUsed.reduce((partial_sum, a) => partial_sum + a,0); 
-  //     var gasPrice = txsOut.map(value => parseInt(value.gasPrice));
-  //     // console.log("gasPrice is", gasPrice);
-  //     var gasPriceMin = Math.min(...gasPrice);
-  //     var gasPriceMax = Math.max(...gasPrice);
-  //     var gasPriceTotal = gasPrice.reduce((partial_sum, a) => partial_sum + a,0);
-  //     var gasFee = multiply(gasPrice, gasUsed);
-  //     // console.log("gasFee is", gasFee);
-  //     var oneGasFeeTotal = gasFee.reduce((partial_sum, a) => partial_sum + a,0); 
-  //     var gasUsedFail = txsOutFail.map(value => parseInt(value.gasUsed));
-  //     var gasPriceFail = txsOutFail.map(value => parseInt(value.gasPrice));
-  //     var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
-  //     var gasFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
-  //   }
-
-  //   setNativeGasFeeTotal("ONE" + comma((oneGasFeeTotal / 1e18).toFixed(3)));
-  //   setUsdGasFeeTotal(comma(formatter((onetokenusd * oneGasFeeTotal / 1e18).toFixed(2))));
-  //   setSentNumTransactions(comma(oneOut));
-  //       // setGweiTotal(comma(formatter(gasUsedTotal)));
-  //   setAvarageGweiTotal(comma((gasPriceTotal / oneOut / 1e9).toFixed(1)));
-  //   setFailedNumTransactions(comma(oneOutFail));
-  //   setUsdFailedTotal("ONE" + (gasFeeTotalFail / 1e18).toFixed(3));
-
-  //   setOneUsd(comma(formatter((onetokenusd * oneGasFeeTotal / 1e18).toFixed(2))))
-
-  // };
-
 
   
+
   const getTransactions = async(address) => {
 
       const gasChain = [{}]
@@ -278,7 +180,7 @@ export default function Main(props) {
     chainConfig['0x89'] = {id: '0x89', shortname: 'matic', name:'Polygon', symbol: 'matic', coingecko_name: 'matic-network', token: 'MATIC', color: '#9d03f4', explorer_uri: 'https://api.polygonscan.com', key: `${POLYGONSCAN_KEY}`}
     chainConfig['0xfa'] = {id: '0xfa', shortname: 'ftm', name:'Fantom', symbol: 'ftm', coingecko_name: 'fantom', token: 'ƒ', color: '#00dbff', explorer_uri: 'https://api.ftmscan.com', key: `${FTMSCAN_KEY}`}
     chainConfig['0xa86a'] = {id: '0xa86a', shortname: 'avax', name:'Avalanche', symbol: 'avax', coingecko_name: 'avalanche-2', token: 'Ã', color: '#ec1616', explorer_uri: 'https://api.snowtrace.io', key: `${SNOWTRACE_KEY}`}
-    chainConfig['0x63564c40'] = {id: '0x63564c40', shortname: 'one', name:'Harmoney One', symbol: 'one', coingecko_name: 'harmony', token: 'Ã', color: '#ec1616', explorer_uri: 'https://api.harmony.one', key: ''}
+    chainConfig['0x63564c40'] = {id: '0x63564c40', shortname: 'one', name:'Harmoney One', symbol: 'one', coingecko_name: 'harmony', token: 'O', color: '#ec1616', explorer_uri: 'https://api.harmony.one', key: ''}
     chainConfig['0xa4ec'] = {id: '0xa4ec', shortname: 'celo', name:'Celo', symbol: 'celo', coingecko_name: 'celo', token: 'C', color: '#ec1616', explorer_uri: 'https://api.snowtrace.io', key: ''}
     chainConfig['0xa4b1'] = {id: '0xa4b1', shortname: 'arbi', name:'Arbitrum', symbol: 'aeth', coingecko_name: 'ethereum', token: 'aΞ', color: '#ec1616', explorer_uri: 'https://api.arbiscan.io', key: `${ARBISCAN_KEY}`}
     chainConfig['0x505'] = {id: '0x505', shortname: 'movr', name:'Moonriver', symbol: 'movr', coingecko_name: 'moonriver', token: 'M', color: '#ec1690', explorer_uri: 'https://api-moonriver.moonscan.io', key: `${MOONSCAN_KEY}`}
@@ -301,121 +203,17 @@ export default function Main(props) {
     console.log(chainConfig[chainId].token);
 
     tokenusd = tokenusd[coingeckoSymbol].usd;
-    console.log(chainConfig[chainId].symbol.toUpperCase()+' USD: $' + tokenusd);
-
-    let key = chainConfig[chainId].key
-    let u = chainConfig[chainId].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc`
-
-    if (chainConfig[chainId].key) { u += `&apikey=${key}` }
-
-    let response = await fetch(u);
-    console.log("u is", response);
-
-
-    if (response.ok) { // if HTTP-status is 200-299
-      var json = await response.json();
-    } else {
-      console.error("HTTP-Error: " + response.status);
-    }
-
-    let txs = json['result'];
-    console.log("txs is", txs);
-    let n = txs.length;
-    console.log("n is", n);
-    let from, txs2;
-
-
-    while (n===10000) {
-      from = txs[txs.length - 1].blockNumber
-      u = chainConfig[chainId].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${from}&endblock=99999999&sort=asc&apikey=${key}`
-      response = await fetch(u)
-
-      if (response.ok) { // if HTTP-status is 200-299
-          json = await response.json();
-      } else {
-          console.log('big pwoblam : ' + response.status);
-          break
-      }
-
-      txs2 = json['result']
-      n = txs2.length
-      txs.push.apply(txs, txs2)
-    }
-
-    let txsOut = $.grep(txs, function(v) {
-      return v.from === address.toLowerCase();
-    });
-
-    txsOut = txsOut.map(({ confirmations, ...item }) => item);
-    console.log('txsOut is ', txsOut);
-    txsOut = new Set(txsOut.map(JSON.stringify));
-    txsOut = Array.from(txsOut).map(JSON.parse);
-        // remove duplicates
-        //localStorage.setItem('txsOut', JSON.stringify(txsOut));
-    console.log('All outgoing txs:', txsOut)
-
-    var nOut = txsOut.length;
-    $('#nOut').text(comma(nOut));
-    var txsOutFail = $.grep(txsOut, function(v) {
-        return v.isError === '1';
-    });
-
-    var nOutFail = txsOutFail.length;
-    $('#nOutFail').text(comma(nOutFail));
-    console.log('Failed outgoing txs:', txsOutFail);
-
-    if (nOut > 0) {
-      var gasUsed = txsOut.map(value => parseInt(value.gasUsed));
-      var gasUsedTotal = gasUsed.reduce((partial_sum, a) => partial_sum + a,0); 
-      var gasPrice = txsOut.map(value => parseInt(value.gasPrice));
-      var gasPriceMin = Math.min(...gasPrice);
-      var gasPriceMax = Math.max(...gasPrice);
-      var gasFee = multiply(gasPrice, gasUsed);
-      var gasFeeTotal = gasFee.reduce((partial_sum, a) => partial_sum + a,0); 
-      var gasPriceTotal = gasPrice.reduce((partial_sum, a) => partial_sum + a,0);
-      var gasUsedFail = txsOutFail.map(value => parseInt(value.gasUsed));
-      var gasPriceFail = txsOutFail.map(value => parseInt(value.gasPrice));
-      var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
-      var gasFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
-
-      $('#gasUsedTotal').text(comma(formatter(gasUsedTotal)));
-      $('#gasPricePerTx').text(comma((gasPriceTotal / nOut / 1e9).toFixed(1)));
-      $('#gasPricePerTx').hover(function() {
-          $(this).css('cursor', 'help').attr('title', 'Min: ' + (gasPriceMin / 1e9).toFixed(3) + '; Max: ' + (gasPriceMax / 1e9).toFixed(3));
-          // Tipped.create('#gasPricePerTx', 'Min: ' + (gasPriceMin / 1e9).toFixed(1) + '; Max: ' + (gasPriceMax / 1e9).toFixed(1), { offset: { y: 20 } });
-      }, function() {
-          $(this).css('cursor', 'auto');
-      });
-      $('#gasFeeTotal').text(chainConfig[chainId].token + comma((gasFeeTotal / 1e18).toFixed(3)));
-      
-      if (nOutFail > 0) {
-          $('#gasFeeTotalFail').html(chainConfig[chainId].token + (gasFeeTotalFail / 1e18).toFixed(3));
-          var oof = Math.max(...gasFeeFail)/1e18;
-
-          if (oof > 0.1) {
-              var i = gasFeeFail.reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0);
-              var tx = txsOutFail[i];
-              $('<p><a id="oof" href="https://bscscan.com/tx/' + 
-              tx.hash + '">This one</a> cost <span id="oofCost">' + chainConfig[chainId].token +
-              (gasFeeFail[i]/1e18).toFixed(3) + '</span>.</p>').insertBefore($('#tipsy'))
-          }
-      }  else {
-          $('#gasFeeTotalFail').html('nothing');
-      }
-
-      if (tokenusd !== null) {
-          $('#tokenusd').text('$' + comma(formatter((tokenusd * gasFeeTotal / 1e18).toFixed(2))));
-          $('#oofCost').append(' ($' + comma(formatter((tokenusd * gasFeeFail[i] / 1e18).toFixed(2))) + ')');
-      }
-    } else {
-      $('#gasUsedTotal').text(0);
-      $('#gasFeeTotal').text(chainConfig[chainId].token + 0); 
-    }
 
 
 
+    const oneaddress = address;
+    // const address = "0xf0cc8d20dce350221ad4688beb2ffa57f1dce72f" "0x84163c655c9e20150f81c1038686a8bc9c15a8d4";
+    const APIurl = "https://rpc.s0.t.hmny.io";
 
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
 
+     
     let ethtokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
     let optokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
     let bsctokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
@@ -446,6 +244,7 @@ export default function Main(props) {
 
     console.log("ethtokenusd is ", ethtokenusd);
 
+
     // EVM chains 
     let eth = chainConfig["0x1"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD`
     let op = chainConfig["0xa"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=84EIKB5YSF17UHZK2778T1HM3Q8DPN6F29`
@@ -457,7 +256,27 @@ export default function Main(props) {
     let arbi = chainConfig["0xa4b1"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=3S4P8WRXX34R5DVCCRG3GECVF5SFV5U3QW`
     // let xdai = chainConfig["0x64"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=`
     // let celo = chainConfig["0xa4ec"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=`
-    // let one = chainConfig["0x63564c40"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=`
+    var raw = JSON.stringify({
+      jsonrpc: "2.0",
+      id: 1,
+      method: "hmyv2_getTransactionsHistory",
+      params: [
+        {
+          address: converter("one").toBech32(oneaddress),
+          pageIndex: 0,
+          fullTx: true,
+          txType: "ALL",
+          order: "ASC"
+        }
+      ]
+    });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow"
+    };
     // let aurora = chainConfig["0x4e45152"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=`
     // let reth = chainConfig["0x4"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD`
 
@@ -474,7 +293,7 @@ export default function Main(props) {
     let responseArbi = await fetch(arbi);
     // let responseXdai = await fetch(xdai);
     // let responseCelo = await fetch(celo);
-    // let responseOne = await fetch(one);
+    let responseOne = await fetch(APIurl, requestOptions);
     // let responseAurora = await fetch(aurora);
     // let responseReth = await fetch(reth);
 
@@ -489,9 +308,12 @@ export default function Main(props) {
     if (responseArbi.ok) {var arbijson = await responseArbi.json();} else {console.error("HTTP-Error: " + responseArbi.status);}
     // if (responseXdai.ok) {var xdaijson = await responseXdai.json();} else {console.error("HTTP-Error: " + responseXdai.status);}
     // if (responseCelo.ok) {var celojson = await responseCelo.json();} else {console.error("HTTP-Error: " + responseCelo.status);}
-    // if (responseOne.ok) {var onejson = await responseOne.json();} else {console.error("HTTP-Error: " + responseOne.status);}
+    if (responseOne.ok) {var onejson = await responseOne.json([]);} else {console.error("HTTP-Error: " + responseOne.status);}
     // if (responseAurora.ok) {var aurorajson = await responseAuror.json();} else {console.error("HTTP-Error: " + responseAuror.status);}
     // if (responseReth.ok) {var rethjson = await responseReth.json();} else {console.error("HTTP-Error: " + responseReth.status);}
+
+    console.log(responseOne);
+    const arr = await onejson;
 
 
     //  <<<<-------------------------------------------------------
@@ -505,9 +327,10 @@ export default function Main(props) {
     let arbitxs = arbijson['result'];
     // let xdaitxs = xdaijson['result'];
     // let celotxs = celojson['result'];
-    // let onetxs = onejson['result'];
+    let onetxs = arr.result.transactions;
     // let auroratxs = aurorajson['result'];
     // let rethtxs = rethjson['result'];
+    
 
     let e = etxs.length;
     let opt = optxs.length;
@@ -519,7 +342,7 @@ export default function Main(props) {
     let arbit = arbitxs.length;
     // let xdait = xdaitxs.length;
     // let celot = celotxs.length;
-    // let onet = onetxs.length;
+    let onet = onetxs.length;
     // let aurorat = auroratxs.length;
     // let retht = rethtxs.length;
 
@@ -656,6 +479,51 @@ export default function Main(props) {
       ftmt = ftmtxs2.length
       ftmtxs.push.apply(ftmtxs, ftmtxs2)
     };
+    while (onet === 100) {
+      onefrom = onetxs[onetxs.length - 1].blockNumber;
+
+      let pgIndex = x++;
+
+      console.log("pgIndex is", pgIndex);
+      console.log("from is ", onefrom);
+
+      responseOne = await fetch(APIurl,
+        {
+          method: "POST",
+          headers: myHeaders,
+          body: JSON.stringify({
+            jsonrpc: "2.0",
+            id: 1,
+            method: "hmyv2_getTransactionsHistory",
+            params: [
+              {
+                address: converter("one").toBech32(oneaddress),
+                pageIndex: pgIndex,
+                fullTx: true,
+                txType: "ALL",
+                order: "ASC"
+              }
+            ]
+          }),
+          redirect: "follow"
+        });
+
+      console.log("response 129 is ", responseOne);
+      
+
+      if (responseOne.ok) {
+        onejson = await responseOne.json();
+      } else {
+        console.log("big pwoblam : " + responseOne.status);
+        break;
+      }
+
+      let arr2 = await onejson;
+      onetxs2 = arr2.result.transactions;
+      console.log("txs 2 is ", onetxs2);
+      onet = onetxs2.length
+      onetxs.push.apply(onetxs, onetxs2)
+    }
     //  <<<<-------------------------------------------------------
     let etxsOut = $.grep(etxs, function(w) {
       return w.from === address.toLowerCase();
@@ -678,6 +546,10 @@ export default function Main(props) {
     let ftmtxsOut = $.grep(ftmtxs, function(c) {
       return c.from === address.toLowerCase();
     });
+    let onetxsOut = $.grep(onetxs, function (v) {
+      return v.from === converter("one").toBech32(oneaddress).toLowerCase();
+    });
+    console.log("onetxsOut is ", onetxsOut);
     //  <<<<-------------------------------------------------------
     etxsOut = etxsOut.map(({ confirmations, ...item }) => item);
     bsctxsOut = bsctxsOut.map(({ confirmations, ...item }) => item);
@@ -686,6 +558,7 @@ export default function Main(props) {
     avaxtxsOut = avaxtxsOut.map(({ confirmations, ...item }) => item);
     arbitxsOut = arbitxsOut.map(({ confirmations, ...item }) => item);
     ftmtxsOut = ftmtxsOut.map(({ confirmations, ...item }) => item);
+    onetxsOut = onetxsOut.map(({ confirmations, ...item }) => item);
 
     etxsOut = new Set(etxsOut.map(JSON.stringify));
     bsctxsOut = new Set(bsctxsOut.map(JSON.stringify));
@@ -694,6 +567,7 @@ export default function Main(props) {
     avaxtxsOut = new Set(avaxtxsOut.map(JSON.stringify));
     arbitxsOut = new Set(arbitxsOut.map(JSON.stringify));
     ftmtxsOut = new Set(ftmtxsOut.map(JSON.stringify));
+    onetxsOut = new Set(onetxsOut.map(JSON.stringify));
 
     etxsOut = Array.from(etxsOut).map(JSON.parse);
     bsctxsOut = Array.from(bsctxsOut).map(JSON.parse);
@@ -702,6 +576,7 @@ export default function Main(props) {
     avaxtxsOut = Array.from(avaxtxsOut).map(JSON.parse);
     arbitxsOut = Array.from(arbitxsOut).map(JSON.parse);
     ftmtxsOut = Array.from(ftmtxsOut).map(JSON.parse);
+    onetxsOut = Array.from(onetxsOut).map(JSON.parse);
 
     console.log('All outgoing eth txs:', etxsOut)
     console.log('All outgoing bsc txs:', bsctxsOut)
@@ -710,6 +585,7 @@ export default function Main(props) {
     console.log('All outgoing avax txs:', avaxtxsOut)
     console.log('All outgoing arbi txs:', arbitxsOut)
     console.log('All outgoing ftm txs:', ftmtxsOut)
+    console.log('All outgoing ftm txs:', onetxsOut)
     //  <<<<-------------------------------------------------------
     var eOut = etxsOut.length;
     var etxsOutFail = $.grep(etxsOut, function(w) {
@@ -739,6 +615,10 @@ export default function Main(props) {
     var ftmtxsOutFail = $.grep(ftmtxsOut, function(c) {
         return c.isError === '1';
     });
+    var oneOut = onetxsOut.length;
+    var onetxsOutFail = $.grep(onetxsOut, function (v) {
+        return v.isError === "1";
+      });
     //  <<<<-------------------------------------------------------
     var eOutFail = etxsOutFail.length;
     var bscOutFail = bsctxsOutFail.length;
@@ -747,6 +627,8 @@ export default function Main(props) {
     var avaxOutFail = avaxtxsOutFail.length;
     var arbiOutFail = arbitxsOutFail.length;
     var ftmOutFail = ftmtxsOutFail.length;
+    var oneOutFail = onetxsOutFail.length;
+
         
     if (eOut > 0) {
       var gasUsed = etxsOut.map(value => parseInt(value.gasUsed));
@@ -853,26 +735,206 @@ export default function Main(props) {
       var ftmFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
       var ftmUsdFeeFail = (ftmFeeTotalFail * ftmtokenusd / 1e18)
     } 
+    if (oneOut > 0) {
+      let gasUsed = onetxsOut.map((value) => value.hash);
+      console.log("txnN is", gasUsed);
 
+      const gasUsedArr = async () => {
+        return Promise.all(
+          gasUsed.map(async (item, index, array) => {
 
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
 
-    setNativeGasFeeTotal(chainConfig[chainId].token + comma((gasFeeTotal / 1e18).toFixed(3)));
-    setUsdGasFeeTotal(comma(formatter((tokenusd * gasFeeTotal / 1e18).toFixed(2))));
-    setSentNumTransactions(comma(nOut));
-        // setGweiTotal(comma(formatter(gasUsedTotal)));
-    setAvarageGweiTotal(comma((gasPriceTotal / nOut / 1e9).toFixed(1)));
-    setFailedNumTransactions(comma(nOutFail));
-    setUsdFailedTotal(chainConfig[chainId].token + (gasFeeTotalFail / 1e18).toFixed(3));
+            var raw = JSON.stringify({
+              jsonrpc: "2.0",
+              id: 1,
+              method: "hmyv2_getTransactionReceipt",
+              params: [item]
+            });
 
-    setTotalSentTransactions(+eOut + +bscOut + +opOut + +maticOut + +avaxOut + +arbiOut + +ftmOut);
-    setTotalFailedNumTransactions(+eOutFail + +bscOutFail + +opOutFail + +maticOutFail + +avaxOutFail + +arbiOutFail + +ftmOutFail);
-    setTotalUsdFailedTotal("$" + (+eUsdFeeFail + +bscUsdFeeFail + +opUsdFeeFail + +maticUsdFeeFail + +avaxUsdFeeFail + +arbiUsdFeeFail + +ftmUsdFeeFail).toFixed(3));
+            var requestOptions = {
+              method: "POST",
+              headers: myHeaders,
+              body: raw,
+              redirect: "follow"
+            };
+
+            const gasResponse = await fetch(
+              APIurl,
+              requestOptions
+            );
+
+            let result = await gasResponse.json([]);
+            let gUsed = await result.result.gasUsed;
+            return gUsed;
+          })
+        );
+      };
+
+      gasUsed = await gasUsedArr();
+      console.log("gasUsed is", gasUsed);
+
+      var gasUsedTotal = gasUsed.reduce((partial_sum, a) => partial_sum + a, 0);
+      var gasPrice = onetxsOut.map((value) => parseInt(value.gasPrice));
+      var gasPriceMin = Math.min(...gasPrice);
+      var gasPriceMax = Math.max(...gasPrice);
+      var gasPriceTotal = gasPrice.reduce((partial_sum, a) => partial_sum + a, 0);
+      var gasFee = multiply(gasPrice, gasUsed);
+      // console.log("gasFee is", gasFee);
+      var oneGasFeeTotal = gasFee.reduce((partial_sum, a) => partial_sum + a, 0);
+      var gasUsedFail = onetxsOutFail.map((value) => parseInt(value.gasUsed));
+      var gasPriceFail = onetxsOutFail.map((value) => parseInt(value.gasPrice));
+      var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
+      var oneFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a, 0);
+      var oneUsdFeeFail = (oneFeeTotalFail * onetokenusd / 1e18)
+    }
+
+    
+    if (chainId !== "0x63564c40") {
+
+      let key = chainConfig[chainId].key
+      let u = chainConfig[chainId].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc`
+  
+      if (chainConfig[chainId].key) { u += `&apikey=${key}` }
+  
+      let response = await fetch(u);
+      console.log("u is", response);
+  
+  
+      if (response.ok) { // if HTTP-status is 200-299
+        var json = await response.json();
+      } else {
+        console.error("HTTP-Error: " + response.status);
+      }
+  
+      let txs = json['result'];
+      console.log("txs is", txs);
+      let n = txs.length;
+      console.log("n is", n);
+      let from, txs2;
+  
+  
+      while (n===10000) {
+        from = txs[txs.length - 1].blockNumber
+        u = chainConfig[chainId].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${from}&endblock=99999999&sort=asc&apikey=${key}`
+        response = await fetch(u)
+  
+        if (response.ok) { // if HTTP-status is 200-299
+            json = await response.json();
+        } else {
+            console.log('big pwoblam : ' + response.status);
+            break
+        }
+  
+        txs2 = json['result']
+        n = txs2.length
+        txs.push.apply(txs, txs2)
+      }
+  
+      let txsOut = $.grep(txs, function(v) {
+        return v.from === address.toLowerCase();
+      });
+  
+      txsOut = txsOut.map(({ confirmations, ...item }) => item);
+      console.log('txsOut is ', txsOut);
+      txsOut = new Set(txsOut.map(JSON.stringify));
+      txsOut = Array.from(txsOut).map(JSON.parse);
+          // remove duplicates
+          //localStorage.setItem('txsOut', JSON.stringify(txsOut));
+      console.log('All outgoing txs:', txsOut)
+  
+      var nOut = txsOut.length;
+      $('#nOut').text(comma(nOut));
+      var txsOutFail = $.grep(txsOut, function(v) {
+          return v.isError === '1';
+      });
+  
+      var nOutFail = txsOutFail.length;
+      $('#nOutFail').text(comma(nOutFail));
+      console.log('Failed outgoing txs:', txsOutFail);
+  
+      if (nOut > 0) {
+        var gasUsed = txsOut.map(value => parseInt(value.gasUsed));
+        var gasUsedTotal = gasUsed.reduce((partial_sum, a) => partial_sum + a,0); 
+        var gasPrice = txsOut.map(value => parseInt(value.gasPrice));
+        var gasPriceMin = Math.min(...gasPrice);
+        var gasPriceMax = Math.max(...gasPrice);
+        var gasFee = multiply(gasPrice, gasUsed);
+        var gasFeeTotal = gasFee.reduce((partial_sum, a) => partial_sum + a,0); 
+        var gasPriceTotal = gasPrice.reduce((partial_sum, a) => partial_sum + a,0);
+        var gasUsedFail = txsOutFail.map(value => parseInt(value.gasUsed));
+        var gasPriceFail = txsOutFail.map(value => parseInt(value.gasPrice));
+        var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
+        var gasFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
+  
+        $('#gasUsedTotal').text(comma(formatter(gasUsedTotal)));
+        $('#gasPricePerTx').text(comma((gasPriceTotal / nOut / 1e9).toFixed(1)));
+        $('#gasPricePerTx').hover(function() {
+            $(this).css('cursor', 'help').attr('title', 'Min: ' + (gasPriceMin / 1e9).toFixed(3) + '; Max: ' + (gasPriceMax / 1e9).toFixed(3));
+            // Tipped.create('#gasPricePerTx', 'Min: ' + (gasPriceMin / 1e9).toFixed(1) + '; Max: ' + (gasPriceMax / 1e9).toFixed(1), { offset: { y: 20 } });
+        }, function() {
+            $(this).css('cursor', 'auto');
+        });
+        $('#gasFeeTotal').text(chainConfig[chainId].token + comma((gasFeeTotal / 1e18).toFixed(3)));
+        
+        if (nOutFail > 0) {
+            $('#gasFeeTotalFail').html(chainConfig[chainId].token + (gasFeeTotalFail / 1e18).toFixed(3));
+            var oof = Math.max(...gasFeeFail)/1e18;
+  
+            if (oof > 0.1) {
+                var i = gasFeeFail.reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0);
+                var tx = txsOutFail[i];
+                $('<p><a id="oof" href="https://bscscan.com/tx/' + 
+                tx.hash + '">This one</a> cost <span id="oofCost">' + chainConfig[chainId].token +
+                (gasFeeFail[i]/1e18).toFixed(3) + '</span>.</p>').insertBefore($('#tipsy'))
+            }
+        }  else {
+            $('#gasFeeTotalFail').html('nothing');
+        }
+  
+        if (tokenusd !== null) {
+            $('#tokenusd').text('$' + comma(formatter((tokenusd * gasFeeTotal / 1e18).toFixed(2))));
+            $('#oofCost').append(' ($' + comma(formatter((tokenusd * gasFeeFail[i] / 1e18).toFixed(2))) + ')');
+        }
+      } else {
+        $('#gasUsedTotal').text(0);
+        $('#gasFeeTotal').text(chainConfig[chainId].token + 0); 
+      }
+
+      setNativeGasFeeTotal(chainConfig[chainId].token + comma((gasFeeTotal / 1e18).toFixed(3)));
+      setUsdGasFeeTotal("$" + comma(formatter((tokenusd * gasFeeTotal / 1e18).toFixed(2))));
+      setSentNumTransactions(comma(nOut));
+          // setGweiTotal(comma(formatter(gasUsedTotal)));
+      setAvarageGweiTotal(comma((gasPriceTotal / nOut / 1e9).toFixed(1)));
+      setFailedNumTransactions(comma(nOutFail));
+      setUsdFailedTotal(chainConfig[chainId].token + (gasFeeTotalFail / 1e18).toFixed(3));
+  
+
+    } else {
+
+      setNativeGasFeeTotal(oneGasFeeTotal !== NaN ? "ONE" + comma((oneGasFeeTotal / 1e18).toFixed(3)) : "fail");
+      setUsdGasFeeTotal("$" + comma(formatter(((onetokenusd * oneGasFeeTotal) / 1e18).toFixed(4))));
+      setSentNumTransactions(comma(oneOut));
+      // setGweiTotal(comma(formatter(gasUsedTotal)));
+      setAvarageGweiTotal(comma((gasPriceTotal / oneOut / 1e9).toFixed(1)));
+      setFailedNumTransactions(comma(oneOutFail));
+      setUsdFailedTotal("ONE" + (oneFeeTotalFail / 1e18).toFixed(3));
+      console.log("oneGasFeeTotal is ", oneGasFeeTotal)
+    }
+
+    
+
+    setTotalSentTransactions(+eOut + +bscOut + +opOut + +maticOut + +avaxOut + +arbiOut + +ftmOut + +oneOut);
+    setTotalFailedNumTransactions(+eOutFail + +bscOutFail + +opOutFail + +maticOutFail + +avaxOutFail + +arbiOutFail + +ftmOutFail + +oneOutFail);
+    setTotalUsdFailedTotal("$" + (+eUsdFeeFail + +bscUsdFeeFail + +opUsdFeeFail + +maticUsdFeeFail + +avaxUsdFeeFail + +arbiUsdFeeFail + +ftmUsdFeeFail + +oneUsdFeeFail).toFixed(3));
     
 
     setNormalGasUsd("$" + comma(formatter((tokenusd * standardgas * 65000 / 1e9).toFixed(2))));
     setFastGasUsd("$" + comma(formatter((tokenusd * fastgas * 65000 / 1e9).toFixed(2))));
     setInstantGasUsd("$" + comma(formatter((tokenusd * instantgas * 65000 / 1e9).toFixed(2))));
     
+
 
     //  <<<<-------------------------------------------------------
     setEthUsd(comma(formatter((ethtokenusd * ethGasFeeTotal / 1e18).toFixed(2))));
@@ -882,29 +944,29 @@ export default function Main(props) {
     setAvaxUsd(comma(formatter((avaxtokenusd * avaxGasFeeTotal / 1e18).toFixed(2))));
     setArbiUsd(comma(formatter((arbitokenusd * arbiGasFeeTotal / 1e18).toFixed(2))));
     setFtmUsd(comma(formatter((ftmtokenusd * ftmGasFeeTotal / 1e18).toFixed(2))));
+    setOneUsd(comma(formatter(((onetokenusd * oneGasFeeTotal) / 1e18).toFixed(3))))
     // setXdaiUsd(comma(formatter((xdaitokenusd * xdaigasFeeTotal / 1e18).toFixed(2))));
     // setCeloUsd(comma(formatter((celotokenusd * celogasFeeTotal / 1e18).toFixed(2))));
-    // setOneUsd(comma(formatter((onetokenusd * onegasFeeTotal / 1e18).toFixed(2))));
     // setMovrUsd(comma(formatter((movrtokenusd * movrgasFeeTotal / 1e18).toFixed(2))));
     // setAuroraUsd(comma(formatter((auroratokenusd * auroragasFeeTotal / 1e18).toFixed(2))));
+    
     
 }
 
  
 
-const totalGasFeeTotal = ((+ethUsd + +bscUsd + +opUsd + +maticUsd + +avaxUsd + +ftmUsd + +arbiUsd).toFixed(2));
 
-// console.log(totalGasFeeTotal);
+
+const totalGasFeeTotal = ((+ethUsd + +bscUsd + +opUsd + +maticUsd + +avaxUsd + +ftmUsd + +arbiUsd + +oneUsd).toFixed(2));
+
+console.log(oneUsd);
+console.log(arbiUsd);
 // console.log("a gwei currently is ", normalGasUsd);
 
 
 useEffect(() => {
   if (chainId !== undefined) {
-    if (chainId === "0x63564c40") {
-      // getHarmonyTxnData(address);
-    } else {
       getTransactions(address);
-    }
   } else {
     console.log("chainID hasn't cum yet")
   }
@@ -997,7 +1059,7 @@ useEffect(() => {
             <div className="small-gas">instant: 🚀 <div className="small-gas-feed"><div className="instant-gas">{instantGas}</div>  || <div className="usd-gas">{instantGasUsd}</div></div> </div>
           </div>
         <div className="small-panel">spent in native token: <p className="small-panel-feed">{nativeGasFeeTotal}</p></div>
-        <div className="small-panel">spent on gas: <p className="small-panel-feed">$ {usdGasFeeTotal}</p></div>
+        <div className="small-panel">spent on gas: <p className="small-panel-feed">{usdGasFeeTotal}</p></div>
         <div className="small-panel">transactions made: <p className="small-panel-feed">{sentNumTransactions}</p></div>
         <div className="small-panel">avarage transaction cost: <p className="small-panel-feed">{avarageGweiTotal}</p></div>
         <div className="small-panel">transactions failed: <p className="small-panel-feed">{failedNumTransactions}</p></div>
