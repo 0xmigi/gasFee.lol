@@ -9,9 +9,11 @@ const LineChart = (props) => {
     const [lineData, setLineData] = useState({});
 
     const [points, setPoints] = useState({});
+    const [gasData, setGasData] = useState({});
 
     useEffect(() => {
         setPoints(props.setPoint);
+        setGasData(props.setGasData);
     
         return () => {
           // console.log("gas fee data recieved", props.setPoint);
@@ -19,11 +21,15 @@ const LineChart = (props) => {
       })
 
     const DATA_COUNT = [(points)];
+    // const DATA_POINTS = [(avaxGas)];
     const labels = [];
     for (let i = 0; i < DATA_COUNT; ++i) {
     labels.push(i.toString());
     }
-    const datapoints = [0, 20, 20, 60, 60, 120, 22, 180, 120, 125, 105, 110, 170];
+    const datapoints = (gasData);
+    for (let i = 0; i < datapoints; ++i) {
+      datapoints.push(i.toString());
+      }
 
     const data = () => {
         setLineData({
@@ -37,18 +43,19 @@ const LineChart = (props) => {
                 fill: false,
                 cubicInterpolationMode: 'monotone',
                 tension: 0.4
-                }, {
-                label: 'coming',
-                data: datapoints,
-                borderColor: '#6f3832',
-                fill: false,
-                tension: 0.8
-                }, {
-                label: 'soon',
-                data: datapoints,
-                borderColor: '#864838',
-                fill: false
                 }
+                // {
+                // label: 'coming',
+                // data: datapoints,
+                // borderColor: '#6f3832',
+                // fill: false,
+                // tension: 0.8
+                // }, {
+                // label: 'soon',
+                // data: datapoints,
+                // borderColor: '#864838',
+                // fill: false
+                // }
             ]
         })
     }
@@ -57,6 +64,8 @@ const LineChart = (props) => {
         data()
     }, [points])
     
+    // console.log("datapoints is ", datapoints);
+    // console.log("points is ", labels);
 
     return (
         <div >

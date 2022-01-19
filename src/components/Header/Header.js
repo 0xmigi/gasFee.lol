@@ -15,6 +15,7 @@ export default function Header(props) {
                         {props.icon}
                     </div>
                     { props.domain }
+                    <div className="open-beta">open beta</div>
               </span>
             </Link>
     );

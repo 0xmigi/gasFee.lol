@@ -186,7 +186,7 @@
   transition: height var(--speed) ease;
   font-size: 14px;
   font-weight: bold;
-  color: rgb(160, 160, 160);
+  color: #a0a0a0;
   z-index: 990;
 }
 

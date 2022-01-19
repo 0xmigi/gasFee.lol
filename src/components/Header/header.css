@@ -11,3 +11,14 @@
     padding: 5px;
     /* margin: 10px; */
   }
+
+  .open-beta {
+    font-size: 10px;
+    font-weight: 400;
+    font-family: 'Nunito', sans-serif;
+    color: #c9c9c9;
+    cursor: pointer;
+    display: flex;
+    padding: 0px 5px 5px 5px;
+    align-items: flex-end;
+  }

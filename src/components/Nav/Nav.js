@@ -79,6 +79,9 @@ export default function Nav(props) {
   const [defaultAccountXd, setDefaultAccountXd] = useState("xDefi");
   const [userBalance, setUserBalance] = useState(null);
 
+  let activeChain = useRef();
+  let newAddress;
+
 
 const chainSwitchEth = () => (
     <Link to="/ethereum">
@@ -289,17 +292,16 @@ const chainSwitchSol = () => (
 
   //Injected browser wallet connections EVM chains   <<------------------------------------------------------------->>
 
+  console.log(newChain);
+
   const Chains = () => {
     const { chainId, chain } = useChain();
-    let activeChain = useRef();
    
     return() => {
 
       try {
         if (typeof window.ethereum !== undefined && window.ethereum !== "") {
           window.ethereum.request({method: 'eth_requestAccounts'})
-
-          console.log(newChain);
 
           if (typeof window.ethereum !== newChain && window.ethereum !== "") {
             window.ethereum.request({
@@ -322,9 +324,10 @@ const chainSwitchSol = () => (
             
             
             console.log(newAccount);
-      
+
+            newAddress = newAccount      
             activeChain = newChain;
-            props.setRecentAccount({ activeChain, newAccount });
+            props.setRecentAccount({ activeChain, newAddress });
       
             console.log(chainId);
           }
@@ -551,22 +554,37 @@ const phantomConnect = () => (
 
 const PasteAddressConnect = () => {
   const [inputAddress, setInputAddress] = useState("paste address/ENS");
+  let newValue;
 
   let displayAddress = (event) => {
-    const newValue = event.target.value;
-    setInputAddress(newValue)
+    newValue = event.target.value;
+    console.log(event.target.value);
   };
 
+  let saveAddress = () => {
+    setInputAddress(newValue)
+
+    
+    activeChain = newChain;
+    newAddress = newValue;
+    props.setRecentAccount({ activeChain, newAddress });
+  }
+
+
   return (
-    <div>
-      <input 
-         className="paste-bar"
-         type="text"
-         placeholder={inputAddress}
-        //  autoFocus="autoFocus"
-        //  value={value}
-         onChange={displayAddress}
-      />
+    <div className="type-address">
+      <input
+        className="paste-bar"
+        type="text"
+        placeholder={inputAddress}
+        onChange={displayAddress}
+        />
+        <button
+        className="submit-button" 
+        onClick={saveAddress}
+        >
+          +
+      </button>
     </div>
   );
 };

@@ -56,7 +56,9 @@ const DoughnutChart = (props) => {
   const data = () => {
     setChartData({
       type: 'doughnut',
-      labels: ['Ethereum', 'BSC', 'Polygon', 'Optimism', 'Arbitrum', 'xDai', 'Avalanche', 'Fantom', 'Celo', 'Harmony One', 'Moonriver', 'Aurora', 'Cosmos', 'Solana', 'Luna', 'Cardano', 'Polkadot', 'Waves', 'Algorand'],
+      labels: ['Ethereum', 'BSC', 'Polygon', 'Optimism', 'Arbitrum', 'xDai', 'Avalanche', 'Fantom', 'Celo', 'Harmony One', 'Moonriver', 'Aurora', 'Cosmos', 'Solana', 'Luna', 'Cardano', 'Polkadot'
+              // , 'Waves', 'Algorand'
+              ],
       datasets: [{
         label: '$ gas spent',
         data: [(ethGasFees), (bscGasFees), (maticGasFees), (opGasFees), (arbiGasFees), (xdaiGasFees), (avaxGasFees), (ftmGasFees), (celoGasFees), (oneGasFees), (movrGasFees), (auroraGasFees), (rethGasFees), (atomGasFees), (solGasFees), (lunaGasFees), (adaGasFees)],

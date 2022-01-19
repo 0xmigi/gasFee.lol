@@ -98,9 +98,11 @@ export default function Main(props) {
   const [fastGas, setFastGas] = useState();
   const [instantGas, setInstantGas] = useState();
 
-  let address = props.recentAccount.newAccount;
+  let address = props.recentAccount.newAddress;
   let chainId = props.recentAccount.activeChain;
   let x = 0;
+
+  const [gasData, setGasData] = useState();
 
   const [ethUsd, setEthUsd] = useState(0);
   const [opUsd, setOpUsd] = useState(0);
@@ -549,7 +551,7 @@ export default function Main(props) {
     let onetxsOut = $.grep(onetxs, function (v) {
       return v.from === converter("one").toBech32(oneaddress).toLowerCase();
     });
-    console.log("onetxsOut is ", onetxsOut);
+
     //  <<<<-------------------------------------------------------
     etxsOut = etxsOut.map(({ confirmations, ...item }) => item);
     bsctxsOut = bsctxsOut.map(({ confirmations, ...item }) => item);
@@ -585,7 +587,7 @@ export default function Main(props) {
     console.log('All outgoing avax txs:', avaxtxsOut)
     console.log('All outgoing arbi txs:', arbitxsOut)
     console.log('All outgoing ftm txs:', ftmtxsOut)
-    console.log('All outgoing ftm txs:', onetxsOut)
+    console.log('All outgoing one txs:', onetxsOut)
     //  <<<<-------------------------------------------------------
     var eOut = etxsOut.length;
     var etxsOutFail = $.grep(etxsOut, function(w) {
@@ -856,6 +858,7 @@ export default function Main(props) {
   
       if (nOut > 0) {
         var gasUsed = txsOut.map(value => parseInt(value.gasUsed));
+        setGasData(gasUsed);
         var gasUsedTotal = gasUsed.reduce((partial_sum, a) => partial_sum + a,0); 
         var gasPrice = txsOut.map(value => parseInt(value.gasPrice));
         var gasPriceMin = Math.min(...gasPrice);
@@ -898,13 +901,12 @@ export default function Main(props) {
             $('#oofCost').append(' ($' + comma(formatter((tokenusd * gasFeeFail[i] / 1e18).toFixed(2))) + ')');
         }
       } else {
-        $('#gasUsedTotal').text(0);
-        $('#gasFeeTotal').text(chainConfig[chainId].token + 0); 
+        // set display value to nothing
       }
 
       setNativeGasFeeTotal(chainConfig[chainId].token + comma((gasFeeTotal / 1e18).toFixed(3)));
       setUsdGasFeeTotal("$" + comma(formatter((tokenusd * gasFeeTotal / 1e18).toFixed(2))));
-      setSentNumTransactions(comma(nOut));
+      setSentNumTransactions((nOut));
           // setGweiTotal(comma(formatter(gasUsedTotal)));
       setAvarageGweiTotal(comma((gasPriceTotal / nOut / 1e9).toFixed(1)));
       setFailedNumTransactions(comma(nOutFail));
@@ -913,9 +915,9 @@ export default function Main(props) {
 
     } else {
 
-      setNativeGasFeeTotal(oneGasFeeTotal !== NaN ? "ONE" + comma((oneGasFeeTotal / 1e18).toFixed(3)) : "fail");
+      setNativeGasFeeTotal("ONE" + comma((oneGasFeeTotal / 1e18).toFixed(3)));
       setUsdGasFeeTotal("$" + comma(formatter(((onetokenusd * oneGasFeeTotal) / 1e18).toFixed(4))));
-      setSentNumTransactions(comma(oneOut));
+      setSentNumTransactions((oneOut));
       // setGweiTotal(comma(formatter(gasUsedTotal)));
       setAvarageGweiTotal(comma((gasPriceTotal / oneOut / 1e9).toFixed(1)));
       setFailedNumTransactions(comma(oneOutFail));
@@ -937,14 +939,14 @@ export default function Main(props) {
 
 
     //  <<<<-------------------------------------------------------
-    setEthUsd(comma(formatter((ethtokenusd * ethGasFeeTotal / 1e18).toFixed(2))));
-    setBscUsd(comma(formatter((bsctokenusd * bscGasFeeTotal / 1e18).toFixed(2))));
-    setOpUsd(comma(formatter((optokenusd * opGasFeeTotal / 1e18).toFixed(2))));
-    setMaticUsd(comma(formatter((matictokenusd * maticGasFeeTotal / 1e18).toFixed(2))));
-    setAvaxUsd(comma(formatter((avaxtokenusd * avaxGasFeeTotal / 1e18).toFixed(2))));
-    setArbiUsd(comma(formatter((arbitokenusd * arbiGasFeeTotal / 1e18).toFixed(2))));
-    setFtmUsd(comma(formatter((ftmtokenusd * ftmGasFeeTotal / 1e18).toFixed(2))));
-    setOneUsd(comma(formatter(((onetokenusd * oneGasFeeTotal) / 1e18).toFixed(3))))
+    setEthUsd((formatter((ethtokenusd * ethGasFeeTotal / 1e18).toFixed(2))));
+    setBscUsd((formatter((bsctokenusd * bscGasFeeTotal / 1e18).toFixed(2))));
+    setOpUsd((formatter((optokenusd * opGasFeeTotal / 1e18).toFixed(2))));
+    setMaticUsd((formatter((matictokenusd * maticGasFeeTotal / 1e18).toFixed(2))));
+    setAvaxUsd((formatter((avaxtokenusd * avaxGasFeeTotal / 1e18).toFixed(2))));
+    setArbiUsd((formatter((arbitokenusd * arbiGasFeeTotal / 1e18).toFixed(2))));
+    setFtmUsd((formatter((ftmtokenusd * ftmGasFeeTotal / 1e18).toFixed(2))));
+    setOneUsd((formatter(((onetokenusd * oneGasFeeTotal) / 1e18).toFixed(3))))
     // setXdaiUsd(comma(formatter((xdaitokenusd * xdaigasFeeTotal / 1e18).toFixed(2))));
     // setCeloUsd(comma(formatter((celotokenusd * celogasFeeTotal / 1e18).toFixed(2))));
     // setMovrUsd(comma(formatter((movrtokenusd * movrgasFeeTotal / 1e18).toFixed(2))));
@@ -957,10 +959,10 @@ export default function Main(props) {
 
 
 
-const totalGasFeeTotal = ((+ethUsd + +bscUsd + +opUsd + +maticUsd + +avaxUsd + +ftmUsd + +arbiUsd + +oneUsd).toFixed(2));
+const totalGasFeeTotal = ("$" + (+ethUsd + +bscUsd + +opUsd + +maticUsd + +avaxUsd + +ftmUsd + +arbiUsd + +oneUsd).toFixed(2));
 
-console.log(oneUsd);
-console.log(arbiUsd);
+
+console.log("ethUsd is ", ethUsd);
 // console.log("a gwei currently is ", normalGasUsd);
 
 
@@ -1005,21 +1007,22 @@ useEffect(() => {
             </div>
           </div>
           <div className="usage-panels">
-            <div className="small-panel">paid fee token types: <p className="small-panel-feed">{nativeGasFeeTotal}</p></div>
-            <div className="small-panel">total spent on gas: <p className="small-panel-feed">$ {totalGasFeeTotal}</p></div>
+            <div className="small-panel">paid fee token types: <p className="small-panel-feed"></p></div>
+            <div className="small-panel">total spent on gas: <p className="small-panel-feed">{totalGasFeeTotal}</p></div>
             <div className="small-panel">total transactions made: <p className="small-panel-feed">{totalSentTransactions}</p></div>
             <div className="small-panel">avarage transaction cost: <p className="small-panel-feed">{avarageGweiTotal}</p></div>
             <div className="small-panel">total transactions failed: <p className="small-panel-feed">{totalFailedNumTransactions}</p></div>
             <div className="small-panel">failed cost: <p className="small-panel-feed">{totalUsdFailedTotal}</p></div>
             <div className="small-panel">gas prices: <p className="small-panel-feed"></p></div>
-            <div className="small-panel">most recent address: <p >{props.recentAccount.newAccount}</p> </div>
+            <div className="small-panel">most recent address: <p >{props.recentAccount.newAddress}</p> </div>
           </div>
       </div>
 
       <div className="right-panel">
         <div className="chainSpecific-page">
           <LineChart 
-            setPoint={sentNumTransactions}/>
+            setPoint={sentNumTransactions}
+            setGasData={gasData}/>
           <Routes>
           <Route path="/ethereum" element={<Ethereum />} />
           <Route path="/binance" element={<BSC />} />
