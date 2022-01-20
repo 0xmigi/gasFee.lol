@@ -293,25 +293,37 @@
 
 .footer-container {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-  /* position: absolute; */
   width: 100%;
   bottom: 0;
-  /* right: 20px; */
   flex-direction: row;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: row;
+}
+
+.zapper-logo {
+  width: 15px;
+  height: 15px;
+  padding: 5px;
+  cursor: pointer;
 }
 
 .twitter-logo {
   width: 15px;
   height: 15px;
   padding: 5px;
+  cursor: pointer;
 }
 
 .github-logo {
   width: 15px;
   height: 15px;
   padding: 5px;
+  cursor: pointer;
 }
 
 .footer-text {

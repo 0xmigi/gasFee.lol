@@ -248,14 +248,14 @@ export default function Main(props) {
 
 
     // EVM chains 
-    let eth = chainConfig["0x1"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD`
-    let op = chainConfig["0xa"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=84EIKB5YSF17UHZK2778T1HM3Q8DPN6F29`
-    let bsc = chainConfig["0x38"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=UWB7YUCVQXT7TGFK41TNJSJBIHDQ1JGU9D`
-    let matic = chainConfig["0x89"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=QDPWKASEUSSYTKX9ZVMSSQGX4PTCZGHNC8`
-    let avax = chainConfig["0xa86a"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=78X9UB1WYTRQQ9Q2G53TR6XQ8P662BDVVK`
-    let ftm = chainConfig["0xfa"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=B5UU3GDR3VJYVXFYT6RPK5RA6I8J5CV6B3`
-    let movr = chainConfig["0x505"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=54HHCHQRAEXBCTS2ZVTSJ991Q34MDB2CRD`
-    let arbi = chainConfig["0xa4b1"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=3S4P8WRXX34R5DVCCRG3GECVF5SFV5U3QW`
+    let eth = chainConfig["0x1"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${ETHERSCAN_KEY}`
+    let op = chainConfig["0xa"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${OPTISCAN_KEY}`
+    let bsc = chainConfig["0x38"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${BSCSCAN_KEY}`
+    let matic = chainConfig["0x89"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${POLYGONSCAN_KEY}`
+    let avax = chainConfig["0xa86a"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${SNOWTRACE_KEY}`
+    let ftm = chainConfig["0xfa"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${FTMSCAN_KEY}`
+    let movr = chainConfig["0x505"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${MOONSCAN_KEY}`
+    let arbi = chainConfig["0xa4b1"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${ARBISCAN_KEY}`
     // let xdai = chainConfig["0x64"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=`
     // let celo = chainConfig["0xa4ec"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=`
     var raw = JSON.stringify({
@@ -364,7 +364,7 @@ export default function Main(props) {
     //  <<<<-------------------------------------------------------
     while (e===10000) {
       efrom = etxs[etxs.length - 1].blockNumber
-      eth = chainConfig["0x1"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${efrom}&endblock=99999999&sort=asc&apikey=KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD`
+      eth = chainConfig["0x1"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${efrom}&endblock=99999999&sort=asc&apikey=${ETHERSCAN_KEY}`
       responseEth = await fetch(eth)
 
       if (responseEth.ok) { // if HTTP-status is 200-299
@@ -381,7 +381,7 @@ export default function Main(props) {
     };
     while (bsct===10000) {
       bscfrom = bsctxs[bsctxs.length - 1].blockNumber
-      bsc = chainConfig["0x38"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${bscfrom}&endblock=99999999&sort=asc&apikey=KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD`
+      bsc = chainConfig["0x38"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${bscfrom}&endblock=99999999&sort=asc&apikey=${BSCSCAN_KEY}`
       responseBsc = await fetch(bsc)
 
       if (responseBsc.ok) {
@@ -398,7 +398,7 @@ export default function Main(props) {
     };
     while (opt===10000) {
       opfrom = optxs[optxs.length - 1].blockNumber
-      op = chainConfig["0x38"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${opfrom}&endblock=99999999&sort=asc&apikey=KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD`
+      op = chainConfig["0x38"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${opfrom}&endblock=99999999&sort=asc&apikey=${OPTISCAN_KEY}`
       responseOp = await fetch(op)
 
       if (responseOp.ok) {
@@ -415,7 +415,7 @@ export default function Main(props) {
     };
     while (matict===10000) {
       maticfrom = matictxs[matictxs.length - 1].blockNumber
-      matic = chainConfig["0x38"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${maticfrom}&endblock=99999999&sort=asc&apikey=KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD`
+      matic = chainConfig["0x38"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${maticfrom}&endblock=99999999&sort=asc&apikey=${POLYGONSCAN_KEY}`
       responseOp = await fetch(matic)
 
       if (responseOp.ok) {
@@ -432,7 +432,7 @@ export default function Main(props) {
     };
     while (avaxt===10000) {
       avaxfrom = avaxtxs[avaxtxs.length - 1].blockNumber
-      avax = chainConfig["0x38"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${avaxfrom}&endblock=99999999&sort=asc&apikey=KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD`
+      avax = chainConfig["0x38"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${avaxfrom}&endblock=99999999&sort=asc&apikey=${SNOWTRACE_KEY}`
       responseAvax = await fetch(avax)
 
       if (responseAvax.ok) {
@@ -449,7 +449,7 @@ export default function Main(props) {
     };
     while (arbit===10000) {
       arbifrom = arbitxs[arbitxs.length - 1].blockNumber
-      arbi = chainConfig["0x38"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${arbifrom}&endblock=99999999&sort=asc&apikey=KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD`
+      arbi = chainConfig["0x38"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${arbifrom}&endblock=99999999&sort=asc&apikey=${ARBISCAN_KEY}`
       responseAvax = await fetch(arbi)
 
       if (responseArbi.ok) {
@@ -466,7 +466,7 @@ export default function Main(props) {
     };
     while (ftmt===10000) {
       ftmfrom = ftmtxs[ftmtxs.length - 1].blockNumber
-      ftm = chainConfig["0x38"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${ftmfrom}&endblock=99999999&sort=asc&apikey=KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD`
+      ftm = chainConfig["0x38"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${ftmfrom}&endblock=99999999&sort=asc&apikey=${FTMSCAN_KEY}`
       responseFtm = await fetch(ftm)
 
       if (responseFtm.ok) {
@@ -526,6 +526,23 @@ export default function Main(props) {
       onet = onetxs2.length
       onetxs.push.apply(onetxs, onetxs2)
     }
+    while (movrt===10000) {
+      movrfrom = movrtxs[movrtxs.length - 1].blockNumber
+      movr = chainConfig["0x505"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${ftmfrom}&endblock=99999999&sort=asc&apikey=${MOONSCAN_KEY}`
+      responseMovr = await fetch(movr)
+
+      if (responseMovr.ok) {
+        movrjson = await responseMovr.json();
+        console.log(movrjson)
+      } else {
+        console.log('big pwoblam : ' + responseMovr.status);
+        break
+      }
+
+      movrtxs2 = movrjson['result']
+      movrt = movrtxs2.length
+      movrtxs.push.apply(movrtxs, movrtxs2)
+    };
     //  <<<<-------------------------------------------------------
     let etxsOut = $.grep(etxs, function(w) {
       return w.from === address.toLowerCase();
@@ -548,8 +565,11 @@ export default function Main(props) {
     let ftmtxsOut = $.grep(ftmtxs, function(c) {
       return c.from === address.toLowerCase();
     });
-    let onetxsOut = $.grep(onetxs, function (v) {
-      return v.from === converter("one").toBech32(oneaddress).toLowerCase();
+    let onetxsOut = $.grep(onetxs, function (d) {
+      return d.from === converter("one").toBech32(oneaddress).toLowerCase();
+    });
+    let movrtxsOut = $.grep(movrtxs, function(e) {
+      return e.from === address.toLowerCase();
     });
 
     //  <<<<-------------------------------------------------------
@@ -561,6 +581,7 @@ export default function Main(props) {
     arbitxsOut = arbitxsOut.map(({ confirmations, ...item }) => item);
     ftmtxsOut = ftmtxsOut.map(({ confirmations, ...item }) => item);
     onetxsOut = onetxsOut.map(({ confirmations, ...item }) => item);
+    movrtxsOut = movrtxsOut.map(({ confirmations, ...item }) => item);
 
     etxsOut = new Set(etxsOut.map(JSON.stringify));
     bsctxsOut = new Set(bsctxsOut.map(JSON.stringify));
@@ -570,6 +591,7 @@ export default function Main(props) {
     arbitxsOut = new Set(arbitxsOut.map(JSON.stringify));
     ftmtxsOut = new Set(ftmtxsOut.map(JSON.stringify));
     onetxsOut = new Set(onetxsOut.map(JSON.stringify));
+    movrtxsOut = new Set(movrtxsOut.map(JSON.stringify));
 
     etxsOut = Array.from(etxsOut).map(JSON.parse);
     bsctxsOut = Array.from(bsctxsOut).map(JSON.parse);
@@ -579,6 +601,7 @@ export default function Main(props) {
     arbitxsOut = Array.from(arbitxsOut).map(JSON.parse);
     ftmtxsOut = Array.from(ftmtxsOut).map(JSON.parse);
     onetxsOut = Array.from(onetxsOut).map(JSON.parse);
+    movrtxsOut = Array.from(movrtxsOut).map(JSON.parse);
 
     console.log('All outgoing eth txs:', etxsOut)
     console.log('All outgoing bsc txs:', bsctxsOut)
@@ -588,6 +611,7 @@ export default function Main(props) {
     console.log('All outgoing arbi txs:', arbitxsOut)
     console.log('All outgoing ftm txs:', ftmtxsOut)
     console.log('All outgoing one txs:', onetxsOut)
+    console.log('All outgoing movr txs:', movrtxsOut)
     //  <<<<-------------------------------------------------------
     var eOut = etxsOut.length;
     var etxsOutFail = $.grep(etxsOut, function(w) {
@@ -618,8 +642,12 @@ export default function Main(props) {
         return c.isError === '1';
     });
     var oneOut = onetxsOut.length;
-    var onetxsOutFail = $.grep(onetxsOut, function (v) {
-        return v.isError === "1";
+    var onetxsOutFail = $.grep(onetxsOut, function (d) {
+        return d.isError === "1";
+      });
+    var movrOut = movrtxsOut.length;
+    var movrtxsOutFail = $.grep(movrtxsOut, function (e) {
+        return e.isError === "1";
       });
     //  <<<<-------------------------------------------------------
     var eOutFail = etxsOutFail.length;
@@ -630,6 +658,7 @@ export default function Main(props) {
     var arbiOutFail = arbitxsOutFail.length;
     var ftmOutFail = ftmtxsOutFail.length;
     var oneOutFail = onetxsOutFail.length;
+    var movrOutFail = movrtxsOutFail.length;
 
         
     if (eOut > 0) {
@@ -646,7 +675,11 @@ export default function Main(props) {
       var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
       var eFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
       var eUsdFeeFail = (eFeeTotalFail * ethtokenusd / 1e18)
-    } 
+    } else {
+      eOut = 0;
+      eOutFail = 0;
+      eUsdFeeFail = 0;
+    }; 
     if (bscOut > 0) {
       var gasUsed = bsctxsOut.map(value => parseInt(value.gasUsed));
       var gasUsedTotal = gasUsed.reduce((partial_sum, a) => partial_sum + a,0); 
@@ -661,7 +694,11 @@ export default function Main(props) {
       var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
       var bscFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
       var bscUsdFeeFail = (bscFeeTotalFail * bsctokenusd / 1e18)
-    } 
+    } else {
+      bscOut = 0;
+      bscOutFail = 0;
+      bscUsdFeeFail = 0;
+    };
     if (opOut > 0) {
       var gasUsed = optxsOut.map(value => parseInt(value.gasUsed));
       var gasUsedTotal = gasUsed.reduce((partial_sum, a) => partial_sum + a,0); 
@@ -676,7 +713,11 @@ export default function Main(props) {
       var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
       var opFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
       var opUsdFeeFail = (opFeeTotalFail * optokenusd / 1e18)
-    } 
+    } else {
+      opOut = 0;
+      opOutFail = 0;
+      opUsdFeeFail = 0;
+    };
     if (maticOut > 0) {
       var gasUsed = matictxsOut.map(value => parseInt(value.gasUsed));
       var gasUsedTotal = gasUsed.reduce((partial_sum, a) => partial_sum + a,0); 
@@ -691,7 +732,11 @@ export default function Main(props) {
       var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
       var maticFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
       var maticUsdFeeFail = (maticFeeTotalFail * matictokenusd / 1e18)
-    } 
+    } else {
+      maticOut = 0;
+      maticOutFail = 0;
+      maticUsdFeeFail = 0;
+    }
     if (avaxOut > 0) {
       var gasUsed = avaxtxsOut.map(value => parseInt(value.gasUsed));
       var gasUsedTotal = gasUsed.reduce((partial_sum, a) => partial_sum + a,0); 
@@ -706,7 +751,11 @@ export default function Main(props) {
       var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
       var avaxFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
       var avaxUsdFeeFail = (avaxFeeTotalFail * avaxtokenusd / 1e18)
-    } 
+    } else {
+      avaxOut = 0;
+      avaxOutFail = 0;
+      avaxUsdFeeFail = 0;
+    };
     if (arbiOut > 0) {
       var gasUsed = arbitxsOut.map(value => parseInt(value.gasUsed));
       var gasUsedTotal = gasUsed.reduce((partial_sum, a) => partial_sum + a,0); 
@@ -721,7 +770,11 @@ export default function Main(props) {
       var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
       var arbiFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
       var arbiUsdFeeFail = (arbiFeeTotalFail * arbitokenusd / 1e18)
-    } 
+    } else {
+      arbiOut = 0;
+      arbiOutFail = 0;
+      arbiUsdFeeFail = 0;
+    };
     if (ftmOut > 0) {
       var gasUsed = ftmtxsOut.map(value => parseInt(value.gasUsed));
       var gasUsedTotal = gasUsed.reduce((partial_sum, a) => partial_sum + a,0); 
@@ -736,7 +789,11 @@ export default function Main(props) {
       var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
       var ftmFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
       var ftmUsdFeeFail = (ftmFeeTotalFail * ftmtokenusd / 1e18)
-    } 
+    } else {
+      ftmOut = 0;
+      ftmOutFail = 0;
+      ftmUsdFeeFail = 0;
+    };
     if (oneOut > 0) {
       let gasUsed = onetxsOut.map((value) => value.hash);
       console.log("txnN is", gasUsed);
@@ -783,16 +840,38 @@ export default function Main(props) {
       var gasPriceMax = Math.max(...gasPrice);
       var gasPriceTotal = gasPrice.reduce((partial_sum, a) => partial_sum + a, 0);
       var gasFee = multiply(gasPrice, gasUsed);
-      // console.log("gasFee is", gasFee);
       var oneGasFeeTotal = gasFee.reduce((partial_sum, a) => partial_sum + a, 0);
       var gasUsedFail = onetxsOutFail.map((value) => parseInt(value.gasUsed));
       var gasPriceFail = onetxsOutFail.map((value) => parseInt(value.gasPrice));
       var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
       var oneFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a, 0);
       var oneUsdFeeFail = (oneFeeTotalFail * onetokenusd / 1e18)
-    }
+    } else {
+      oneOut = 0;
+      oneOutFail = 0;
+      oneUsdFeeFail = 0;
+    };
+    if (movrOut > 0) {
+      var gasUsed = movrtxsOut.map(value => parseInt(value.gasUsed));
+      var gasUsedTotal = gasUsed.reduce((partial_sum, a) => partial_sum + a,0); 
+      var gasPrice = movrtxsOut.map(value => parseInt(value.gasPrice));
+      var gasPriceMin = Math.min(...gasPrice);
+      var gasPriceMax = Math.max(...gasPrice);
+      var gasFee = multiply(gasPrice, gasUsed);
+      var movrGasFeeTotal = gasFee.reduce((partial_sum, a) => partial_sum + a,0); 
 
-    
+      var gasUsedFail = movrtxsOutFail.map(value => parseInt(value.gasUsed));
+      var gasPriceFail = movrtxsOutFail.map(value => parseInt(value.gasPrice));
+      var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
+      var movrFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
+      var movrUsdFeeFail = (movrFeeTotalFail * movrtokenusd / 1e18);
+    } else {
+      movrOut = 0;
+      movrOutFail = 0;
+      movrUsdFeeFail = 0;
+    };
+
+
     if (chainId !== "0x63564c40") {
 
       let key = chainConfig[chainId].key
@@ -811,9 +890,7 @@ export default function Main(props) {
       }
   
       let txs = json['result'];
-      console.log("txs is", txs);
       let n = txs.length;
-      console.log("n is", n);
       let from, txs2;
   
   
@@ -839,22 +916,15 @@ export default function Main(props) {
       });
   
       txsOut = txsOut.map(({ confirmations, ...item }) => item);
-      console.log('txsOut is ', txsOut);
       txsOut = new Set(txsOut.map(JSON.stringify));
       txsOut = Array.from(txsOut).map(JSON.parse);
-          // remove duplicates
-          //localStorage.setItem('txsOut', JSON.stringify(txsOut));
-      console.log('All outgoing txs:', txsOut)
   
       var nOut = txsOut.length;
-      $('#nOut').text(comma(nOut));
       var txsOutFail = $.grep(txsOut, function(v) {
           return v.isError === '1';
       });
   
       var nOutFail = txsOutFail.length;
-      $('#nOutFail').text(comma(nOutFail));
-      console.log('Failed outgoing txs:', txsOutFail);
   
       if (nOut > 0) {
         var gasUsed = txsOut.map(value => parseInt(value.gasUsed));
@@ -871,15 +941,6 @@ export default function Main(props) {
         var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
         var gasFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
   
-        $('#gasUsedTotal').text(comma(formatter(gasUsedTotal)));
-        $('#gasPricePerTx').text(comma((gasPriceTotal / nOut / 1e9).toFixed(1)));
-        $('#gasPricePerTx').hover(function() {
-            $(this).css('cursor', 'help').attr('title', 'Min: ' + (gasPriceMin / 1e9).toFixed(3) + '; Max: ' + (gasPriceMax / 1e9).toFixed(3));
-            // Tipped.create('#gasPricePerTx', 'Min: ' + (gasPriceMin / 1e9).toFixed(1) + '; Max: ' + (gasPriceMax / 1e9).toFixed(1), { offset: { y: 20 } });
-        }, function() {
-            $(this).css('cursor', 'auto');
-        });
-        $('#gasFeeTotal').text(chainConfig[chainId].token + comma((gasFeeTotal / 1e18).toFixed(3)));
         
         if (nOutFail > 0) {
             $('#gasFeeTotalFail').html(chainConfig[chainId].token + (gasFeeTotalFail / 1e18).toFixed(3));
@@ -927,9 +988,9 @@ export default function Main(props) {
 
     
 
-    setTotalSentTransactions(+eOut + +bscOut + +opOut + +maticOut + +avaxOut + +arbiOut + +ftmOut + +oneOut);
-    setTotalFailedNumTransactions(+eOutFail + +bscOutFail + +opOutFail + +maticOutFail + +avaxOutFail + +arbiOutFail + +ftmOutFail + +oneOutFail);
-    setTotalUsdFailedTotal("$" + (+eUsdFeeFail + +bscUsdFeeFail + +opUsdFeeFail + +maticUsdFeeFail + +avaxUsdFeeFail + +arbiUsdFeeFail + +ftmUsdFeeFail + +oneUsdFeeFail).toFixed(3));
+    setTotalSentTransactions(+eOut + +bscOut + +opOut + +maticOut + +avaxOut + +arbiOut + +ftmOut + +oneOut + +movrOut);
+    setTotalFailedNumTransactions(+eOutFail + +bscOutFail + +opOutFail + +maticOutFail + +avaxOutFail + +arbiOutFail + +ftmOutFail + +oneOutFail + +movrOutFail);
+    setTotalUsdFailedTotal("$" + (+eUsdFeeFail + +bscUsdFeeFail + +opUsdFeeFail + +maticUsdFeeFail + +avaxUsdFeeFail + +arbiUsdFeeFail + +ftmUsdFeeFail + +oneUsdFeeFail + +movrUsdFeeFail).toFixed(3));
     
 
     setNormalGasUsd("$" + comma(formatter((tokenusd * standardgas * 65000 / 1e9).toFixed(2))));
@@ -939,30 +1000,27 @@ export default function Main(props) {
 
 
     //  <<<<-------------------------------------------------------
-    setEthUsd((formatter((ethtokenusd * ethGasFeeTotal / 1e18).toFixed(2))));
-    setBscUsd((formatter((bsctokenusd * bscGasFeeTotal / 1e18).toFixed(2))));
-    setOpUsd((formatter((optokenusd * opGasFeeTotal / 1e18).toFixed(2))));
-    setMaticUsd((formatter((matictokenusd * maticGasFeeTotal / 1e18).toFixed(2))));
-    setAvaxUsd((formatter((avaxtokenusd * avaxGasFeeTotal / 1e18).toFixed(2))));
-    setArbiUsd((formatter((arbitokenusd * arbiGasFeeTotal / 1e18).toFixed(2))));
-    setFtmUsd((formatter((ftmtokenusd * ftmGasFeeTotal / 1e18).toFixed(2))));
-    setOneUsd((formatter(((onetokenusd * oneGasFeeTotal) / 1e18).toFixed(3))))
+    setEthUsd(ethGasFeeTotal === undefined ? 0 : (formatter((ethtokenusd * ethGasFeeTotal / 1e18).toFixed(2))));
+    setBscUsd(bscGasFeeTotal === undefined ? 0 : (formatter((bsctokenusd * bscGasFeeTotal / 1e18).toFixed(2))));
+    setOpUsd(opGasFeeTotal === undefined ? 0 : (formatter((optokenusd * opGasFeeTotal / 1e18).toFixed(2))));
+    setMaticUsd(maticGasFeeTotal === undefined ? 0 : (formatter((matictokenusd * maticGasFeeTotal / 1e18).toFixed(2))));
+    setAvaxUsd(avaxGasFeeTotal === undefined ? 0 : (formatter((avaxtokenusd * avaxGasFeeTotal / 1e18).toFixed(2))));
+    setArbiUsd(arbiGasFeeTotal === undefined ? 0 : (formatter((arbitokenusd * arbiGasFeeTotal / 1e18).toFixed(2))));
+    setFtmUsd(ftmGasFeeTotal === undefined ? 0 : (formatter((ftmtokenusd * ftmGasFeeTotal / 1e18).toFixed(2))));
+    setOneUsd(oneGasFeeTotal === undefined ? 0 : (formatter(((onetokenusd * oneGasFeeTotal) / 1e18).toFixed(3))))
     // setXdaiUsd(comma(formatter((xdaitokenusd * xdaigasFeeTotal / 1e18).toFixed(2))));
     // setCeloUsd(comma(formatter((celotokenusd * celogasFeeTotal / 1e18).toFixed(2))));
-    // setMovrUsd(comma(formatter((movrtokenusd * movrgasFeeTotal / 1e18).toFixed(2))));
+    setMovrUsd(movrGasFeeTotal === undefined ? 0 : (formatter((movrtokenusd * movrGasFeeTotal / 1e18).toFixed(2))));
     // setAuroraUsd(comma(formatter((auroratokenusd * auroragasFeeTotal / 1e18).toFixed(2))));
     
     
 }
 
- 
+
+const totalGasFeeTotal = ("$" + (+ethUsd + +bscUsd + +opUsd + +maticUsd + +avaxUsd + +ftmUsd + +arbiUsd + +oneUsd + +movrUsd).toFixed(2));
 
 
-
-const totalGasFeeTotal = ("$" + (+ethUsd + +bscUsd + +opUsd + +maticUsd + +avaxUsd + +ftmUsd + +arbiUsd + +oneUsd).toFixed(2));
-
-
-console.log("ethUsd is ", ethUsd);
+// console.log("ethUsd is ", ethUsd);
 // console.log("a gwei currently is ", normalGasUsd);
 
 

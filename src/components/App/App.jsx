@@ -4,12 +4,10 @@ import './App.css';
 
 import { ReactComponent as CaretIcon } from '../../assets/icons/caret.svg';
 import { ReactComponent as McPepeIcon } from '../../assets/icons/mcPepeSmol.svg';
-import { ReactComponent as ZapIcon } from '../../assets/icons/powered_by_zap_purple.svg';
-import twitterLogo from '../../assets/twitter-logo.svg';
-import githubLogo from '../../assets/github-mark.svg';
 import mcPepe from '../../assets/icons/mcPepeSmol.png';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
+import Footer from '../Footer/Footer';
 
 
 
@@ -39,9 +37,6 @@ let useClickOutside = (handler) => {
 export default function App(props) {
   // Constants
 
-
-  const TWITTER_LINK = `https://twitter.com/0xmigi`;
-  const GITHUB_LINK = `https://github.com/0xmigi`;
 
   const name = 'gasFees';
   const [open, setOpen] = useState(false);
@@ -119,20 +114,7 @@ export default function App(props) {
          <main className="content">
              <Main recentAccount={recentAccount} />
          </main>
-         <div className="footer-container">
-              <div
-               className="footer-text"
-               href={GITHUB_LINK}
-               target={githubLogo}
-               rel="noreferrer"
-               >{<img alt="Github Logo" className="github-logo" src={githubLogo} />}</div>
-              <div
-               className="footer-text"
-               href={TWITTER_LINK}
-               target={twitterLogo}
-               rel="noreferrer"
-               >{<img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />}</div>
-           </div>
+         <Footer />
     </div>
    </div>
   );
