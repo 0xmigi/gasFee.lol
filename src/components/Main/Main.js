@@ -31,6 +31,7 @@ import Sub from '../Sub/Sub';
 import Sub1 from '../Sub/Sub1';
 import LineChart from '../Charts/LineChart';
 import { chain } from 'lodash';
+import { ETH_ICON, BNB_ICON, OP_ICON, MATIC_ICON, AVAX_ICON, ARBI_ICON, FTM_ICON, ONE_ICON, MOVR_ICON} from '../App/constants';
 
 export const ETHERSCAN_KEY = "KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD";
 export const OPTISCAN_KEY = "84EIKB5YSF17UHZK2778T1HM3Q8DPN6F29";
@@ -85,6 +86,7 @@ export default function Main(props) {
   const [avarageGweiTotal, setAvarageGweiTotal] = useState();
   const [failedNumTransactions, setFailedNumTransactions] = useState();
   const [usdFailedTotal, setUsdFailedTotal] = useState();
+  const [paidTokenTypes, setPaidTokenTypes] = useState();
 
   const [totalSentTransactions, setTotalSentTransactions] = useState();
   const [totalFailedNumTransactions, setTotalFailedNumTransactions] = useState();
@@ -660,6 +662,16 @@ export default function Main(props) {
     var oneOutFail = onetxsOutFail.length;
     var movrOutFail = movrtxsOutFail.length;
 
+    var ethToken;
+    var bnbToken;
+    var opToken;
+    var maticToken;
+    var arbiToken;
+    var avaxToken;
+    var ftmToken;
+    var oneToken;
+    var movrToken;
+
         
     if (eOut > 0) {
       var gasUsed = etxsOut.map(value => parseInt(value.gasUsed));
@@ -674,7 +686,8 @@ export default function Main(props) {
       var gasPriceFail = etxsOutFail.map(value => parseInt(value.gasPrice));
       var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
       var eFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
-      var eUsdFeeFail = (eFeeTotalFail * ethtokenusd / 1e18)
+      var eUsdFeeFail = (eFeeTotalFail * ethtokenusd / 1e18);
+      ethToken = <div className="token-types"><ETH_ICON height={"20px"} width={"20px"}/></div>
     } else {
       eOut = 0;
       eOutFail = 0;
@@ -694,6 +707,7 @@ export default function Main(props) {
       var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
       var bscFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
       var bscUsdFeeFail = (bscFeeTotalFail * bsctokenusd / 1e18)
+      bnbToken = <div className="token-types"><BNB_ICON height={"20px"} width={"20px"}/></div>
     } else {
       bscOut = 0;
       bscOutFail = 0;
@@ -713,6 +727,7 @@ export default function Main(props) {
       var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
       var opFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
       var opUsdFeeFail = (opFeeTotalFail * optokenusd / 1e18)
+      opToken = <div className="token-types"><OP_ICON height={"20px"} width={"20px"}/></div>
     } else {
       opOut = 0;
       opOutFail = 0;
@@ -732,6 +747,7 @@ export default function Main(props) {
       var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
       var maticFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
       var maticUsdFeeFail = (maticFeeTotalFail * matictokenusd / 1e18)
+      maticToken = <div className="token-types"><MATIC_ICON height={"20px"} width={"20px"}/></div>
     } else {
       maticOut = 0;
       maticOutFail = 0;
@@ -751,6 +767,7 @@ export default function Main(props) {
       var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
       var avaxFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
       var avaxUsdFeeFail = (avaxFeeTotalFail * avaxtokenusd / 1e18)
+      avaxToken = <div className="token-types"><AVAX_ICON height={"20px"} width={"20px"}/></div>
     } else {
       avaxOut = 0;
       avaxOutFail = 0;
@@ -770,6 +787,7 @@ export default function Main(props) {
       var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
       var arbiFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
       var arbiUsdFeeFail = (arbiFeeTotalFail * arbitokenusd / 1e18)
+      arbiToken = <div className="token-types"><ARBI_ICON height={"20px"} width={"20px"}/></div>
     } else {
       arbiOut = 0;
       arbiOutFail = 0;
@@ -788,7 +806,8 @@ export default function Main(props) {
       var gasPriceFail = ftmtxsOutFail.map(value => parseInt(value.gasPrice));
       var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
       var ftmFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
-      var ftmUsdFeeFail = (ftmFeeTotalFail * ftmtokenusd / 1e18)
+      var ftmUsdFeeFail = (ftmFeeTotalFail * ftmtokenusd / 1e18);
+      ftmToken = <div className="token-types"><FTM_ICON height={"20px"} width={"20px"}/></div>
     } else {
       ftmOut = 0;
       ftmOutFail = 0;
@@ -846,6 +865,7 @@ export default function Main(props) {
       var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
       var oneFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a, 0);
       var oneUsdFeeFail = (oneFeeTotalFail * onetokenusd / 1e18)
+      oneToken = <div className="token-types"><ONE_ICON height={"20px"} width={"20px"}/></div>
     } else {
       oneOut = 0;
       oneOutFail = 0;
@@ -865,6 +885,8 @@ export default function Main(props) {
       var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
       var movrFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
       var movrUsdFeeFail = (movrFeeTotalFail * movrtokenusd / 1e18);
+      movrToken = <div className="token-types"><MOVR_ICON height={"20px"} width={"20px"}/></div>
+
     } else {
       movrOut = 0;
       movrOutFail = 0;
@@ -991,7 +1013,13 @@ export default function Main(props) {
     setTotalSentTransactions(+eOut + +bscOut + +opOut + +maticOut + +avaxOut + +arbiOut + +ftmOut + +oneOut + +movrOut);
     setTotalFailedNumTransactions(+eOutFail + +bscOutFail + +opOutFail + +maticOutFail + +avaxOutFail + +arbiOutFail + +ftmOutFail + +oneOutFail + +movrOutFail);
     setTotalUsdFailedTotal("$" + (+eUsdFeeFail + +bscUsdFeeFail + +opUsdFeeFail + +maticUsdFeeFail + +avaxUsdFeeFail + +arbiUsdFeeFail + +ftmUsdFeeFail + +oneUsdFeeFail + +movrUsdFeeFail).toFixed(3));
-    
+    // const tokens = [ethToken, bnbToken,  opToken, maticToken, avaxToken, arbiToken, ftmToken, oneToken, movrToken];
+    // const listItems = tokens.map((token) => 
+    //   <li key={token.toArray()} className="fee-tokens">
+    //     {token}
+    //   </li>
+    // );
+    setPaidTokenTypes(<li className="fee-tokens">{[ethToken, bnbToken,  opToken, maticToken, avaxToken, arbiToken, ftmToken, oneToken, movrToken]}</li>);
 
     setNormalGasUsd("$" + comma(formatter((tokenusd * standardgas * 65000 / 1e9).toFixed(2))));
     setFastGasUsd("$" + comma(formatter((tokenusd * fastgas * 65000 / 1e9).toFixed(2))));
@@ -1000,7 +1028,7 @@ export default function Main(props) {
 
 
     //  <<<<-------------------------------------------------------
-    setEthUsd(ethGasFeeTotal === undefined ? 0 : (formatter((ethtokenusd * ethGasFeeTotal / 1e18).toFixed(2))));
+    setEthUsd(ethGasFeeTotal === undefined ? 0 : ((ethtokenusd * ethGasFeeTotal / 1e18).toFixed(2)));
     setBscUsd(bscGasFeeTotal === undefined ? 0 : (formatter((bsctokenusd * bscGasFeeTotal / 1e18).toFixed(2))));
     setOpUsd(opGasFeeTotal === undefined ? 0 : (formatter((optokenusd * opGasFeeTotal / 1e18).toFixed(2))));
     setMaticUsd(maticGasFeeTotal === undefined ? 0 : (formatter((matictokenusd * maticGasFeeTotal / 1e18).toFixed(2))));
@@ -1013,15 +1041,10 @@ export default function Main(props) {
     setMovrUsd(movrGasFeeTotal === undefined ? 0 : (formatter((movrtokenusd * movrGasFeeTotal / 1e18).toFixed(2))));
     // setAuroraUsd(comma(formatter((auroratokenusd * auroragasFeeTotal / 1e18).toFixed(2))));
     
-    
 }
 
 
-const totalGasFeeTotal = ("$" + (+ethUsd + +bscUsd + +opUsd + +maticUsd + +avaxUsd + +ftmUsd + +arbiUsd + +oneUsd + +movrUsd).toFixed(2));
-
-
-// console.log("ethUsd is ", ethUsd);
-// console.log("a gwei currently is ", normalGasUsd);
+const totalGasFeeTotal = (+ethUsd + +bscUsd + +opUsd + +maticUsd + +avaxUsd + +ftmUsd + +arbiUsd + +oneUsd + +movrUsd).toFixed(2);
 
 
 useEffect(() => {
@@ -1065,8 +1088,8 @@ useEffect(() => {
             </div>
           </div>
           <div className="usage-panels">
-            <div className="small-panel">paid fee token types: <p className="small-panel-feed"></p></div>
-            <div className="small-panel">total spent on gas: <p className="small-panel-feed">{totalGasFeeTotal}</p></div>
+            <div className="small-panel">paid fee token types: <p className="small-panel-feed"></p>{paidTokenTypes}</div>
+            <div className="small-panel">total spent on gas: <p className="small-panel-feed">{("$" + comma(totalGasFeeTotal))}</p></div>
             <div className="small-panel">total transactions made: <p className="small-panel-feed">{totalSentTransactions}</p></div>
             <div className="small-panel">avarage transaction cost: <p className="small-panel-feed">{avarageGweiTotal}</p></div>
             <div className="small-panel">total transactions failed: <p className="small-panel-feed">{totalFailedNumTransactions}</p></div>
@@ -1102,13 +1125,10 @@ useEffect(() => {
           <Route path="/moonriver" element={<Moonriver />} />
           <Route path="/aurora" element={<Aurora />} />
           <Route 
-              path="/home" 
+              path="/" 
               exact
               element={
-              <Home time={new Date() - 50000000} >
-                <Sub />
-                <Sub1 />
-              </Home>
+              <Home />
               }
           />
           </Routes>

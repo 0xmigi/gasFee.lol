@@ -11,53 +11,7 @@ import '../App/App.css';
 import { ethers } from 'ethers';
 import { walletlink } from '../Connections/Button';
 import { useChain } from "react-moralis";
-
-
-
-
-// chain icons
-import { ReactComponent as CogIcon } from '../../assets/icons/cog.svg';
-import { ReactComponent as ChevronIcon } from '../../assets/icons/chevron.svg';
-import { ReactComponent as ArrowIcon } from '../../assets/icons/arrow.svg';
-import { ReactComponent as BoltIcon } from '../../assets/icons/bolt.svg';
-import { ReactComponent as LunaIcon } from '../../assets/icons/terra.4c802748.svg';
-import { ReactComponent as DotIcon } from '../../assets/icons/dot.svg';
-import { ReactComponent as WaveIcon } from '../../assets/icons/waves-waves-logo.svg';
-import { ReactComponent as AvaxIcon } from '../../assets/icons/avax.svg';
-import { ReactComponent as FtmIcon } from '../../assets/icons/fantom.svg';
-import { ReactComponent as CeloIcon } from '../../assets/icons/celo.svg';
-import { ReactComponent as OneIcon } from '../../assets/icons/harmony.svg';
-import { ReactComponent as SolIcon } from '../../assets/icons/solana.svg';
-import { ReactComponent as OpIcon } from '../../assets/icons/optimism.caeb9392.svg';
-import { ReactComponent as ArbiIcon } from '../../assets/icons/arbitrum.svg';
-import { ReactComponent as BscIcon } from '../../assets/icons/bsc.svg';
-import { ReactComponent as XdaiIcon } from '../../assets/icons/xdai.svg';
-import { ReactComponent as MovrIcon } from '../../assets/icons/moonriver.svg';
-import { ReactComponent as AuroraIcon } from '../../assets/icons/aurora-near.svg';
-import { ReactComponent as EthIcon } from '../../../node_modules/cryptocurrency-icons/svg/color/eth.svg';
-import { ReactComponent as MaticIcon } from '../../../node_modules/cryptocurrency-icons/svg/color/matic.svg';
-import { ReactComponent as AtomIcon } from '../../../node_modules/cryptocurrency-icons/svg/color/atom.svg';
-import { ReactComponent as AdaIcon } from '../../../node_modules/cryptocurrency-icons/svg/color/ada.svg';
-import { ReactComponent as AlgoIcon } from '../../../node_modules/cryptocurrency-icons/svg/color/algo.svg';
-
-
-// wallet icons
-import { ReactComponent as PhantomIcon } from '../../assets/icons/phtm.svg';
-import { ReactComponent as BonifidaIcon } from '../../assets/icons/bonifida.svg';
-import { ReactComponent as MmIcon } from '../../assets/icons/mm.svg';
-import { ReactComponent as WalletConnectIcon } from '../../assets/icons/walletConnect.svg';
-import { ReactComponent as CbWalletIcon } from '../../assets/icons/cbWallet.svg';
-import { ReactComponent as StationIcon } from '../../assets/icons/station.svg';
-import { ReactComponent as RabbyIcon } from '../../assets/icons/rabby.svg';
-import { ReactComponent as Coin98Icon } from '../../assets/icons/coin98.svg';
-import { ReactComponent as KeplrIcon } from '../../assets/icons/keplr.svg';
-import { ReactComponent as CosmoStIcon } from '../../assets/icons/cosmostation.svg';
-import { ReactComponent as XdefiIcon } from '../../assets/icons/xdefi.svg';
-import { ReactComponent as CloverIcon } from '../../assets/icons/clover.svg';
-
-
-
-
+import { ALGO_ICON, ARBI_ICON, ARROW_ICON, ATOM_ICON, AURORA_ICON, AVAX_ICON, BONIFIDA_ICON, BSC_ICON, CBW_ICON, CELO_ICON, CLOVER_ICON, COG_ICON, COIN98_ICON, COSMOST_ICON, DOT_ICON, ETH_ICON, FTM_ICON, GNOSIS_ICON, KEPLR_ICON, LUNA_ICON, MATIC_ICON, MM_ICON, MOVR_ICON, ONE_ICON, OP_ICON, PHANTOM_ICON, RABBY_ICON, SOL_ICON, TSTATION_ICON, WAVE_ICON, WC_ICON, XDEFI_ICON } from '../App/constants';
 
 
 
@@ -112,7 +66,7 @@ const chainSwitchXdai = () => (
             onClick={() => setNewChain("0x64")}
             className="nav-cta-button mint-button"
             >
-               xDai
+               Gnosis
           </button>
         </Link>
 );
@@ -553,7 +507,7 @@ const phantomConnect = () => (
 
 
 const PasteAddressConnect = () => {
-  const [inputAddress, setInputAddress] = useState("paste address/ENS");
+  const [inputAddress, setInputAddress] = useState("paste address");
   let newValue;
 
   let displayAddress = (event) => {
@@ -618,130 +572,115 @@ const PasteAddressConnect = () => {
         onEnter={calcHeight}>
         <div className="menu">
           <DropdownItem
-            leftIcon={<EthIcon />}
+            leftIcon={<ETH_ICON />}
             goToMenu="evmChains"
             >
             <h2>{chainSwitchEth()}</h2>
           </DropdownItem>
           <DropdownItem
-            leftIcon={<BscIcon />}
+            leftIcon={<BSC_ICON />}
             goToMenu="evmChains"
             >
             <h2>{chainSwitchBsc()}</h2>
           </DropdownItem>
           <DropdownItem
-            leftIcon={<MaticIcon />}
-            rightIcon={<ChevronIcon />}
+            leftIcon={<MATIC_ICON />}
             goToMenu="evmChains"
             >
             <h2>{chainSwitchMatic()}</h2>
           </DropdownItem>
           <DropdownItem
-            leftIcon={<OpIcon />}
-            rightIcon={<ChevronIcon />}
+            leftIcon={<OP_ICON/>}
             goToMenu="Optimism"
             >
             <h2>{chainSwitchOp()}</h2>
           </DropdownItem>
           <DropdownItem
-            leftIcon={<ArbiIcon />}
-            rightIcon={<ChevronIcon />}
+            leftIcon={<ARBI_ICON />}
             goToMenu="evmChains"
             >
             <h2>{chainSwitchArbi()}</h2>
           </DropdownItem>
           <DropdownItem
-            leftIcon={<XdaiIcon />}
-            rightIcon={<ChevronIcon />}
+            leftIcon={<GNOSIS_ICON />}
             goToMenu="evmChains"
             >
             <h2>{chainSwitchXdai()}</h2>
           </DropdownItem>
           <DropdownItem
-            leftIcon={<AvaxIcon />}
-            rightIcon={<ChevronIcon />}
+            leftIcon={<AVAX_ICON />}
             goToMenu="evmChains"
             >
             <h2>{chainSwitchAvax()}</h2>
           </DropdownItem>
           <DropdownItem
-            leftIcon={<FtmIcon />}
-            rightIcon={<ChevronIcon />}
+            leftIcon={<FTM_ICON/>}
             goToMenu="evmChains"
             >
             <h2>{chainSwitchFtm()}</h2>
           </DropdownItem>
           <DropdownItem
-            leftIcon={<CeloIcon />}
-            rightIcon={<ChevronIcon />}
+            leftIcon={<CELO_ICON/>}
             goToMenu="evmChains"
             >
             <h2>{chainSwitchCelo()}</h2>
           </DropdownItem>
           <DropdownItem
-            leftIcon={<OneIcon />}
-            rightIcon={<ChevronIcon />}
+            leftIcon={<ONE_ICON />}
             goToMenu="evmChains"
             >
             <h2>{chainSwitchOne()}</h2>
           </DropdownItem>
           <DropdownItem
-            leftIcon={<MovrIcon />}
+            leftIcon={<MOVR_ICON />}
             goToMenu="evmChains"
             >
             <h2>{chainSwitchMovr()}</h2>
           </DropdownItem>
           <DropdownItem
-            leftIcon={<AuroraIcon />}
+            leftIcon={<AURORA_ICON />}
             goToMenu="evmChains"
             >
             <h2>{chainSwitchAurora()}</h2>
           </DropdownItem>
           <DropdownItem
-            leftIcon={<AtomIcon />}
-            rightIcon={<ChevronIcon />}
+            leftIcon={<ATOM_ICON />}
             goToMenu="Cosmos"
             >
             <h2>{chainSwitchAtom()}</h2>
           </DropdownItem>
           <DropdownItem
-            leftIcon={<SolIcon />}
-            rightIcon={<ChevronIcon />}
+            leftIcon={<SOL_ICON/>}
             goToMenu="Solana"
             >
             <h2>{chainSwitchSol()}</h2>
           </DropdownItem>
           <DropdownItem
-            leftIcon={<LunaIcon />}
-            rightIcon={<ChevronIcon />}
+            leftIcon={<LUNA_ICON />}
             goToMenu="Terra"
             >
             <h2>{chainSwitchLuna()}</h2>
           </DropdownItem>
           {/* <DropdownItem
-            leftIcon={<AdaIcon />}
-            rightIcon={<ChevronIcon />}
+            leftIcon={<ADA_ICON />}
             goToMenu="evmChains"
             >
             <h2>{chainSwitchAda()}</h2>
           </DropdownItem> */}
           <DropdownItem
-            leftIcon={<DotIcon />}
-            rightIcon={<ChevronIcon />}
+            leftIcon={<DOT_ICON />}
             goToMenu="Polkadot"
             >
             <h2>{chainSwitchDot()}</h2>
           </DropdownItem>
           {/* <DropdownItem
-            leftIcon={<WaveIcon />}
-            rightIcon={<ChevronIcon />}
+            leftIcon={<WAVE_ICON />}
             goToMenu="evmChains"
             >
             <h2>{chainSwitchWaves()}</h2>
           </DropdownItem>
           <DropdownItem
-            leftIcon={<AlgoIcon />}
-            rightIcon={<ChevronIcon />}
+            leftIcon={<ALGO_ICON />}
             goToMenu="evmChains"
             >
             <h2>{chainSwitchAlgo()}</h2>
@@ -749,8 +688,7 @@ const PasteAddressConnect = () => {
 
 
           <DropdownItem
-            leftIcon={<CogIcon />}
-            rightIcon={<ChevronIcon />}
+            leftIcon={<COG_ICON />}
             goToMenu="evmChains" 
             >
               <h3>Settings</h3>
@@ -766,13 +704,13 @@ const PasteAddressConnect = () => {
         unmountOnExit
         onEnter={calcHeight}>
         <div className="menu">
-          <DropdownItem goToMenu="main" leftIcon={<ArrowIcon />}>
+          <DropdownItem goToMenu="main" leftIcon={<ARROW_ICON />}>
               <h3>chains</h3>
           </DropdownItem>
-          <DropdownItem leftIcon={<MmIcon />} >{metaMaskConnect()}</DropdownItem>
-          <DropdownItem leftIcon={<WalletConnectIcon />}>{<WalletConnectButton />}</DropdownItem>
-          <DropdownItem leftIcon={<CbWalletIcon />}>{coinBaseConnect()}</DropdownItem>
-          <DropdownItem leftIcon={<RabbyIcon />}>{rabbyConnect()}</DropdownItem>
+          <DropdownItem leftIcon={<MM_ICON/>} >{metaMaskConnect()}</DropdownItem>
+          <DropdownItem leftIcon={<WC_ICON />}>{<WalletConnectButton />}</DropdownItem>
+          <DropdownItem leftIcon={<CBW_ICON/>}>{coinBaseConnect()}</DropdownItem>
+          <DropdownItem leftIcon={<RABBY_ICON />}>{rabbyConnect()}</DropdownItem>
           <DropdownItem >{PasteAddressConnect()}</DropdownItem>
         </div>
       </CSSTransition>
@@ -784,13 +722,13 @@ const PasteAddressConnect = () => {
         unmountOnExit
         onEnter={calcHeight}>
         <div className="menu">
-          <DropdownItem goToMenu="main" leftIcon={<ArrowIcon />}>
+          <DropdownItem goToMenu="main" leftIcon={<ARROW_ICON />}>
             <h2>choose a wallet</h2>
           </DropdownItem>
-          <DropdownItem leftIcon={<MmIcon />}>{metaMaskConnect()}</DropdownItem>
-          <DropdownItem leftIcon={<WalletConnectIcon />}>{<WalletConnectButton />}</DropdownItem>
-          <DropdownItem leftIcon={<CbWalletIcon />}>{coinBaseConnect()}</DropdownItem>
-          <DropdownItem leftIcon={<RabbyIcon />}>{rabbyConnect()}</DropdownItem>
+          <DropdownItem leftIcon={<MM_ICON/>}>{metaMaskConnect()}</DropdownItem>
+          <DropdownItem leftIcon={<WC_ICON />}>{<WalletConnectButton />}</DropdownItem>
+          <DropdownItem leftIcon={<CBW_ICON />}>{coinBaseConnect()}</DropdownItem>
+          <DropdownItem leftIcon={<RABBY_ICON />}>{rabbyConnect()}</DropdownItem>
           <DropdownItem >{PasteAddressConnect()}</DropdownItem>
         </div>
       </CSSTransition>
@@ -802,11 +740,11 @@ const PasteAddressConnect = () => {
         unmountOnExit
         onEnter={calcHeight}>
         <div className="menu">
-          <DropdownItem goToMenu="main" leftIcon={<ArrowIcon />}>
+          <DropdownItem goToMenu="main" leftIcon={<ARROW_ICON />}>
             <h2>choose a wallet</h2>
           </DropdownItem>
-          <DropdownItem leftIcon={<PhantomIcon />}>{!walletAddress && phantomConnect()}</DropdownItem>
-          <DropdownItem leftIcon={<BonifidaIcon />}>{chainSwitchBsc()}</DropdownItem>
+          <DropdownItem leftIcon={<PHANTOM_ICON />}>{!walletAddress && phantomConnect()}</DropdownItem>
+          <DropdownItem leftIcon={<BONIFIDA_ICON />}>{chainSwitchBsc()}</DropdownItem>
           <DropdownItem >{PasteAddressConnect()}</DropdownItem>
         </div>
       </CSSTransition>
@@ -818,12 +756,12 @@ const PasteAddressConnect = () => {
         unmountOnExit
         onEnter={calcHeight}>
         <div className="menu">
-          <DropdownItem goToMenu="main" leftIcon={<ArrowIcon />}>
+          <DropdownItem goToMenu="main" leftIcon={<ARBI_ICON />}>
             <h2>choose a wallet</h2>
           </DropdownItem>
-          <DropdownItem leftIcon={<StationIcon />}>{terraStConnect()}</DropdownItem>
-          <DropdownItem leftIcon={<WalletConnectIcon />}>{<WalletConnectButton />}</DropdownItem>
-          <DropdownItem leftIcon={<XdefiIcon />}>{xdefiConnect()}</DropdownItem>
+          <DropdownItem leftIcon={<TSTATION_ICON />}>{terraStConnect()}</DropdownItem>
+          <DropdownItem leftIcon={<WC_ICON/>}>{<WalletConnectButton />}</DropdownItem>
+          <DropdownItem leftIcon={<XDEFI_ICON/>}>{xdefiConnect()}</DropdownItem>
           <DropdownItem >{PasteAddressConnect()}</DropdownItem>
         </div>
       </CSSTransition>
@@ -835,12 +773,12 @@ const PasteAddressConnect = () => {
         unmountOnExit
         onEnter={calcHeight}>
         <div className="menu">
-          <DropdownItem goToMenu="main" leftIcon={<ArrowIcon />}>
+          <DropdownItem goToMenu="main" leftIcon={<ARROW_ICON />}>
             <h2>choose a wallet</h2>
           </DropdownItem>
-          <DropdownItem leftIcon={<KeplrIcon />}>{keplrConnect()}</DropdownItem>
-          <DropdownItem leftIcon={<CosmoStIcon />}>{cosmoStConnect()}</DropdownItem>
-          <DropdownItem leftIcon={<Coin98Icon />}>{coin98Connect()}</DropdownItem>
+          <DropdownItem leftIcon={<KEPLR_ICON />}>{keplrConnect()}</DropdownItem>
+          <DropdownItem leftIcon={<COSMOST_ICON />}>{cosmoStConnect()}</DropdownItem>
+          <DropdownItem leftIcon={<COIN98_ICON />}>{coin98Connect()}</DropdownItem>
           <DropdownItem >{PasteAddressConnect()}</DropdownItem>
         </div>
       </CSSTransition>
@@ -852,13 +790,13 @@ const PasteAddressConnect = () => {
         unmountOnExit
         onEnter={calcHeight}>
         <div className="menu">
-          <DropdownItem goToMenu="main" leftIcon={<ArrowIcon />}>
+          <DropdownItem goToMenu="main" leftIcon={<ARROW_ICON />}>
             <h2>choose a wallet</h2>
           </DropdownItem>
-          <DropdownItem leftIcon={<MmIcon />}>{metaMaskConnect()}</DropdownItem>
-          <DropdownItem leftIcon={<WalletConnectIcon />}>{<WalletConnectButton />}</DropdownItem>
-          <DropdownItem leftIcon={<CbWalletIcon />}>{coinBaseConnect()}</DropdownItem>
-          <DropdownItem leftIcon={<CloverIcon />}>{cloverConnect()}</DropdownItem>
+          <DropdownItem leftIcon={<MM_ICON />}>{metaMaskConnect()}</DropdownItem>
+          <DropdownItem leftIcon={<WC_ICON />}>{<WalletConnectButton />}</DropdownItem>
+          <DropdownItem leftIcon={<CBW_ICON />}>{coinBaseConnect()}</DropdownItem>
+          <DropdownItem leftIcon={<CLOVER_ICON />}>{cloverConnect()}</DropdownItem>
           <DropdownItem >{PasteAddressConnect()}</DropdownItem>
         </div>
       </CSSTransition>
@@ -870,10 +808,10 @@ const PasteAddressConnect = () => {
         unmountOnExit
         onEnter={calcHeight}>
         <div className="menu">
-          <DropdownItem goToMenu="main" leftIcon={<ArrowIcon />}>
+          <DropdownItem goToMenu="main" leftIcon={<ARROW_ICON />}>
             <h2>Other Chains</h2>
           </DropdownItem>
-          <DropdownItem leftIcon={<WalletConnectIcon />}>{<WalletConnectButton />}</DropdownItem>
+          <DropdownItem leftIcon={<WC_ICON />}>{<WalletConnectButton />}</DropdownItem>
           
         </div>
       </CSSTransition>

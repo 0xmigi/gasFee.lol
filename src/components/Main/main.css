@@ -1,0 +1,10 @@
+.fee-tokens {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.token-types {
+    position: relative;
+    display: flex;
+    margin-left: -4px;
+}

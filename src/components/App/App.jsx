@@ -74,13 +74,6 @@ export default function App(props) {
   }
 
   const PlusUltraDropdown = (props) => {
-      const [inputAddress, setInputAddress] = useState("paste");
-    
-      let displayAddress = (event) => {
-        const newValue = event.target.value;
-        setInputAddress(newValue)
-      };
-    
       return (
         <div className="plus-ultra">
           <div className="plus-ultra-panel">

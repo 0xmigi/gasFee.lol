@@ -4,7 +4,7 @@ import './index.css';
 
 import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter as Router} from 'react-router-dom';
 import { MoralisProvider } from 'react-moralis';
 // import { Web3ReactProvider } from '@web3-react/core';
 // import { Web3Provider } from '@ethersproject/providers';
@@ -18,16 +18,17 @@ const moralisServerURL = "https://dcsdixcbd1kw.usemoralis.com:2053/server";
 
 
 ReactDOM.render(
-  <BrowserRouter>
+  <Router>
         <MoralisProvider appId={moralisAppId} serverUrl={moralisServerURL} >
           <App />
         </MoralisProvider>
-  </BrowserRouter>,
+  </Router>,
   document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+
+// reportWebVitals(console.log);
 
