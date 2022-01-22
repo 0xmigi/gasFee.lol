@@ -27,8 +27,7 @@ import Moonriver from '../chains/Moonriver';
 import Aurora from '../chains/Aurora';
 
 import Home from '../Home/Home';
-import Sub from '../Sub/Sub';
-import Sub1 from '../Sub/Sub1';
+import mcPepe from '../../assets/icons/mcPepeSmol.png';
 import LineChart from '../Charts/LineChart';
 import { chain } from 'lodash';
 import { ETH_ICON, BNB_ICON, OP_ICON, MATIC_ICON, AVAX_ICON, ARBI_ICON, FTM_ICON, ONE_ICON, MOVR_ICON} from '../App/constants';
@@ -44,7 +43,22 @@ export const ARBISCAN_KEY = "3S4P8WRXX34R5DVCCRG3GECVF5SFV5U3QW";
 
 
 export default function Main(props) {
-  const [gasSpent, setGasSpent] = useState()
+  // const [cooking, setCooking] = useState()
+
+
+  // useEffect(() => {
+  //   setCooking(
+  //     <div className="plus-ultra">
+  //       <div className="plus-ultra-panel">
+  //         <img src={mcPepe} alt="McPepe"/>
+  //       </div>
+  //     </div>
+  //   )
+  //   return(() => {
+  //     props.setCookingStatus={cooking}
+  //   })
+  // }, []);
+  
   
 
 
@@ -1105,27 +1119,27 @@ useEffect(() => {
             setPoint={sentNumTransactions}
             setGasData={gasData}/>
           <Routes>
-          <Route path="/ethereum" element={<Ethereum />} />
-          <Route path="/binance" element={<BSC />} />
-          <Route path="/xdai" element={<Xdai />} />
-          <Route path="/polygon" element={<Polygon />} />
-          <Route path="/fantom" element={<Fantom />} />
-          <Route path="/optimism" element={<Optimism/>} />
-          <Route path="/arbitrum" element={<Arbitrum />} />
-          <Route path="/avalanche" element={<Avalanche />} />
-          <Route path="/celo" element={<Celo />} />
-          <Route path="/harmony" element={<Harmony />} />
-          <Route path="/cosmos" element={<Cosmos />} />
-          <Route path="/solana" element={<Solana />} />
-          <Route path="/terra" element={<Terra />} />
-          <Route path="/cardano" element={<Cardano />} />
-          <Route path="/polkadot" element={<Polkadot />} />
-          <Route path="/waves" element={<Waves />} />
-          <Route path="/algo" element={<Algorand />} />
-          <Route path="/moonriver" element={<Moonriver />} />
-          <Route path="/aurora" element={<Aurora />} />
+          <Route path="ethereum" element={<Ethereum />} />
+          <Route path="binance" element={<BSC />} />
+          <Route path="xdai" element={<Xdai />} />
+          <Route path="polygon" element={<Polygon />} />
+          <Route path="fantom" element={<Fantom />} />
+          <Route path="optimism" element={<Optimism/>} />
+          <Route path="arbitrum" element={<Arbitrum />} />
+          <Route path="avalanche" element={<Avalanche />} />
+          <Route path="celo" element={<Celo />} />
+          <Route path="harmony" element={<Harmony />} />
+          <Route path="cosmos" element={<Cosmos />} />
+          <Route path="solana" element={<Solana />} />
+          <Route path="terra" element={<Terra />} />
+          <Route path="cardano" element={<Cardano />} />
+          <Route path="polkadot" element={<Polkadot />} />
+          <Route path="waves" element={<Waves />} />
+          <Route path="algo" element={<Algorand />} />
+          <Route path="moonriver" element={<Moonriver />} />
+          <Route path="aurora" element={<Aurora />} />
           <Route 
-              path="/" 
+              path="home" 
               exact
               element={
               <Home />

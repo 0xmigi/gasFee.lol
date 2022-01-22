@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect, useRef } from 'react';
-import  Nav  from '../Nav/Nav';
+import  Nav, { StartKitchen }  from '../Nav/Nav';
 import './App.css';
 
 import { ReactComponent as CaretIcon } from '../../assets/icons/caret.svg';
@@ -79,7 +79,7 @@ export default function App(props) {
           <div className="plus-ultra-panel">
             <p className="plus-ultra-text">+Ultra NFTs coming soon, a generative svg NFT based on your unfortunate transaction history, served fresh on Optimism or Polygon</p>
           <img src={mcPepe} alt="McPepe"/>
-          <p className="sub-ultra-text">meanwhile show McPepe your support: 0x2b3Ca2178e0dF323f413a8402eEF04Df8E5b8e3C  <br></br>any EVM chain</p>
+          <div className="sub-ultra-text">meanwhile, support the chefs down at McPepe's kitchen, anon:<br/> any EVM chain<p className="plus-ultra-text">0x2b3Ca2178e0dF323f413a8402eEF04Df8E5b8e3C</p></div>
           </div>
         </div>
       );
@@ -91,6 +91,7 @@ export default function App(props) {
   })
   
   const [recentAccount, setRecentAccount] = useState({});
+  const [cookingStatus, setCookingStatus] = useState({});
 
 
   return (
@@ -104,8 +105,11 @@ export default function App(props) {
     </Navbar>
 
     <div className="App"> 
+      {/* {cookingStatus} */}
          <main className="content">
-             <Main recentAccount={recentAccount} />
+             <Main recentAccount={recentAccount}
+                  //  setCookingStatus={setCookingStatus} 
+                   />
          </main>
          <Footer />
     </div>

@@ -75,8 +75,7 @@ const LineChart = (props) => {
                 responsive: true,
                 plugins: {
                   title: {
-                    display: true,
-                    text: 'Chart.js Line Chart - Cubic interpolation mode'
+                    display: true
                   },
                 },
                 interaction: {

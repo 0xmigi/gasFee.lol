@@ -299,64 +299,7 @@ const chainSwitchSol = () => (
   }
 
 
-  
-  // useEffect(() => {
-    
-  // }, [defaultAccount])
 
-
-  // const setActiveChain = ({chainId});
-  // setActiveChain(activeChain.current.focus());
-
-  // function TextInputWithFocusButton() {
-  //   const inputEl = useRef(null);
-  //   const onButtonClick = () => {
-  //     // `current` points to the mounted text input element
-  //     inputEl.current.focus();
-  //   };
-  //   return (
-  //     <>
-  //       <input ref={inputEl} type="text" />
-  //       <button onClick={onButtonClick}>Focus the input</button>
-  //     </>
-  //   );
-  // }
-  
-  
-
-
-  // want to return all gas spending transaction 
-  // const getTransactions = async (address) => {
-  //   const url = `/api/etherscan?address=${address}`;
-  //   const response = await fetch(url).then((resp) => resp.json());
-  //      await provider.getTransactionCount(address);
-  //   return response?.result ?? [];
-  // };
-
-  // const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
-  // provider.on("network", (newNetwork, oldNetwork) => {
-  //     // When a Provider makes its initial connection, it emits a "network"
-  //     // event with a null oldNetwork along with the newNetwork. So, if the
-  //     // oldNetwork exists, it represents a changing network
-  //     if (oldNetwork) {
-  //         window.location.reload();
-  //     }
-  // });
-  
-  // const onChange = props.setRecentAccount({ defaultAccount, userBalance })
-
-      
-
-  // const chainChangedHandler = () => {
-  //   window.location.reload();
-  // }
-
-  // window.ethereum.on('accountsChanged', accountChangedHandler);
-  // window.ethereum.on('chainChanged', chainChangedHandler)
-  const f = [];
-
-
-  
   // Solana wallet connection <<------------------------------------------------------------->>
   const [walletAddress, setWalletAddress] = useState(null);
 
@@ -756,7 +699,7 @@ const PasteAddressConnect = () => {
         unmountOnExit
         onEnter={calcHeight}>
         <div className="menu">
-          <DropdownItem goToMenu="main" leftIcon={<ARBI_ICON />}>
+          <DropdownItem goToMenu="main" leftIcon={<ARROW_ICON />}>
             <h2>choose a wallet</h2>
           </DropdownItem>
           <DropdownItem leftIcon={<TSTATION_ICON />}>{terraStConnect()}</DropdownItem>

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 export default function Header(props) {
 
     const returnHome = () => (
-            <Link to="/home"
+            <Link to="home"
                   className="icon-button-home">
               <span
                 className="header"

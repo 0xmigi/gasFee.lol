@@ -42,7 +42,7 @@
   }
 
   .address-display:hover {
-    background-color: rgb(180, 180, 180);
+    background-color: #b4b4b4;
   }
 
   .type-address {
@@ -61,11 +61,12 @@
     height: 30px;
     display: flex;
     border: 0;
+    outline: none;
     padding-left: 20px;
     border-radius: 10px;
     cursor: text;
-    font-size: 16px;
-    font-weight: bold;
+    color: #b4b4b4;
+    font-size: 13px;
     background: rgb(53, 53, 53);
     background-size: 200% 200%;
     transition: 0.3s;
@@ -80,12 +81,29 @@
     width: 50px;
     border-radius: 10px;
     font-size: 26px;
-    color: rgb(155, 53, 53);
+    color: #b4b4b4;
     cursor: pointer;
     border: 0;
-    background-color: rgb(46, 28, 28);
+    background-color: #141414;
     align-items: center;
     justify-content: center;
   }
 
+  .paste-bar:hover {
+    color: #b4b4b4;
+  }
  
+  /* .paste-bar:focus::placeholder {
+    color: transparent;
+  } */
+
+  .paste-bar:hover::placeholder {
+    color: transparent;
+  }
+
+  .paste-bar::placeholder {
+    color: #b4b4b4;
+    font-size: 16px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+  }
