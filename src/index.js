@@ -4,8 +4,14 @@ import './index.css';
 
 import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter as Router} from 'react-router-dom';
+import { HashRouter as Router} from 'react-router-dom';
 import { MoralisProvider } from 'react-moralis';
+import {
+  NetworkInfo,
+  WalletProvider,
+  WalletStatus,
+  getChainOptions,
+} from '@terra-money/wallet-provider';
 // import { Web3ReactProvider } from '@web3-react/core';
 // import { Web3Provider } from '@ethersproject/providers';
 
@@ -16,15 +22,19 @@ import { MoralisProvider } from 'react-moralis';
 const moralisAppId = "vPt2n1IsrYwsq9depxVfMvSwmVwniPnMGGoy49Co";
 const moralisServerURL = "https://dcsdixcbd1kw.usemoralis.com:2053/server";
 
+getChainOptions().then((chainOptions) => {
+  ReactDOM.render(
+    <Router hashtype="noslash">
+      <WalletProvider {...getChainOptions}>
+          <MoralisProvider appId={moralisAppId} serverUrl={moralisServerURL} >
+            <App />
+          </MoralisProvider>
+      </WalletProvider>
+    </Router>,
+    document.getElementById('root')
+  );
+});
 
-ReactDOM.render(
-  <Router>
-        <MoralisProvider appId={moralisAppId} serverUrl={moralisServerURL} >
-          <App />
-        </MoralisProvider>
-  </Router>,
-  document.getElementById('root')
-);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

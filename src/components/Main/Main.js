@@ -2,6 +2,7 @@ import './main.css';
 import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import converter from "bech32-converting";
+import { LCDClient } from '@terra-money/terra.js';
 import $ from 'jquery';
 import DoughnutChart from '../Charts/DoughnutChart';
 
@@ -41,6 +42,10 @@ export const FTMSCAN_KEY = "B5UU3GDR3VJYVXFYT6RPK5RA6I8J5CV6B3";
 export const MOONSCAN_KEY = "54HHCHQRAEXBCTS2ZVTSJ991Q34MDB2CRD";
 export const ARBISCAN_KEY = "3S4P8WRXX34R5DVCCRG3GECVF5SFV5U3QW";
 
+const terra = new LCDClient({
+  URL: 'https://lcd.terra.dev',
+  terraChainID: 'columbus-5'
+});
 
 export default function Main(props) {
   // const [cooking, setCooking] = useState()
@@ -115,7 +120,9 @@ export default function Main(props) {
   const [instantGas, setInstantGas] = useState();
 
   let address = props.recentAccount.newAddress;
-  let chainId = props.recentAccount.activeChain;
+  let terraAddress = props.recentAccount.terraAccount;
+  let evmChainId = props.recentAccount.activeChain;
+  let terraChainID = props.recentAccount.terraChain;
   let x = 0;
 
   const [gasData, setGasData] = useState();
@@ -134,10 +141,15 @@ export default function Main(props) {
   const [auroraUsd, setAuroraUsd] = useState(0);
   const [rEthUsd, setRethUsd] = useState(0);
 
+  const getTerraTransactions = async(terraAddress) => {
+    const accountInfo = await terra.auth.accountInfo(terraAddress);
+    console.log(terraAddress);
+    console.log("terra accountInfo is ", accountInfo);
+  }
 
   
 
-  const getTransactions = async(address) => {
+  const getEvmTransactions = async(address) => {
 
       const gasChain = [{}]
       gasChain[''] = {zapperName: "ethereum"};
@@ -168,7 +180,7 @@ export default function Main(props) {
           );
       }
   
-      let chainName = gasChain[chainId].zapperName;
+      let chainName = gasChain[evmChainId].zapperName;
       const postLondon = testNum(chainName);
       console.log("postLondon gas >", postLondon);
       
@@ -210,7 +222,7 @@ export default function Main(props) {
     chainConfig['0x4'] = {id: '0x4', shortname: 'eth', name:'Rinkeby', symbol: 'eth', coingecko_name: 'ethereum', token: 'Ξ', color: '#03a9f4', explorer_uri: 'https://api-rinkeby.etherscan.io', key: 'KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD'}
 
     
-    let coingeckoSymbol = chainConfig[chainId].coingecko_name;
+    let coingeckoSymbol = chainConfig[evmChainId].coingecko_name;
     let tokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids='+coingeckoSymbol+'&vs_currencies=usd')
     .then(response => {return response.json()})
     .catch(err => {
@@ -218,7 +230,7 @@ export default function Main(props) {
     })
 
     console.log("tokenusd is officailly", tokenusd);
-    console.log(chainConfig[chainId].token);
+    console.log(chainConfig[evmChainId].token);
 
     tokenusd = tokenusd[coingeckoSymbol].usd;
 
@@ -908,12 +920,12 @@ export default function Main(props) {
     };
 
 
-    if (chainId !== "0x63564c40") {
+    if (evmChainId !== "0x63564c40") {
 
-      let key = chainConfig[chainId].key
-      let u = chainConfig[chainId].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc`
+      let key = chainConfig[evmChainId].key
+      let u = chainConfig[evmChainId].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc`
   
-      if (chainConfig[chainId].key) { u += `&apikey=${key}` }
+      if (chainConfig[evmChainId].key) { u += `&apikey=${key}` }
   
       let response = await fetch(u);
       console.log("u is", response);
@@ -932,7 +944,7 @@ export default function Main(props) {
   
       while (n===10000) {
         from = txs[txs.length - 1].blockNumber
-        u = chainConfig[chainId].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${from}&endblock=99999999&sort=asc&apikey=${key}`
+        u = chainConfig[evmChainId].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${from}&endblock=99999999&sort=asc&apikey=${key}`
         response = await fetch(u)
   
         if (response.ok) { // if HTTP-status is 200-299
@@ -979,14 +991,14 @@ export default function Main(props) {
   
         
         if (nOutFail > 0) {
-            $('#gasFeeTotalFail').html(chainConfig[chainId].token + (gasFeeTotalFail / 1e18).toFixed(3));
+            $('#gasFeeTotalFail').html(chainConfig[evmChainId].token + (gasFeeTotalFail / 1e18).toFixed(3));
             var oof = Math.max(...gasFeeFail)/1e18;
   
             if (oof > 0.1) {
                 var i = gasFeeFail.reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0);
                 var tx = txsOutFail[i];
                 $('<p><a id="oof" href="https://bscscan.com/tx/' + 
-                tx.hash + '">This one</a> cost <span id="oofCost">' + chainConfig[chainId].token +
+                tx.hash + '">This one</a> cost <span id="oofCost">' + chainConfig[evmChainId].token +
                 (gasFeeFail[i]/1e18).toFixed(3) + '</span>.</p>').insertBefore($('#tipsy'))
             }
         }  else {
@@ -1001,13 +1013,13 @@ export default function Main(props) {
         // set display value to nothing
       }
 
-      setNativeGasFeeTotal(chainConfig[chainId].token + comma((gasFeeTotal / 1e18).toFixed(3)));
+      setNativeGasFeeTotal(chainConfig[evmChainId].token + comma((gasFeeTotal / 1e18).toFixed(3)));
       setUsdGasFeeTotal("$" + comma(formatter((tokenusd * gasFeeTotal / 1e18).toFixed(2))));
       setSentNumTransactions((nOut));
           // setGweiTotal(comma(formatter(gasUsedTotal)));
       setAvarageGweiTotal(comma((gasPriceTotal / nOut / 1e9).toFixed(1)));
       setFailedNumTransactions(comma(nOutFail));
-      setUsdFailedTotal(chainConfig[chainId].token + (gasFeeTotalFail / 1e18).toFixed(3));
+      setUsdFailedTotal(chainConfig[evmChainId].token + (gasFeeTotalFail / 1e18).toFixed(3));
   
 
     } else {
@@ -1062,15 +1074,17 @@ const totalGasFeeTotal = (+ethUsd + +bscUsd + +opUsd + +maticUsd + +avaxUsd + +f
 
 
 useEffect(() => {
-  if (chainId !== undefined) {
-      getTransactions(address);
-  } else {
-    console.log("chainID hasn't cum yet")
+  if (evmChainId !== undefined) {
+      getEvmTransactions(address);
+  } else if (terraChainID !== undefined) {
+    getTerraTransactions(terraAddress);
+  }else {
+    console.log("no chainID has arrived")
   }
   return () => {
     
   }
-}, [props.recentAccount.activeChain]);
+}, [props.recentAccount.activeChain, props.recentAccount.terraChain]);
 
 
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import _ from 'lodash';
 
@@ -8,6 +8,7 @@ import { WalletConnectButton } from '../Connections/Button';
 // import { NETWORKS } from 'react-router-dom';
 import './nav.css';
 import '../App/App.css';
+import { ConnectType, useWallet } from '@terra-money/wallet-provider'; 
 import { ethers } from 'ethers';
 import { walletlink } from '../Connections/Button';
 import { useChain } from "react-moralis";
@@ -32,8 +33,21 @@ export default function Nav(props) {
   const [errorMessageXd, setErrorMessageXd] = useState("xDefi");
   const [defaultAccountXd, setDefaultAccountXd] = useState("xDefi");
   const [userBalance, setUserBalance] = useState(null);
+  const {
+    status,
+    network,
+    wallets,
+    availableConnectTypes,
+    availableInstallTypes,
+    availableConnections,
+    supportFeatures,
+    connect,
+    install,
+    disconnect,
+  } = useWallet();
 
   let activeChain = useRef();
+  let terraChain = useRef();
   let newAddress;
 
 
@@ -180,6 +194,7 @@ const chainSwitchWaves = () => (
 const chainSwitchLuna = () => (
         <Link to="/terra">
           <button
+            onClick={() => setNewChain("terra")}
             className="nav-cta-button mint-button"
             >
                Terra
@@ -339,10 +354,16 @@ const chainSwitchSol = () => (
     }
   };
 
+const onConnect = useCallback(() => {
+  connect(ConnectType.EXTENSION);
+  let terraAccount = wallets[0].terraAddress;
+  terraChain = newChain;
 
+  props.setRecentAccount({ terraAccount, terraChain });
+  console.log("connected to terra address", wallets[0].terraAddress);
+}, [connect]);
   
  
-
 
 //wallet connections <<------------------------------------------------------------->>
 
@@ -385,17 +406,24 @@ const rabbyConnect = () => (
 );
 
 const xdefiConnect = () => (
-  <button
-    onClick={Chains()} 
+  <button 
+    onClick={onConnect}
     className="address-display"
     >
-      {window.ethereum ? defaultAccountXd : <p >{errorMessageXd}</p>} 
-  </button>
+      Xdefi
+    </button>
+
+  // <button
+  //   onClick={Chains()} 
+  //   className="address-display"
+  //   >
+  //     {window.ethereum ? defaultAccountXd : <p >{errorMessageXd}</p>} 
+  // </button>
 );
 
 const terraStConnect = () => (
   <button
-    onClick={Chains()} 
+    onClick={onConnect} 
     className="address-display"
     >
       Terra Station 
