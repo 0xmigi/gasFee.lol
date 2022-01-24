@@ -12,7 +12,7 @@ import { ConnectType, useWallet } from '@terra-money/wallet-provider';
 import { ethers } from 'ethers';
 import { walletlink } from '../Connections/Button';
 import { useChain } from "react-moralis";
-import { ALGO_ICON, ARBI_ICON, ARROW_ICON, ATOM_ICON, AURORA_ICON, AVAX_ICON, BONIFIDA_ICON, BSC_ICON, CBW_ICON, CELO_ICON, CLOVER_ICON, COG_ICON, COIN98_ICON, COSMOST_ICON, DOT_ICON, ETH_ICON, FTM_ICON, GNOSIS_ICON, KEPLR_ICON, LUNA_ICON, MATIC_ICON, MM_ICON, MOVR_ICON, ONE_ICON, OP_ICON, PHANTOM_ICON, RABBY_ICON, SOL_ICON, TSTATION_ICON, WAVE_ICON, WC_ICON, XDEFI_ICON } from '../App/constants';
+import { ALGO_ICON, ARBI_ICON, ARROW_ICON, ATOM_ICON, AURORA_ICON, AVAX_ICON, BONIFIDA_ICON, BSC_ICON, CBW_ICON, CELO_ICON, CLOVER_ICON, COG_ICON, COIN98_ICON, COSMOST_ICON, DOT_ICON, ETH_ICON, FTM_ICON, GNOSIS_ICON, KEPLR_ICON, LUNA_ICON, MATIC_ICON, METIS_ICON, MM_ICON, MOVR_ICON, ONE_ICON, OP_ICON, PHANTOM_ICON, RABBY_ICON, SOL_ICON, TSTATION_ICON, WAVE_ICON, WC_ICON, XDEFI_ICON } from '../App/constants';
 
 
 
@@ -53,7 +53,7 @@ export default function Nav(props) {
 
 
 const chainSwitchEth = () => (
-    <Link to="/ethereum">
+    <Link to="ethereum">
             <button
               onClick={() => setNewChain("0x1")}
               className="nav-cta-button mint-button"
@@ -64,7 +64,7 @@ const chainSwitchEth = () => (
 );
 
 const chainSwitchBsc = () => (
-        <Link to="/binance">
+        <Link to="binance">
           <button
             onClick={() => setNewChain("0x38")}
 
@@ -76,7 +76,7 @@ const chainSwitchBsc = () => (
 );
 
 const chainSwitchXdai = () => (
-        <Link to="/xdai">
+        <Link to="xdai">
           <button
             onClick={() => setNewChain("0x64")}
             className="nav-cta-button mint-button"
@@ -87,7 +87,7 @@ const chainSwitchXdai = () => (
 );
 
 const chainSwitchMatic = () => (
-        <Link to="/polygon">
+        <Link to="polygon">
           <button
             onClick={() => setNewChain("0x89")}
             className="nav-cta-button mint-button"
@@ -98,7 +98,7 @@ const chainSwitchMatic = () => (
 );
 
 const chainSwitchFtm = () => (
-        <Link to="/fantom">
+        <Link to="fantom">
           <button
             onClick={() => setNewChain("0xfa")}
             className="nav-cta-button mint-button"
@@ -109,7 +109,7 @@ const chainSwitchFtm = () => (
 );
 
 const chainSwitchOne = () => (
-        <Link to="/harmony">
+        <Link to="harmony">
           <button
             onClick={() => setNewChain("0x63564c40")}
             className="nav-cta-button mint-button"
@@ -120,7 +120,7 @@ const chainSwitchOne = () => (
 );
 
 const chainSwitchAvax = () => (
-        <Link to="/avalanche">
+        <Link to="avalanche">
           <button
             onClick={() => setNewChain("0xa86a")}
             className="nav-cta-button mint-button"
@@ -131,7 +131,7 @@ const chainSwitchAvax = () => (
 );
 
 const chainSwitchCelo = () => (
-        <Link to="/celo">
+        <Link to="celo">
           <button
             onClick={() => setNewChain("0xa4ec")}
             className="nav-cta-button mint-button"
@@ -142,7 +142,7 @@ const chainSwitchCelo = () => (
 );
 
 const chainSwitchOp = () => (
-        <Link to="/optimism">
+        <Link to="optimism">
           <button
             onClick={() => setNewChain("0xa")}
             className="nav-cta-button mint-button"
@@ -153,7 +153,7 @@ const chainSwitchOp = () => (
 );
 
 const chainSwitchAda = () => (
-        <Link to="/cardano">
+        <Link to="cardano">
           <button
             className="nav-cta-button mint-button"
             >
@@ -163,7 +163,7 @@ const chainSwitchAda = () => (
 );
 
 const chainSwitchDot = () => (
-        <Link to="/polkadot">
+        <Link to="polkadot">
           <button
             className="nav-cta-button mint-button"
             >
@@ -173,7 +173,7 @@ const chainSwitchDot = () => (
 );
 
 const chainSwitchAtom = () => (
-        <Link to="/cosmos">
+        <Link to="cosmos">
           <button
             className="nav-cta-button mint-button"
             >
@@ -183,7 +183,7 @@ const chainSwitchAtom = () => (
 );
 
 const chainSwitchWaves = () => (
-        <Link to="/waves">
+        <Link to="waves">
           <button
             className="nav-cta-button mint-button"
             >
@@ -193,7 +193,7 @@ const chainSwitchWaves = () => (
 );
 
 const chainSwitchLuna = () => (
-        <Link to="/terra">
+        <Link to="terra">
           <button
             onClick={() => setNewChain("terra")}
             className="nav-cta-button mint-button"
@@ -205,7 +205,7 @@ const chainSwitchLuna = () => (
 
 const chainSwitchAlgo = () => {
   return(
-    <Link to="/algo">
+    <Link to="algo">
           <button
             
             className="nav-cta-button mint-button"
@@ -217,7 +217,7 @@ const chainSwitchAlgo = () => {
 };
 
 const chainSwitchArbi = () => (
-        <Link to="/arbitrum">
+        <Link to="arbitrum">
           <button
             onClick={() => setNewChain("0xa4b1")}
             className="nav-cta-button mint-button"
@@ -227,8 +227,19 @@ const chainSwitchArbi = () => (
         </Link>
 );
 
+const chainSwitchMetis = () => (
+  <Link to="metis">
+    <button
+      onClick={() => setNewChain("0x440")}
+      className="nav-cta-button mint-button"
+      >
+         Metis
+    </button>
+  </Link>
+);
+
 const chainSwitchMovr = () => (
-  <Link to="/moonriver">
+  <Link to="moonriver">
     <button
       onClick={() => setNewChain("0x505")}
       className="nav-cta-button mint-button"
@@ -239,7 +250,7 @@ const chainSwitchMovr = () => (
 );
 
 const chainSwitchAurora = () => (
-  <Link to="/aurora">
+  <Link to="aurora">
     <button
       onClick={() => setNewChain("0x4e45152")}
       className="nav-cta-button mint-button"
@@ -250,7 +261,7 @@ const chainSwitchAurora = () => (
 );
 
 const chainSwitchSol = () => (
-        <Link to="/solana">
+        <Link to="solana">
           <button
             onClick={() => setNewChain("solana")}
             className="nav-cta-button mint-button"
@@ -267,6 +278,7 @@ const chainSwitchSol = () => (
 
   const Chains = () => {
     const { chainId, chain } = useChain();
+    console.log("chainId is ", chainId);
    
     return() => {
 
@@ -616,6 +628,12 @@ const PasteAddressConnect = () => {
             goToMenu="evmChains"
             >
             <h2>{chainSwitchAurora()}</h2>
+          </DropdownItem>
+          <DropdownItem
+            leftIcon={<METIS_ICON />}
+            goToMenu="evmChains"
+            >
+            <h2>{chainSwitchMetis()}</h2>
           </DropdownItem>
           <DropdownItem
             leftIcon={<ATOM_ICON />}

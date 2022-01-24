@@ -22,6 +22,7 @@ const DoughnutChart = (props) => {
   const [lunaGasFees, setLunaGasFees] = useState({});
   const [adaGasFees, setAdaGasFees] = useState({});
   const [dotGasFees, setDotGasFees] = useState({});
+  const [metisGasFees, setMetisGasFees] = useState({});
   const [wavesGasFees, setWavesGasFees] = useState({});
   const [algoGasFees, setAlgoGasFees] = useState({});
   
@@ -44,6 +45,7 @@ const DoughnutChart = (props) => {
     setOneGasFees(props.setOne);
     setMovrGasFees(props.setMovr);
     setAuroraGasFees(props.setAurora);
+    setMetisGasFees(props.setMetis);
     setSolGasFees(props.setSol);
 
     setRethGasFees(props.setReth);
@@ -57,12 +59,12 @@ const DoughnutChart = (props) => {
   const data = () => {
     setChartData({
       type: 'doughnut',
-      labels: ['Ethereum', 'BSC', 'Polygon', 'Optimism', 'Arbitrum', 'xDai', 'Avalanche', 'Fantom', 'Celo', 'Harmony One', 'Moonriver', 'Aurora', 'Cosmos', 'Solana', 'Luna', 'Cardano', 'Polkadot'
+      labels: ['Ethereum', 'BSC', 'Polygon', 'Optimism', 'Arbitrum', 'xDai', 'Avalanche', 'Fantom', 'Celo', 'Harmony One', 'Moonriver', 'Aurora', 'Metis', 'Cosmos', 'Solana', 'Luna', 'Cardano', 'Polkadot'
               // , 'Waves', 'Algorand'
               ],
       datasets: [{
         label: '$ gas spent',
-        data: [(ethGasFees), (bscGasFees), (maticGasFees), (opGasFees), (arbiGasFees), (xdaiGasFees), (avaxGasFees), (ftmGasFees), (celoGasFees), (oneGasFees), (movrGasFees), (auroraGasFees), (atomGasFees), (solGasFees), (lunaGasFees), (adaGasFees), (dotGasFees)],
+        data: [(ethGasFees), (bscGasFees), (maticGasFees), (opGasFees), (arbiGasFees), (xdaiGasFees), (avaxGasFees), (ftmGasFees), (celoGasFees), (oneGasFees), (movrGasFees), (auroraGasFees), (metisGasFees), (atomGasFees), (solGasFees), (lunaGasFees), (adaGasFees), (dotGasFees)],
         backgroundColor: [
           '#582a2a',
           '#6f3832',
@@ -112,7 +114,7 @@ const DoughnutChart = (props) => {
 
   useEffect(() => {
     data()
-  }, [ethGasFees, bscGasFees, maticGasFees, opGasFees, arbiGasFees, xdaiGasFees, avaxGasFees, ftmGasFees, celoGasFees, oneGasFees, movrGasFees, auroraGasFees, rethGasFees, atomGasFees, solGasFees, lunaGasFees, adaGasFees])
+  }, [ethGasFees, bscGasFees, maticGasFees, opGasFees, arbiGasFees, xdaiGasFees, avaxGasFees, ftmGasFees, celoGasFees, oneGasFees, movrGasFees, auroraGasFees, metisGasFees, rethGasFees, atomGasFees, solGasFees, lunaGasFees, adaGasFees])
 
 
   return (

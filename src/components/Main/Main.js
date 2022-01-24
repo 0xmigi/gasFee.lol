@@ -27,12 +27,13 @@ import Cardano from '../chains/Cardano';
 import Fantom from '../chains/Fantom';
 import Moonriver from '../chains/Moonriver';
 import Aurora from '../chains/Aurora';
+import Metis from '../chains/Metis';
 
 import Home from '../Home/Home';
 import mcPepe from '../../assets/icons/mcPepeSmol.png';
 import LineChart from '../Charts/LineChart';
 import { chain } from 'lodash';
-import { ETH_ICON, BNB_ICON, OP_ICON, MATIC_ICON, AVAX_ICON, ARBI_ICON, FTM_ICON, ONE_ICON, MOVR_ICON, SOL_ICON, CELO_ICON, GNOSIS_ICON, AURORA_ICON} from '../App/constants';
+import { ETH_ICON, BNB_ICON, OP_ICON, MATIC_ICON, AVAX_ICON, ARBI_ICON, FTM_ICON, ONE_ICON, MOVR_ICON, SOL_ICON, CELO_ICON, GNOSIS_ICON, AURORA_ICON, METIS_ICON} from '../App/constants';
 
 export const ETHERSCAN_KEY = "KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD";
 export const OPTISCAN_KEY = "84EIKB5YSF17UHZK2778T1HM3Q8DPN6F29";
@@ -144,6 +145,7 @@ export default function Main(props) {
   const [oneUsd, setOneUsd] = useState(0);
   const [movrUsd, setMovrUsd] = useState(0);
   const [auroraUsd, setAuroraUsd] = useState(0);
+  const [metisUsd, setMetisUsd] = useState(0);
   const [solUsd, setSolUsd] = useState(0);
   const [rEthUsd, setRethUsd] = useState(0);
 
@@ -258,6 +260,7 @@ export default function Main(props) {
       gasChain['0xa4ec'] = {zapperName: "celo"}
       gasChain['0x63564c40'] = {zapperName: "harmony"}
       gasChain['0x4e45152'] = {zapperName: "aurora"}
+      gasChain['0x440'] = {zapperName: "metis"}
       gasChain['0x4'] = {zapperName: "rinkeby-ethereum"}
   
   
@@ -297,17 +300,20 @@ export default function Main(props) {
 
     const chainConfig = [{}]
 
-    chainConfig['0x1'] = {id: '0x1', shortname: 'eth', name:'Ethereum', symbol: 'eth', coingecko_name: 'ethereum', token: 'ETH', color: '#582a2a', explorer_uri: 'https://api.etherscan.io', key: `${ETHERSCAN_KEY}`}
-    chainConfig['0x38'] = {id: '0x38', shortname: 'bsc', name:'Binance Smart Chain', symbol: 'bnb', coingecko_name: 'binancecoin', token: 'BSC', color: "#f4ce03", explorer_uri: 'https://api.bscscan.com', key: `${BSCSCAN_KEY}`}
-    chainConfig['0x64'] = {id: '0x64', shortname: 'xdai', name:'xDai', symbol: 'xdai', coingecko_name: 'gnosis', token: 'GNO', color: '#48a9a6', explorer_uri: 'https://blockscout.com/xdai/mainnet'}
-    chainConfig['0x89'] = {id: '0x89', shortname: 'matic', name:'Polygon', symbol: 'matic', coingecko_name: 'matic-network', token: 'MATIC', color: '#9d03f4', explorer_uri: 'https://api.polygonscan.com', key: `${POLYGONSCAN_KEY}`}
-    chainConfig['0xfa'] = {id: '0xfa', shortname: 'ftm', name:'Fantom', symbol: 'ftm', coingecko_name: 'fantom', token: 'ƒ', color: '#00dbff', explorer_uri: 'https://api.ftmscan.com', key: `${FTMSCAN_KEY}`}
-    chainConfig['0xa86a'] = {id: '0xa86a', shortname: 'avax', name:'Avalanche', symbol: 'avax', coingecko_name: 'avalanche-2', token: 'Ã', color: '#ec1616', explorer_uri: 'https://api.snowtrace.io', key: `${SNOWTRACE_KEY}`}
-    chainConfig['0x63564c40'] = {id: '0x63564c40', shortname: 'one', name:'Harmoney One', symbol: 'one', coingecko_name: 'harmony', token: 'O', color: '#ec1616', explorer_uri: 'https://api.harmony.one'}
-    chainConfig['0xa4ec'] = {id: '0xa4ec', shortname: 'celo', name:'Celo', symbol: 'celo', coingecko_name: 'celo', token: 'C', color: '#ec1616', explorer_uri: 'https://explorer.celo.org'}
-    chainConfig['0xa4b1'] = {id: '0xa4b1', shortname: 'arbi', name:'Arbitrum', symbol: 'aeth', coingecko_name: 'ethereum', token: 'aΞ', color: '#ec1616', explorer_uri: 'https://api.arbiscan.io', key: `${ARBISCAN_KEY}`}
-    chainConfig['0x505'] = {id: '0x505', shortname: 'movr', name:'Moonriver', symbol: 'movr', coingecko_name: 'moonriver', token: 'M', color: '#ec1690', explorer_uri: 'https://api-moonriver.moonscan.io', key: `${MOONSCAN_KEY}`}
-    chainConfig['0x4e45152'] = {id: '0x4e45152', shortname: 'aurora', name:'Aurora', symbol: 'aurora', coingecko_name: 'aurora-near', token: 'Au', color: '#ec1616', explorer_uri: 'https://explorer.mainnet.aurora.dev'}
+    chainConfig['0x1'] = {id: '0x1', shortname: 'eth', name:'Ethereum', symbol: 'eth', coingecko_name: 'ethereum', token: 'eth', color: '#582a2a', explorer_uri: 'https://api.etherscan.io', key: `${ETHERSCAN_KEY}`}
+    chainConfig['0x38'] = {id: '0x38', shortname: 'bsc', name:'Binance Smart Chain', symbol: 'bnb', coingecko_name: 'binancecoin', token: 'bsc', color: "#f4ce03", explorer_uri: 'https://api.bscscan.com', key: `${BSCSCAN_KEY}`}
+    chainConfig['0x64'] = {id: '0x64', shortname: 'xdai', name:'xDai', symbol: 'xdai', coingecko_name: 'gnosis', token: 'gno', color: '#48a9a6', explorer_uri: 'https://blockscout.com/xdai/mainnet'}
+    chainConfig['0x89'] = {id: '0x89', shortname: 'matic', name:'Polygon', symbol: 'matic', coingecko_name: 'matic-network', token: 'matic', color: '#9d03f4', explorer_uri: 'https://api.polygonscan.com', key: `${POLYGONSCAN_KEY}`}
+    chainConfig['0xfa'] = {id: '0xfa', shortname: 'ftm', name:'Fantom', symbol: 'ftm', coingecko_name: 'fantom', token: 'ƒtm', color: '#00dbff', explorer_uri: 'https://api.ftmscan.com', key: `${FTMSCAN_KEY}`}
+    chainConfig['0xa86a'] = {id: '0xa86a', shortname: 'avax', name:'Avalanche', symbol: 'avax', coingecko_name: 'avalanche-2', token: 'avax', color: '#ec1616', explorer_uri: 'https://api.snowtrace.io', key: `${SNOWTRACE_KEY}`}
+    chainConfig['0x63564c40'] = {id: '0x63564c40', shortname: 'one', name:'Harmoney One', symbol: 'one', coingecko_name: 'harmony', token: 'one', color: '#ec1616', explorer_uri: 'https://api.harmony.one'}
+    chainConfig['0xa4ec'] = {id: '0xa4ec', shortname: 'celo', name:'Celo', symbol: 'celo', coingecko_name: 'celo', token: 'celo', color: '#ec1616', explorer_uri: 'https://explorer.celo.org'}
+    chainConfig['0xa4b1'] = {id: '0xa4b1', shortname: 'arbi', name:'Arbitrum', symbol: 'aeth', coingecko_name: 'ethereum', token: 'aeth', color: '#ec1616', explorer_uri: 'https://api.arbiscan.io', key: `${ARBISCAN_KEY}`}
+    chainConfig['0x505'] = {id: '0x505', shortname: 'movr', name:'Moonriver', symbol: 'movr', coingecko_name: 'moonriver', token: 'movr', color: '#ec1690', explorer_uri: 'https://api-moonriver.moonscan.io', key: `${MOONSCAN_KEY}`}
+    chainConfig['0x4e45152'] = {id: '0x4e45152', shortname: 'aurora', name:'Aurora', symbol: 'aurora', coingecko_name: 'aurora-near', token: 'aurora', color: '#ec1616', explorer_uri: 'https://explorer.mainnet.aurora.dev'}
+    chainConfig['0xa'] = {id: '0xa', shortname: 'op', name:'Optimism', symbol: 'oeth', coingecko_name: 'ethereum', token: 'oeth', color: '#ec8816', explorer_uri: 'https://api-optimistic.etherscan.io', key: `${OPTISCAN_KEY}`}
+    chainConfig['0x440'] = {id: '0x440', shortname: 'metis', name:'Metis', symbol: 'metis', coingecko_name: 'metis-token', token: 'metis', color: '#ec8816', explorer_uri: 'https://andromeda-explorer.metis.io'}
+    chainConfig['0xa'] = {id: '0xa', shortname: 'op', name:'Optimism', symbol: 'oeth', coingecko_name: 'ethereum', token: 'oΞ', color: '#ec8816', explorer_uri: 'https://api-optimistic.etherscan.io', key: `${OPTISCAN_KEY}`}
     chainConfig['0xa'] = {id: '0xa', shortname: 'op', name:'Optimism', symbol: 'oeth', coingecko_name: 'ethereum', token: 'oΞ', color: '#ec8816', explorer_uri: 'https://api-optimistic.etherscan.io', key: `${OPTISCAN_KEY}`}
     // chainConfig['0xa'] = {id: '0xa', shortname: 'op', name:'Optimism', symbol: 'oeth', coingecko_name: 'opEthereum', token: 'oΞ', color: '#ec1616', explorer_uri: 'https://api.optimistic.etherscan.io', key: '84EIKB5YSF17UHZK2778T1HM3Q8DPN6F29'}
 
@@ -349,6 +355,7 @@ export default function Main(props) {
     let onetokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=harmony&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
     let movrtokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=moonriver&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
     let auroratokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=aurora-near&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
+    let metistokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=metis-token&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
     let rethtokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
 
     ethtokenusd = ethtokenusd["ethereum"].usd;
@@ -363,9 +370,10 @@ export default function Main(props) {
     onetokenusd = onetokenusd["harmony"].usd;
     movrtokenusd = movrtokenusd["moonriver"].usd;
     auroratokenusd = auroratokenusd["aurora-near"].usd;
+    metistokenusd = metistokenusd["metis-token"].usd;
     rethtokenusd = rethtokenusd["ethereum"].usd;
 
-    console.log("ethtokenusd is ", ethtokenusd);
+    console.log("metistokenusd is ", metistokenusd);
 
 
     // EVM chains 
@@ -401,6 +409,7 @@ export default function Main(props) {
       redirect: "follow"
     };
     let aurora = chainConfig["0x4e45152"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc`
+    let metis = chainConfig["0x440"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc`
     // let reth = chainConfig["0x4"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD`
 
 
@@ -418,6 +427,7 @@ export default function Main(props) {
     let responseCelo = await fetch(celo);
     let responseOne = await fetch(APIurl, requestOptions);
     let responseAurora = await fetch(aurora);
+    let responseMetis = await fetch(metis);
     // let responseReth = await fetch(reth);
 
     //  <<<<-------------------------------------------------------
@@ -433,6 +443,7 @@ export default function Main(props) {
     if (responseCelo.ok) {var celojson = await responseCelo.json();} else {console.error("HTTP-Error: " + responseCelo.status);}
     if (responseOne.ok) {var onejson = await responseOne.json([]);} else {console.error("HTTP-Error: " + responseOne.status);}
     if (responseAurora.ok) {var aurorajson = await responseAurora.json();} else {console.error("HTTP-Error: " + responseAurora.status);}
+    if (responseMetis.ok) {var metisjson = await responseMetis.json();} else {console.error("HTTP-Error: " + responseMetis.status);}
     // if (responseReth.ok) {var rethjson = await responseReth.json();} else {console.error("HTTP-Error: " + responseReth.status);}
 
     console.log(responseOne);
@@ -452,6 +463,7 @@ export default function Main(props) {
     let celotxs = celojson['result'];
     let onetxs = arr.result.transactions;
     let auroratxs = aurorajson['result'];
+    let metistxs = metisjson['result'];
     // let rethtxs = rethjson['result'];
     
 
@@ -467,6 +479,7 @@ export default function Main(props) {
     let celot = celotxs.length;
     let onet = onetxs.length;
     let aurorat = auroratxs.length;
+    let metist = metistxs.length;
     // let retht = rethtxs.length;
 
     let efrom, etxs2;
@@ -481,6 +494,7 @@ export default function Main(props) {
     let celofrom, celotxs2;
     let onefrom, onetxs2;
     let aurorafrom, auroratxs2;
+    let metisfrom, metistxs2;
     let rethfrom, rethtxs2;
     //  <<<<-------------------------------------------------------
     while (e===10000) {
@@ -715,6 +729,23 @@ export default function Main(props) {
       aurorat = auroratxs2.length
       auroratxs.push.apply(auroratxs, auroratxs2)
     };
+    while (metist===10000) {
+      metisfrom = metistxs[metistxs.length - 1].blockNumber
+      metis = chainConfig["0xa4ec"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${metisfrom}&endblock=99999999&sort=asc`
+      responseMetis = await fetch(metis)
+
+      if (responseMetis.ok) {
+        metisjson = await responseMetis.json();
+        console.log(metisjson)
+      } else {
+        console.log('big pwoblam : ' + responseMetis.status);
+        break
+      }
+
+      metistxs2 = metisjson['result']
+      metist = metistxs2.length
+      metistxs.push.apply(metistxs, metistxs2)
+    };
     //  <<<<-------------------------------------------------------
     let etxsOut = $.grep(etxs, function(w) {
       return w.from === address.toLowerCase();
@@ -752,6 +783,9 @@ export default function Main(props) {
     let auroratxsOut = $.grep(auroratxs, function(e) {
       return e.from === address.toLowerCase();
     });
+    let metistxsOut = $.grep(metistxs, function(e) {
+      return e.from === address.toLowerCase();
+    });
 
     //  <<<<-------------------------------------------------------
     etxsOut = etxsOut.map(({ confirmations, ...item }) => item);
@@ -766,6 +800,7 @@ export default function Main(props) {
     movrtxsOut = movrtxsOut.map(({ confirmations, ...item }) => item);
     celotxsOut = celotxsOut.map(({ confirmations, ...item }) => item);
     auroratxsOut = auroratxsOut.map(({ confirmations, ...item }) => item);
+    metistxsOut = metistxsOut.map(({ confirmations, ...item }) => item);
 
     etxsOut = new Set(etxsOut.map(JSON.stringify));
     bsctxsOut = new Set(bsctxsOut.map(JSON.stringify));
@@ -779,6 +814,7 @@ export default function Main(props) {
     movrtxsOut = new Set(movrtxsOut.map(JSON.stringify));
     celotxsOut = new Set(celotxsOut.map(JSON.stringify));
     auroratxsOut = new Set(auroratxsOut.map(JSON.stringify));
+    metistxsOut = new Set(metistxsOut.map(JSON.stringify));
 
     etxsOut = Array.from(etxsOut).map(JSON.parse);
     bsctxsOut = Array.from(bsctxsOut).map(JSON.parse);
@@ -792,6 +828,7 @@ export default function Main(props) {
     movrtxsOut = Array.from(movrtxsOut).map(JSON.parse);
     celotxsOut = Array.from(celotxsOut).map(JSON.parse);
     auroratxsOut = Array.from(auroratxsOut).map(JSON.parse);
+    metistxsOut = Array.from(metistxsOut).map(JSON.parse);
 
     console.log('All outgoing eth txs:', etxsOut)
     console.log('All outgoing bsc txs:', bsctxsOut)
@@ -805,6 +842,7 @@ export default function Main(props) {
     console.log('All outgoing movr txs:', movrtxsOut)
     console.log('All outgoing celo txs:', celotxsOut)
     console.log('All outgoing aurora txs:', auroratxsOut)
+    console.log('All outgoing metis txs:', metistxsOut)
     //  <<<<-------------------------------------------------------
     var eOut = etxsOut.length;
     var etxsOutFail = $.grep(etxsOut, function(w) {
@@ -854,6 +892,10 @@ export default function Main(props) {
     var auroratxsOutFail = $.grep(auroratxsOut, function (e) {
         return e.isError === "1";
       });
+    var metisOut = metistxsOut.length;
+    var metistxsOutFail = $.grep(metistxsOut, function (e) {
+        return e.isError === "1";
+      });
     //  <<<<-------------------------------------------------------
     var eOutFail = etxsOutFail.length;
     var bscOutFail = bsctxsOutFail.length;
@@ -867,6 +909,7 @@ export default function Main(props) {
     var movrOutFail = movrtxsOutFail.length;
     var celoOutFail = celotxsOutFail.length;
     var auroraOutFail = auroratxsOutFail.length;
+    var metisOutFail = metistxsOutFail.length;
 
     var ethToken;
     var bnbToken;
@@ -880,6 +923,7 @@ export default function Main(props) {
     var movrToken;
     var celoToken;
     var auroraToken;
+    var metisToken;
 
         
     if (eOut > 0) {
@@ -1155,13 +1199,34 @@ export default function Main(props) {
       var gasPriceFail = auroratxsOutFail.map(value => parseInt(value.gasPrice));
       var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
       var auroraFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
-      var auroraUsdFeeFail = (auroraFeeTotalFail * celotokenusd / 1e18);
+      var auroraUsdFeeFail = (auroraFeeTotalFail * auroratokenusd / 1e18);
       auroraToken = <div className="token-types"><AURORA_ICON height={"20px"} width={"20px"}/></div>
 
     } else {
       auroraOut = 0;
       auroraOutFail = 0;
       auroraUsdFeeFail = 0;
+    };
+    if (metisOut > 0) {
+      var gasUsed = metistxsOut.map(value => parseInt(value.gasUsed));
+      var gasUsedTotal = gasUsed.reduce((partial_sum, a) => partial_sum + a,0); 
+      var gasPrice = metistxsOut.map(value => parseInt(value.gasPrice));
+      var gasPriceMin = Math.min(...gasPrice);
+      var gasPriceMax = Math.max(...gasPrice);
+      var gasFee = multiply(gasPrice, gasUsed);
+      var metisGasFeeTotal = gasFee.reduce((partial_sum, a) => partial_sum + a,0); 
+
+      var gasUsedFail = metistxsOutFail.map(value => parseInt(value.gasUsed));
+      var gasPriceFail = metistxsOutFail.map(value => parseInt(value.gasPrice));
+      var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
+      var metisFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
+      var metisUsdFeeFail = (metisFeeTotalFail * metistokenusd / 1e18);
+      metisToken = <div className="token-types"><METIS_ICON height={"20px"} width={"20px"}/></div>
+
+    } else {
+      metisOut = 0;
+      metisOutFail = 0;
+      metisUsdFeeFail = 0;
     };
 
 
@@ -1260,10 +1325,10 @@ export default function Main(props) {
 
     
 
-    setTotalSentTransactions(+eOut + +bscOut + +opOut + +maticOut + +avaxOut + +arbiOut + +ftmOut + +oneOut + +movrOut + +celoOut + +xdaiOut + +auroraOut);
-    setTotalFailedNumTransactions(+eOutFail + +bscOutFail + +opOutFail + +maticOutFail + +avaxOutFail + +arbiOutFail + +ftmOutFail + +oneOutFail + +movrOutFail + +celoOutFail + +xdaiOutFail + +auroraOutFail);
-    setTotalUsdFailedTotal(+eUsdFeeFail + +bscUsdFeeFail + +opUsdFeeFail + +maticUsdFeeFail + +avaxUsdFeeFail + +arbiUsdFeeFail + +ftmUsdFeeFail + +oneUsdFeeFail + +movrUsdFeeFail + +celoUsdFeeFail + +xdaiUsdFeeFail + +auroraUsdFeeFail);
-    setPaidTokenTypes([ethToken, bnbToken,  opToken, maticToken, avaxToken, arbiToken, ftmToken, oneToken, movrToken, celoToken, xdaiToken, auroraToken]);
+    setTotalSentTransactions(+eOut + +bscOut + +opOut + +maticOut + +avaxOut + +arbiOut + +ftmOut + +oneOut + +movrOut + +celoOut + +xdaiOut + +auroraOut + +metisOut);
+    setTotalFailedNumTransactions(+eOutFail + +bscOutFail + +opOutFail + +maticOutFail + +avaxOutFail + +arbiOutFail + +ftmOutFail + +oneOutFail + +movrOutFail + +celoOutFail + +xdaiOutFail + +auroraOutFail + +metisOut);
+    setTotalUsdFailedTotal(+eUsdFeeFail + +bscUsdFeeFail + +opUsdFeeFail + +maticUsdFeeFail + +avaxUsdFeeFail + +arbiUsdFeeFail + +ftmUsdFeeFail + +oneUsdFeeFail + +movrUsdFeeFail + +celoUsdFeeFail + +xdaiUsdFeeFail + +auroraUsdFeeFail + +metisOut);
+    setPaidTokenTypes([ethToken, bnbToken,  opToken, maticToken, avaxToken, arbiToken, ftmToken, oneToken, movrToken, celoToken, xdaiToken, auroraToken, metisToken]);
 
     setNormalGasUsd("$" + comma(formatter((tokenusd * standardgas * 65000 / 1e9).toFixed(2))));
     setFastGasUsd("$" + comma(formatter((tokenusd * fastgas * 65000 / 1e9).toFixed(2))));
@@ -1284,12 +1349,13 @@ export default function Main(props) {
     setCeloUsd(celoGasFeeTotal === undefined ? 0 : (formatter(((celotokenusd * celoGasFeeTotal) / 1e18).toFixed(3))));
     setMovrUsd(movrGasFeeTotal === undefined ? 0 : (formatter((movrtokenusd * movrGasFeeTotal / 1e18).toFixed(3))));
     setAuroraUsd(auroraGasFeeTotal === undefined ? 0 : (formatter((auroratokenusd * auroraGasFeeTotal / 1e18).toFixed(3))));
+    setMetisUsd(metisGasFeeTotal === undefined ? 0 : (formatter((metistokenusd * metisGasFeeTotal / 1e18).toFixed(3))));
     
 }
 
 
 const totalPaidTokenTypes = (<li className="fee-tokens">{[solToken, paidTokenTypes]}</li>);
-const totalGasFeeTotal = (+ethUsd + +bscUsd + +opUsd + +maticUsd + +avaxUsd + +ftmUsd + +arbiUsd + +oneUsd + +movrUsd + +celoUsd + +xdaiUsd + +auroraUsd + +solUsd).toFixed(2);
+const totalGasFeeTotal = (+ethUsd + +bscUsd + +opUsd + +maticUsd + +avaxUsd + +ftmUsd + +arbiUsd + +oneUsd + +movrUsd + +celoUsd + +xdaiUsd + +auroraUsd  + +metisUsd + +solUsd).toFixed(2);
 const totalSentTotal = (totalSentTransactions + +totalSentSol);
 const totalFailedNumTotal = (totalFailedNumTransactions + +totalFailedSol);
 const totalFailedCostTotal = ("$" + (totalUsdFailedTotal + +totalUsdFailedSol).toFixed(4));
@@ -1349,6 +1415,7 @@ useEffect(() => {
               setOne={oneUsd}
               setMovr={movrUsd}
               setAurora={auroraUsd}
+              setMetis={metisUsd}
               setSol={solUsd}
               setReth={rEthUsd}
               />
@@ -1393,6 +1460,7 @@ useEffect(() => {
           <Route path="algo" element={<Algorand />} />
           <Route path="moonriver" element={<Moonriver />} />
           <Route path="aurora" element={<Aurora />} />
+          <Route path="metis" element={<Metis />} />
           <Route 
               path="home" 
               exact
