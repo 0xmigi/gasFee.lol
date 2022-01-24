@@ -491,7 +491,7 @@ const PasteAddressConnect = () => {
     if (newChain === "solana") {
       solAccount = newValue
       props.setRecentAccount({ solAccount })
-    } else if (newChain === "0x") {
+    } else {
       activeChain = newChain;
       newAddress = newValue;
       props.setRecentAccount({ activeChain, newAddress });
