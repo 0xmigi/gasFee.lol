@@ -133,7 +133,7 @@ const chainSwitchAvax = () => (
 const chainSwitchCelo = () => (
         <Link to="/celo">
           <button
-            onClick={() => setNewChain("0x4ec")}
+            onClick={() => setNewChain("0xa4ec")}
             className="nav-cta-button mint-button"
             >
                Celo

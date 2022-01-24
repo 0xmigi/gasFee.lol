@@ -32,7 +32,7 @@ import Home from '../Home/Home';
 import mcPepe from '../../assets/icons/mcPepeSmol.png';
 import LineChart from '../Charts/LineChart';
 import { chain } from 'lodash';
-import { ETH_ICON, BNB_ICON, OP_ICON, MATIC_ICON, AVAX_ICON, ARBI_ICON, FTM_ICON, ONE_ICON, MOVR_ICON, SOL_ICON} from '../App/constants';
+import { ETH_ICON, BNB_ICON, OP_ICON, MATIC_ICON, AVAX_ICON, ARBI_ICON, FTM_ICON, ONE_ICON, MOVR_ICON, SOL_ICON, CELO_ICON, GNOSIS_ICON, AURORA_ICON} from '../App/constants';
 
 export const ETHERSCAN_KEY = "KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD";
 export const OPTISCAN_KEY = "84EIKB5YSF17UHZK2778T1HM3Q8DPN6F29";
@@ -299,15 +299,15 @@ export default function Main(props) {
 
     chainConfig['0x1'] = {id: '0x1', shortname: 'eth', name:'Ethereum', symbol: 'eth', coingecko_name: 'ethereum', token: 'ETH', color: '#582a2a', explorer_uri: 'https://api.etherscan.io', key: `${ETHERSCAN_KEY}`}
     chainConfig['0x38'] = {id: '0x38', shortname: 'bsc', name:'Binance Smart Chain', symbol: 'bnb', coingecko_name: 'binancecoin', token: 'BSC', color: "#f4ce03", explorer_uri: 'https://api.bscscan.com', key: `${BSCSCAN_KEY}`}
-    chainConfig['0x64'] = {id: '0x64', shortname: 'xdai', name:'xDai', symbol: 'xdai', coingecko_name: 'xdai', token: 'GNO', color: '#48a9a6', explorer_uri: 'https://blockscout.com/xdai/mainnet', key: ''}
+    chainConfig['0x64'] = {id: '0x64', shortname: 'xdai', name:'xDai', symbol: 'xdai', coingecko_name: 'gnosis', token: 'GNO', color: '#48a9a6', explorer_uri: 'https://blockscout.com/xdai/mainnet'}
     chainConfig['0x89'] = {id: '0x89', shortname: 'matic', name:'Polygon', symbol: 'matic', coingecko_name: 'matic-network', token: 'MATIC', color: '#9d03f4', explorer_uri: 'https://api.polygonscan.com', key: `${POLYGONSCAN_KEY}`}
     chainConfig['0xfa'] = {id: '0xfa', shortname: 'ftm', name:'Fantom', symbol: 'ftm', coingecko_name: 'fantom', token: 'ƒ', color: '#00dbff', explorer_uri: 'https://api.ftmscan.com', key: `${FTMSCAN_KEY}`}
     chainConfig['0xa86a'] = {id: '0xa86a', shortname: 'avax', name:'Avalanche', symbol: 'avax', coingecko_name: 'avalanche-2', token: 'Ã', color: '#ec1616', explorer_uri: 'https://api.snowtrace.io', key: `${SNOWTRACE_KEY}`}
-    chainConfig['0x63564c40'] = {id: '0x63564c40', shortname: 'one', name:'Harmoney One', symbol: 'one', coingecko_name: 'harmony', token: 'O', color: '#ec1616', explorer_uri: 'https://api.harmony.one', key: ''}
-    chainConfig['0xa4ec'] = {id: '0xa4ec', shortname: 'celo', name:'Celo', symbol: 'celo', coingecko_name: 'celo', token: 'C', color: '#ec1616', explorer_uri: 'https://api.snowtrace.io', key: ''}
+    chainConfig['0x63564c40'] = {id: '0x63564c40', shortname: 'one', name:'Harmoney One', symbol: 'one', coingecko_name: 'harmony', token: 'O', color: '#ec1616', explorer_uri: 'https://api.harmony.one'}
+    chainConfig['0xa4ec'] = {id: '0xa4ec', shortname: 'celo', name:'Celo', symbol: 'celo', coingecko_name: 'celo', token: 'C', color: '#ec1616', explorer_uri: 'https://explorer.celo.org'}
     chainConfig['0xa4b1'] = {id: '0xa4b1', shortname: 'arbi', name:'Arbitrum', symbol: 'aeth', coingecko_name: 'ethereum', token: 'aΞ', color: '#ec1616', explorer_uri: 'https://api.arbiscan.io', key: `${ARBISCAN_KEY}`}
     chainConfig['0x505'] = {id: '0x505', shortname: 'movr', name:'Moonriver', symbol: 'movr', coingecko_name: 'moonriver', token: 'M', color: '#ec1690', explorer_uri: 'https://api-moonriver.moonscan.io', key: `${MOONSCAN_KEY}`}
-    chainConfig['0x4e45152'] = {id: '0x4e45152', shortname: 'aurora', name:'Aurora', symbol: 'aurora', coingecko_name: 'aurora-near', token: 'Au', color: '#ec1616', explorer_uri: 'https://explorer.mainnet.aurora.dev/api', key: ''}
+    chainConfig['0x4e45152'] = {id: '0x4e45152', shortname: 'aurora', name:'Aurora', symbol: 'aurora', coingecko_name: 'aurora-near', token: 'Au', color: '#ec1616', explorer_uri: 'https://explorer.mainnet.aurora.dev'}
     chainConfig['0xa'] = {id: '0xa', shortname: 'op', name:'Optimism', symbol: 'oeth', coingecko_name: 'ethereum', token: 'oΞ', color: '#ec8816', explorer_uri: 'https://api-optimistic.etherscan.io', key: `${OPTISCAN_KEY}`}
     // chainConfig['0xa'] = {id: '0xa', shortname: 'op', name:'Optimism', symbol: 'oeth', coingecko_name: 'opEthereum', token: 'oΞ', color: '#ec1616', explorer_uri: 'https://api.optimistic.etherscan.io', key: '84EIKB5YSF17UHZK2778T1HM3Q8DPN6F29'}
 
@@ -377,8 +377,8 @@ export default function Main(props) {
     let ftm = chainConfig["0xfa"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${FTMSCAN_KEY}`
     let movr = chainConfig["0x505"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${MOONSCAN_KEY}`
     let arbi = chainConfig["0xa4b1"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${ARBISCAN_KEY}`
-    // let xdai = chainConfig["0x64"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=`
-    // let celo = chainConfig["0xa4ec"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=`
+    let xdai = chainConfig["0x64"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc`
+    let celo = chainConfig["0xa4ec"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc`
     var raw = JSON.stringify({
       jsonrpc: "2.0",
       id: 1,
@@ -400,11 +400,11 @@ export default function Main(props) {
       body: raw,
       redirect: "follow"
     };
-    // let aurora = chainConfig["0x4e45152"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=`
+    let aurora = chainConfig["0x4e45152"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc`
     // let reth = chainConfig["0x4"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD`
 
 
-    console.log("eth is ", eth)
+    console.log("celo is ", celo)
 
     let responseEth = await fetch(eth);
     let responseOp = await fetch(op);
@@ -414,10 +414,10 @@ export default function Main(props) {
     let responseFtm = await fetch(ftm);
     let responseMovr = await fetch(movr);
     let responseArbi = await fetch(arbi);
-    // let responseXdai = await fetch(xdai);
-    // let responseCelo = await fetch(celo);
+    let responseXdai = await fetch(xdai);
+    let responseCelo = await fetch(celo);
     let responseOne = await fetch(APIurl, requestOptions);
-    // let responseAurora = await fetch(aurora);
+    let responseAurora = await fetch(aurora);
     // let responseReth = await fetch(reth);
 
     //  <<<<-------------------------------------------------------
@@ -429,10 +429,10 @@ export default function Main(props) {
     if (responseFtm.ok) {var ftmjson = await responseFtm.json();} else {console.error("HTTP-Error: " + responseFtm.status);}
     if (responseMovr.ok) {var movrjson = await responseMovr.json();} else {console.error("HTTP-Error: " + responseMovr.status);}
     if (responseArbi.ok) {var arbijson = await responseArbi.json();} else {console.error("HTTP-Error: " + responseArbi.status);}
-    // if (responseXdai.ok) {var xdaijson = await responseXdai.json();} else {console.error("HTTP-Error: " + responseXdai.status);}
-    // if (responseCelo.ok) {var celojson = await responseCelo.json();} else {console.error("HTTP-Error: " + responseCelo.status);}
+    if (responseXdai.ok) {var xdaijson = await responseXdai.json();} else {console.error("HTTP-Error: " + responseXdai.status);}
+    if (responseCelo.ok) {var celojson = await responseCelo.json();} else {console.error("HTTP-Error: " + responseCelo.status);}
     if (responseOne.ok) {var onejson = await responseOne.json([]);} else {console.error("HTTP-Error: " + responseOne.status);}
-    // if (responseAurora.ok) {var aurorajson = await responseAuror.json();} else {console.error("HTTP-Error: " + responseAuror.status);}
+    if (responseAurora.ok) {var aurorajson = await responseAurora.json();} else {console.error("HTTP-Error: " + responseAurora.status);}
     // if (responseReth.ok) {var rethjson = await responseReth.json();} else {console.error("HTTP-Error: " + responseReth.status);}
 
     console.log(responseOne);
@@ -448,10 +448,10 @@ export default function Main(props) {
     let ftmtxs = ftmjson['result'];
     let movrtxs = movrjson['result'];
     let arbitxs = arbijson['result'];
-    // let xdaitxs = xdaijson['result'];
-    // let celotxs = celojson['result'];
+    let xdaitxs = xdaijson['result'];
+    let celotxs = celojson['result'];
     let onetxs = arr.result.transactions;
-    // let auroratxs = aurorajson['result'];
+    let auroratxs = aurorajson['result'];
     // let rethtxs = rethjson['result'];
     
 
@@ -463,10 +463,10 @@ export default function Main(props) {
     let ftmt = ftmtxs.length;
     let movrt = movrtxs.length;
     let arbit = arbitxs.length;
-    // let xdait = xdaitxs.length;
-    // let celot = celotxs.length;
+    let xdait = xdaitxs.length;
+    let celot = celotxs.length;
     let onet = onetxs.length;
-    // let aurorat = auroratxs.length;
+    let aurorat = auroratxs.length;
     // let retht = rethtxs.length;
 
     let efrom, etxs2;
@@ -519,7 +519,7 @@ export default function Main(props) {
     };
     while (opt===10000) {
       opfrom = optxs[optxs.length - 1].blockNumber
-      op = chainConfig["0x38"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${opfrom}&endblock=99999999&sort=asc&apikey=${OPTISCAN_KEY}`
+      op = chainConfig["0xa"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${opfrom}&endblock=99999999&sort=asc&apikey=${OPTISCAN_KEY}`
       responseOp = await fetch(op)
 
       if (responseOp.ok) {
@@ -536,7 +536,7 @@ export default function Main(props) {
     };
     while (matict===10000) {
       maticfrom = matictxs[matictxs.length - 1].blockNumber
-      matic = chainConfig["0x38"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${maticfrom}&endblock=99999999&sort=asc&apikey=${POLYGONSCAN_KEY}`
+      matic = chainConfig["0x89"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${maticfrom}&endblock=99999999&sort=asc&apikey=${POLYGONSCAN_KEY}`
       responseOp = await fetch(matic)
 
       if (responseOp.ok) {
@@ -553,7 +553,7 @@ export default function Main(props) {
     };
     while (avaxt===10000) {
       avaxfrom = avaxtxs[avaxtxs.length - 1].blockNumber
-      avax = chainConfig["0x38"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${avaxfrom}&endblock=99999999&sort=asc&apikey=${SNOWTRACE_KEY}`
+      avax = chainConfig["0xa86a"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${avaxfrom}&endblock=99999999&sort=asc&apikey=${SNOWTRACE_KEY}`
       responseAvax = await fetch(avax)
 
       if (responseAvax.ok) {
@@ -570,7 +570,7 @@ export default function Main(props) {
     };
     while (arbit===10000) {
       arbifrom = arbitxs[arbitxs.length - 1].blockNumber
-      arbi = chainConfig["0x38"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${arbifrom}&endblock=99999999&sort=asc&apikey=${ARBISCAN_KEY}`
+      arbi = chainConfig["0xa4b1"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${arbifrom}&endblock=99999999&sort=asc&apikey=${ARBISCAN_KEY}`
       responseAvax = await fetch(arbi)
 
       if (responseArbi.ok) {
@@ -585,9 +585,26 @@ export default function Main(props) {
       arbit = arbitxs2.length
       arbitxs.push.apply(arbitxs, arbitxs2)
     };
+    while (xdait===10000) {
+      xdaifrom = xdaitxs[xdaitxs.length - 1].blockNumber
+      xdai = chainConfig["0x64"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${xdaifrom}&endblock=99999999&sort=asc`
+      responseXdai = await fetch(xdai)
+
+      if (responseXdai.ok) {
+        xdaijson = await responseXdai.json();
+        console.log(xdaijson)
+      } else {
+        console.log('big pwoblam : ' + responseXdai.status);
+        break
+      }
+
+      xdaitxs2 = xdaijson['result']
+      xdait = xdaitxs2.length
+      xdaitxs.push.apply(xdaitxs, xdaitxs2)
+    };
     while (ftmt===10000) {
       ftmfrom = ftmtxs[ftmtxs.length - 1].blockNumber
-      ftm = chainConfig["0x38"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${ftmfrom}&endblock=99999999&sort=asc&apikey=${FTMSCAN_KEY}`
+      ftm = chainConfig["0xfa"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${ftmfrom}&endblock=99999999&sort=asc&apikey=${FTMSCAN_KEY}`
       responseFtm = await fetch(ftm)
 
       if (responseFtm.ok) {
@@ -646,10 +663,10 @@ export default function Main(props) {
       console.log("txs 2 is ", onetxs2);
       onet = onetxs2.length
       onetxs.push.apply(onetxs, onetxs2)
-    }
+    };
     while (movrt===10000) {
       movrfrom = movrtxs[movrtxs.length - 1].blockNumber
-      movr = chainConfig["0x505"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${ftmfrom}&endblock=99999999&sort=asc&apikey=${MOONSCAN_KEY}`
+      movr = chainConfig["0x505"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${movrfrom}&endblock=99999999&sort=asc&apikey=${MOONSCAN_KEY}`
       responseMovr = await fetch(movr)
 
       if (responseMovr.ok) {
@@ -663,6 +680,40 @@ export default function Main(props) {
       movrtxs2 = movrjson['result']
       movrt = movrtxs2.length
       movrtxs.push.apply(movrtxs, movrtxs2)
+    };
+    while (celot===10000) {
+      celofrom = celotxs[celotxs.length - 1].blockNumber
+      celo = chainConfig["0xa4ec"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${celofrom}&endblock=99999999&sort=asc`
+      responseCelo = await fetch(celo)
+
+      if (responseCelo.ok) {
+        celojson = await responseCelo.json();
+        console.log(celojson)
+      } else {
+        console.log('big pwoblam : ' + responseCelo.status);
+        break
+      }
+
+      celotxs2 = celojson['result']
+      celot = celotxs2.length
+      celotxs.push.apply(celotxs, celotxs2)
+    };
+    while (aurorat===10000) {
+      aurorafrom = auroratxs[auroratxs.length - 1].blockNumber
+      aurora = chainConfig["0xa4ec"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${aurorafrom}&endblock=99999999&sort=asc`
+      responseAurora = await fetch(aurora)
+
+      if (responseAurora.ok) {
+        aurorajson = await responseAurora.json();
+        console.log(aurorajson)
+      } else {
+        console.log('big pwoblam : ' + responseAurora.status);
+        break
+      }
+
+      auroratxs2 = aurorajson['result']
+      aurorat = auroratxs2.length
+      auroratxs.push.apply(auroratxs, auroratxs2)
     };
     //  <<<<-------------------------------------------------------
     let etxsOut = $.grep(etxs, function(w) {
@@ -683,6 +734,9 @@ export default function Main(props) {
     let arbitxsOut = $.grep(arbitxs, function(b) {
       return b.from === address.toLowerCase();
     });
+    let xdaitxsOut = $.grep(xdaitxs, function(b) {
+      return b.from === address.toLowerCase();
+    });
     let ftmtxsOut = $.grep(ftmtxs, function(c) {
       return c.from === address.toLowerCase();
     });
@@ -690,6 +744,12 @@ export default function Main(props) {
       return d.from === converter("one").toBech32(oneaddress).toLowerCase();
     });
     let movrtxsOut = $.grep(movrtxs, function(e) {
+      return e.from === address.toLowerCase();
+    });
+    let celotxsOut = $.grep(celotxs, function(e) {
+      return e.from === address.toLowerCase();
+    });
+    let auroratxsOut = $.grep(auroratxs, function(e) {
       return e.from === address.toLowerCase();
     });
 
@@ -700,9 +760,12 @@ export default function Main(props) {
     matictxsOut = matictxsOut.map(({ confirmations, ...item }) => item);
     avaxtxsOut = avaxtxsOut.map(({ confirmations, ...item }) => item);
     arbitxsOut = arbitxsOut.map(({ confirmations, ...item }) => item);
+    xdaitxsOut = xdaitxsOut.map(({ confirmations, ...item }) => item);
     ftmtxsOut = ftmtxsOut.map(({ confirmations, ...item }) => item);
     onetxsOut = onetxsOut.map(({ confirmations, ...item }) => item);
     movrtxsOut = movrtxsOut.map(({ confirmations, ...item }) => item);
+    celotxsOut = celotxsOut.map(({ confirmations, ...item }) => item);
+    auroratxsOut = auroratxsOut.map(({ confirmations, ...item }) => item);
 
     etxsOut = new Set(etxsOut.map(JSON.stringify));
     bsctxsOut = new Set(bsctxsOut.map(JSON.stringify));
@@ -710,9 +773,12 @@ export default function Main(props) {
     matictxsOut = new Set(matictxsOut.map(JSON.stringify));
     avaxtxsOut = new Set(avaxtxsOut.map(JSON.stringify));
     arbitxsOut = new Set(arbitxsOut.map(JSON.stringify));
+    xdaitxsOut = new Set(xdaitxsOut.map(JSON.stringify));
     ftmtxsOut = new Set(ftmtxsOut.map(JSON.stringify));
     onetxsOut = new Set(onetxsOut.map(JSON.stringify));
     movrtxsOut = new Set(movrtxsOut.map(JSON.stringify));
+    celotxsOut = new Set(celotxsOut.map(JSON.stringify));
+    auroratxsOut = new Set(auroratxsOut.map(JSON.stringify));
 
     etxsOut = Array.from(etxsOut).map(JSON.parse);
     bsctxsOut = Array.from(bsctxsOut).map(JSON.parse);
@@ -720,9 +786,12 @@ export default function Main(props) {
     matictxsOut = Array.from(matictxsOut).map(JSON.parse);
     avaxtxsOut = Array.from(avaxtxsOut).map(JSON.parse);
     arbitxsOut = Array.from(arbitxsOut).map(JSON.parse);
+    xdaitxsOut = Array.from(xdaitxsOut).map(JSON.parse);
     ftmtxsOut = Array.from(ftmtxsOut).map(JSON.parse);
     onetxsOut = Array.from(onetxsOut).map(JSON.parse);
     movrtxsOut = Array.from(movrtxsOut).map(JSON.parse);
+    celotxsOut = Array.from(celotxsOut).map(JSON.parse);
+    auroratxsOut = Array.from(auroratxsOut).map(JSON.parse);
 
     console.log('All outgoing eth txs:', etxsOut)
     console.log('All outgoing bsc txs:', bsctxsOut)
@@ -730,9 +799,12 @@ export default function Main(props) {
     console.log('All outgoing matic txs:', matictxsOut)
     console.log('All outgoing avax txs:', avaxtxsOut)
     console.log('All outgoing arbi txs:', arbitxsOut)
+    console.log('All outgoing xdai txs:', xdaitxsOut)
     console.log('All outgoing ftm txs:', ftmtxsOut)
     console.log('All outgoing one txs:', onetxsOut)
     console.log('All outgoing movr txs:', movrtxsOut)
+    console.log('All outgoing celo txs:', celotxsOut)
+    console.log('All outgoing aurora txs:', auroratxsOut)
     //  <<<<-------------------------------------------------------
     var eOut = etxsOut.length;
     var etxsOutFail = $.grep(etxsOut, function(w) {
@@ -758,6 +830,10 @@ export default function Main(props) {
     var arbitxsOutFail = $.grep(arbitxsOut, function(b) {
         return b.isError === '1';
     });
+    var xdaiOut = xdaitxsOut.length;
+    var xdaitxsOutFail = $.grep(xdaitxsOut, function(b) {
+        return b.isError === '1';
+    });
     var ftmOut = ftmtxsOut.length;
     var ftmtxsOutFail = $.grep(ftmtxsOut, function(c) {
         return c.isError === '1';
@@ -770,6 +846,14 @@ export default function Main(props) {
     var movrtxsOutFail = $.grep(movrtxsOut, function (e) {
         return e.isError === "1";
       });
+    var celoOut = celotxsOut.length;
+    var celotxsOutFail = $.grep(celotxsOut, function (e) {
+        return e.isError === "1";
+      });
+    var auroraOut = auroratxsOut.length;
+    var auroratxsOutFail = $.grep(auroratxsOut, function (e) {
+        return e.isError === "1";
+      });
     //  <<<<-------------------------------------------------------
     var eOutFail = etxsOutFail.length;
     var bscOutFail = bsctxsOutFail.length;
@@ -777,19 +861,25 @@ export default function Main(props) {
     var maticOutFail = matictxsOutFail.length;
     var avaxOutFail = avaxtxsOutFail.length;
     var arbiOutFail = arbitxsOutFail.length;
+    var xdaiOutFail = xdaitxsOutFail.length;
     var ftmOutFail = ftmtxsOutFail.length;
     var oneOutFail = onetxsOutFail.length;
     var movrOutFail = movrtxsOutFail.length;
+    var celoOutFail = celotxsOutFail.length;
+    var auroraOutFail = auroratxsOutFail.length;
 
     var ethToken;
     var bnbToken;
     var opToken;
     var maticToken;
     var arbiToken;
+    var xdaiToken;
     var avaxToken;
     var ftmToken;
     var oneToken;
     var movrToken;
+    var celoToken;
+    var auroraToken;
 
         
     if (eOut > 0) {
@@ -912,6 +1002,26 @@ export default function Main(props) {
       arbiOutFail = 0;
       arbiUsdFeeFail = 0;
     };
+    if (xdaiOut > 0) {
+      var gasUsed = xdaitxsOut.map(value => parseInt(value.gasUsed));
+      var gasUsedTotal = gasUsed.reduce((partial_sum, a) => partial_sum + a,0); 
+      var gasPrice = xdaitxsOut.map(value => parseInt(value.gasPrice));
+      var gasPriceMin = Math.min(...gasPrice);
+      var gasPriceMax = Math.max(...gasPrice);
+      var gasFee = multiply(gasPrice, gasUsed);
+      var xdaiGasFeeTotal = gasFee.reduce((partial_sum, a) => partial_sum + a,0); 
+
+      var gasUsedFail = xdaitxsOutFail.map(value => parseInt(value.gasUsed));
+      var gasPriceFail = xdaitxsOutFail.map(value => parseInt(value.gasPrice));
+      var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
+      var xdaiFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
+      var xdaiUsdFeeFail = (xdaiFeeTotalFail * xdaitokenusd / 1e18)
+      xdaiToken = <div className="token-types"><GNOSIS_ICON height={"20px"} width={"20px"}/></div>
+    } else {
+      xdaiOut = 0;
+      xdaiOutFail = 0;
+      xdaiUsdFeeFail = 0;
+    };
     if (ftmOut > 0) {
       var gasUsed = ftmtxsOut.map(value => parseInt(value.gasUsed));
       var gasUsedTotal = gasUsed.reduce((partial_sum, a) => partial_sum + a,0); 
@@ -1011,6 +1121,48 @@ export default function Main(props) {
       movrOutFail = 0;
       movrUsdFeeFail = 0;
     };
+    if (celoOut > 0) {
+      var gasUsed = celotxsOut.map(value => parseInt(value.gasUsed));
+      var gasUsedTotal = gasUsed.reduce((partial_sum, a) => partial_sum + a,0); 
+      var gasPrice = celotxsOut.map(value => parseInt(value.gasPrice));
+      var gasPriceMin = Math.min(...gasPrice);
+      var gasPriceMax = Math.max(...gasPrice);
+      var gasFee = multiply(gasPrice, gasUsed);
+      var celoGasFeeTotal = gasFee.reduce((partial_sum, a) => partial_sum + a,0); 
+
+      var gasUsedFail = celotxsOutFail.map(value => parseInt(value.gasUsed));
+      var gasPriceFail = celotxsOutFail.map(value => parseInt(value.gasPrice));
+      var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
+      var celoFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
+      var celoUsdFeeFail = (celoFeeTotalFail * celotokenusd / 1e18);
+      celoToken = <div className="token-types"><CELO_ICON height={"20px"} width={"20px"}/></div>
+
+    } else {
+      celoOut = 0;
+      celoOutFail = 0;
+      celoUsdFeeFail = 0;
+    };
+    if (auroraOut > 0) {
+      var gasUsed = auroratxsOut.map(value => parseInt(value.gasUsed));
+      var gasUsedTotal = gasUsed.reduce((partial_sum, a) => partial_sum + a,0); 
+      var gasPrice = auroratxsOut.map(value => parseInt(value.gasPrice));
+      var gasPriceMin = Math.min(...gasPrice);
+      var gasPriceMax = Math.max(...gasPrice);
+      var gasFee = multiply(gasPrice, gasUsed);
+      var auroraGasFeeTotal = gasFee.reduce((partial_sum, a) => partial_sum + a,0); 
+
+      var gasUsedFail = auroratxsOutFail.map(value => parseInt(value.gasUsed));
+      var gasPriceFail = auroratxsOutFail.map(value => parseInt(value.gasPrice));
+      var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
+      var auroraFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
+      var auroraUsdFeeFail = (auroraFeeTotalFail * celotokenusd / 1e18);
+      auroraToken = <div className="token-types"><AURORA_ICON height={"20px"} width={"20px"}/></div>
+
+    } else {
+      auroraOut = 0;
+      auroraOutFail = 0;
+      auroraUsdFeeFail = 0;
+    };
 
 
     if (evmChainId !== "0x63564c40") {
@@ -1081,27 +1233,6 @@ export default function Main(props) {
         var gasPriceFail = txsOutFail.map(value => parseInt(value.gasPrice));
         var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
         var gasFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
-  
-        
-        if (nOutFail > 0) {
-            $('#gasFeeTotalFail').html(chainConfig[evmChainId].token + (gasFeeTotalFail / 1e18).toFixed(3));
-            var oof = Math.max(...gasFeeFail)/1e18;
-  
-            if (oof > 0.1) {
-                var i = gasFeeFail.reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0);
-                var tx = txsOutFail[i];
-                $('<p><a id="oof" href="https://bscscan.com/tx/' + 
-                tx.hash + '">This one</a> cost <span id="oofCost">' + chainConfig[evmChainId].token +
-                (gasFeeFail[i]/1e18).toFixed(3) + '</span>.</p>').insertBefore($('#tipsy'))
-            }
-        }  else {
-            $('#gasFeeTotalFail').html('nothing');
-        }
-  
-        if (tokenusd !== null) {
-            $('#tokenusd').text('$' + comma(formatter((tokenusd * gasFeeTotal / 1e18).toFixed(2))));
-            $('#oofCost').append(' ($' + comma(formatter((tokenusd * gasFeeFail[i] / 1e18).toFixed(2))) + ')');
-        }
       } else {
         // set display value to nothing
       }
@@ -1129,10 +1260,10 @@ export default function Main(props) {
 
     
 
-    setTotalSentTransactions(+eOut + +bscOut + +opOut + +maticOut + +avaxOut + +arbiOut + +ftmOut + +oneOut + +movrOut);
-    setTotalFailedNumTransactions(+eOutFail + +bscOutFail + +opOutFail + +maticOutFail + +avaxOutFail + +arbiOutFail + +ftmOutFail + +oneOutFail + +movrOutFail);
-    setTotalUsdFailedTotal(+eUsdFeeFail + +bscUsdFeeFail + +opUsdFeeFail + +maticUsdFeeFail + +avaxUsdFeeFail + +arbiUsdFeeFail + +ftmUsdFeeFail + +oneUsdFeeFail + +movrUsdFeeFail);
-    setPaidTokenTypes([ethToken, bnbToken,  opToken, maticToken, avaxToken, arbiToken, ftmToken, oneToken, movrToken]);
+    setTotalSentTransactions(+eOut + +bscOut + +opOut + +maticOut + +avaxOut + +arbiOut + +ftmOut + +oneOut + +movrOut + +celoOut + +xdaiOut + +auroraOut);
+    setTotalFailedNumTransactions(+eOutFail + +bscOutFail + +opOutFail + +maticOutFail + +avaxOutFail + +arbiOutFail + +ftmOutFail + +oneOutFail + +movrOutFail + +celoOutFail + +xdaiOutFail + +auroraOutFail);
+    setTotalUsdFailedTotal(+eUsdFeeFail + +bscUsdFeeFail + +opUsdFeeFail + +maticUsdFeeFail + +avaxUsdFeeFail + +arbiUsdFeeFail + +ftmUsdFeeFail + +oneUsdFeeFail + +movrUsdFeeFail + +celoUsdFeeFail + +xdaiUsdFeeFail + +auroraUsdFeeFail);
+    setPaidTokenTypes([ethToken, bnbToken,  opToken, maticToken, avaxToken, arbiToken, ftmToken, oneToken, movrToken, celoToken, xdaiToken, auroraToken]);
 
     setNormalGasUsd("$" + comma(formatter((tokenusd * standardgas * 65000 / 1e9).toFixed(2))));
     setFastGasUsd("$" + comma(formatter((tokenusd * fastgas * 65000 / 1e9).toFixed(2))));
@@ -1141,24 +1272,24 @@ export default function Main(props) {
 
 
     //  <<<<-------------------------------------------------------
-    setEthUsd(ethGasFeeTotal === undefined ? 0 : ((ethtokenusd * ethGasFeeTotal / 1e18).toFixed(2)));
-    setBscUsd(bscGasFeeTotal === undefined ? 0 : (formatter((bsctokenusd * bscGasFeeTotal / 1e18).toFixed(2))));
-    setOpUsd(opGasFeeTotal === undefined ? 0 : (formatter((optokenusd * opGasFeeTotal / 1e18).toFixed(2))));
-    setMaticUsd(maticGasFeeTotal === undefined ? 0 : (formatter((matictokenusd * maticGasFeeTotal / 1e18).toFixed(2))));
-    setAvaxUsd(avaxGasFeeTotal === undefined ? 0 : (formatter((avaxtokenusd * avaxGasFeeTotal / 1e18).toFixed(2))));
-    setArbiUsd(arbiGasFeeTotal === undefined ? 0 : (formatter((arbitokenusd * arbiGasFeeTotal / 1e18).toFixed(2))));
-    setFtmUsd(ftmGasFeeTotal === undefined ? 0 : (formatter((ftmtokenusd * ftmGasFeeTotal / 1e18).toFixed(2))));
-    setOneUsd(oneGasFeeTotal === undefined ? 0 : (formatter(((onetokenusd * oneGasFeeTotal) / 1e18).toFixed(3))))
-    // setXdaiUsd(comma(formatter((xdaitokenusd * xdaigasFeeTotal / 1e18).toFixed(2))));
-    // setCeloUsd(comma(formatter((celotokenusd * celogasFeeTotal / 1e18).toFixed(2))));
-    setMovrUsd(movrGasFeeTotal === undefined ? 0 : (formatter((movrtokenusd * movrGasFeeTotal / 1e18).toFixed(2))));
-    // setAuroraUsd(comma(formatter((auroratokenusd * auroragasFeeTotal / 1e18).toFixed(2))));
+    setEthUsd(ethGasFeeTotal === undefined ? 0 : ((ethtokenusd * ethGasFeeTotal / 1e18).toFixed(3)));
+    setBscUsd(bscGasFeeTotal === undefined ? 0 : (formatter((bsctokenusd * bscGasFeeTotal / 1e18).toFixed(3))));
+    setOpUsd(opGasFeeTotal === undefined ? 0 : (formatter((optokenusd * opGasFeeTotal / 1e18).toFixed(3))));
+    setMaticUsd(maticGasFeeTotal === undefined ? 0 : (formatter((matictokenusd * maticGasFeeTotal / 1e18).toFixed(3))));
+    setAvaxUsd(avaxGasFeeTotal === undefined ? 0 : (formatter((avaxtokenusd * avaxGasFeeTotal / 1e18).toFixed(3))));
+    setArbiUsd(arbiGasFeeTotal === undefined ? 0 : (formatter((arbitokenusd * arbiGasFeeTotal / 1e18).toFixed(3))));
+    setFtmUsd(ftmGasFeeTotal === undefined ? 0 : (formatter((ftmtokenusd * ftmGasFeeTotal / 1e18).toFixed(3))));
+    setOneUsd(oneGasFeeTotal === undefined ? 0 : (formatter(((onetokenusd * oneGasFeeTotal) / 1e18).toFixed(3))));
+    setXdaiUsd(xdaiGasFeeTotal === undefined ? 0 : (formatter(((xdaitokenusd * xdaiGasFeeTotal) / 1e18).toFixed(3))));
+    setCeloUsd(celoGasFeeTotal === undefined ? 0 : (formatter(((celotokenusd * celoGasFeeTotal) / 1e18).toFixed(3))));
+    setMovrUsd(movrGasFeeTotal === undefined ? 0 : (formatter((movrtokenusd * movrGasFeeTotal / 1e18).toFixed(3))));
+    setAuroraUsd(auroraGasFeeTotal === undefined ? 0 : (formatter((auroratokenusd * auroraGasFeeTotal / 1e18).toFixed(3))));
     
 }
 
 
 const totalPaidTokenTypes = (<li className="fee-tokens">{[solToken, paidTokenTypes]}</li>);
-const totalGasFeeTotal = (+ethUsd + +bscUsd + +opUsd + +maticUsd + +avaxUsd + +ftmUsd + +arbiUsd + +oneUsd + +movrUsd + +solUsd).toFixed(2);
+const totalGasFeeTotal = (+ethUsd + +bscUsd + +opUsd + +maticUsd + +avaxUsd + +ftmUsd + +arbiUsd + +oneUsd + +movrUsd + +celoUsd + +xdaiUsd + +auroraUsd + +solUsd).toFixed(2);
 const totalSentTotal = (totalSentTransactions + +totalSentSol);
 const totalFailedNumTotal = (totalFailedNumTransactions + +totalFailedSol);
 const totalFailedCostTotal = ("$" + (totalUsdFailedTotal + +totalUsdFailedSol).toFixed(4));
