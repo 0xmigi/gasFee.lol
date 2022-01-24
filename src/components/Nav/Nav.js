@@ -49,6 +49,7 @@ export default function Nav(props) {
   let activeChain = useRef();
   let terraChain = useRef();
   let newAddress;
+  let solAccount;
 
 
 const chainSwitchEth = () => (
@@ -251,6 +252,7 @@ const chainSwitchAurora = () => (
 const chainSwitchSol = () => (
         <Link to="/solana">
           <button
+            onClick={() => setNewChain("solana")}
             className="nav-cta-button mint-button"
             >
                Solana
@@ -324,16 +326,12 @@ const chainSwitchSol = () => (
 
       if (solana) {
         if (solana.isPhantom) {
-          console.log('Phantom wallet found!');
 
           const response = await solana.connect({ onlyIfTrusted: true });
-          console.log(
-            'Connected with Public Key:',
-            response.publicKey.toString()
-          );
-
+          console.log('Connected with Public Key:', response.publicKey.toString());
 
           setWalletAddress(response.publicKey.toString());
+
         }
       } else {
         alert('Solana object not found! Get a Phantom Wallet 👻');
@@ -351,6 +349,8 @@ const chainSwitchSol = () => (
       const response = await solana.connect();
       console.log('Connected with Public Key:', response.publicKey.toString());
       setWalletAddress(response.publicKey.toString());
+      solAccount = response.publicKey.toString();
+      props.setRecentAccount({ solAccount })
     }
   };
 
@@ -487,12 +487,15 @@ const PasteAddressConnect = () => {
   };
 
   let saveAddress = () => {
-    setInputAddress(newValue)
-
-    
-    activeChain = newChain;
-    newAddress = newValue;
-    props.setRecentAccount({ activeChain, newAddress });
+    setInputAddress(newValue);
+    if (newChain === "solana") {
+      solAccount = newValue
+      props.setRecentAccount({ solAccount })
+    } else if (newChain === "0x") {
+      activeChain = newChain;
+      newAddress = newValue;
+      props.setRecentAccount({ activeChain, newAddress });
+    }
   }
 
 

@@ -169,17 +169,19 @@
   min-width: fit-content;
   flex-grow: 1;
   flex-basis: 800px;
+  flex-wrap: wrap;
 }
 
 .small-gas {
   width: auto;
   height: 80px;
+  display: flex;
   margin: 5px;
   padding: 10px;
   max-width: 800px;
   min-width: fit-content;
   flex-grow: 1;
-  flex-basis: 200px;
+  flex-basis: 170px;
   background-color: var(--bg);
   border-radius: var(--border-radius);
   overflow: hidden;
@@ -188,40 +190,49 @@
   font-weight: bold;
   color: #a0a0a0;
   z-index: 990;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .small-gas-feed {
   display: flex;
-  font-size: 22px;
+  /* font-size: 22px; */
   font-weight: 600;
-  margin-top: 18px;
-  flex-direction: row;
+  /* margin-top: 18px; */
+  flex-direction: column;
+  /* justify-content: center; */
+  /* padding-top: 5px; */
+  /* align-items: baseline; */
+  flex-grow: 1;
+  flex-basis: 200px;
   justify-content: center;
-  align-items: baseline;
+  flex-wrap: wrap;
 }
 
 .normal-gas {
-  font-size: 18px;
-  padding-right: 10px;
+  font-size: 16px;
+  padding: 5px;
   color: #00c9a7;
 }
 
 .fast-gas {
-  font-size: 18px;
-  padding-right: 10px;
+  font-size: 16px;
+  padding: 5px;
   color: #3498db;
 }
 
 .instant-gas {
-  font-size: 18px;
-  padding-right: 10px;
+  font-size: 16px;
+  padding: 5px;
   color: #982a2c;
 }
 
 .usd-gas {
-  font-size: 18px;
-  padding-left: 10px;
+  font-size: 16px;
+  padding: 3px;
   font-weight: 500;
+  border-top: 1px solid #353535;
 }
 
 .chainSpecific-page {

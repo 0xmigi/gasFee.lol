@@ -62,7 +62,7 @@ const LineChart = (props) => {
 
     useEffect(() => {
         data()
-    }, [points])
+    }, [points, gasData])
     
     // console.log("datapoints is ", datapoints);
     // console.log("points is ", labels);

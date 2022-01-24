@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.4.2",
+    "@solana/web3.js": "^1.32.0",
     "@terra-money/terra.js": "^3.0.4",
     "@terra-money/wallet-provider": "^3.7.1",
     "@testing-library/jest-dom": "^5.11.4",

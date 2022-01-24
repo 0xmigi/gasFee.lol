@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import converter from "bech32-converting";
 import { LCDClient } from '@terra-money/terra.js';
+import * as web3 from '@solana/web3.js';
 import $ from 'jquery';
 import DoughnutChart from '../Charts/DoughnutChart';
 
@@ -31,7 +32,7 @@ import Home from '../Home/Home';
 import mcPepe from '../../assets/icons/mcPepeSmol.png';
 import LineChart from '../Charts/LineChart';
 import { chain } from 'lodash';
-import { ETH_ICON, BNB_ICON, OP_ICON, MATIC_ICON, AVAX_ICON, ARBI_ICON, FTM_ICON, ONE_ICON, MOVR_ICON} from '../App/constants';
+import { ETH_ICON, BNB_ICON, OP_ICON, MATIC_ICON, AVAX_ICON, ARBI_ICON, FTM_ICON, ONE_ICON, MOVR_ICON, SOL_ICON} from '../App/constants';
 
 export const ETHERSCAN_KEY = "KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD";
 export const OPTISCAN_KEY = "84EIKB5YSF17UHZK2778T1HM3Q8DPN6F29";
@@ -42,10 +43,7 @@ export const FTMSCAN_KEY = "B5UU3GDR3VJYVXFYT6RPK5RA6I8J5CV6B3";
 export const MOONSCAN_KEY = "54HHCHQRAEXBCTS2ZVTSJ991Q34MDB2CRD";
 export const ARBISCAN_KEY = "3S4P8WRXX34R5DVCCRG3GECVF5SFV5U3QW";
 
-const terra = new LCDClient({
-  URL: 'https://lcd.terra.dev',
-  terraChainID: 'columbus-5'
-});
+
 
 export default function Main(props) {
   // const [cooking, setCooking] = useState()
@@ -106,10 +104,14 @@ export default function Main(props) {
   const [failedNumTransactions, setFailedNumTransactions] = useState();
   const [usdFailedTotal, setUsdFailedTotal] = useState();
   const [paidTokenTypes, setPaidTokenTypes] = useState();
+  const [totalSentTransactions, setTotalSentTransactions] = useState(0);
+  const [totalFailedNumTransactions, setTotalFailedNumTransactions] = useState(0);
+  const [totalUsdFailedTotal, setTotalUsdFailedTotal] = useState(0);
 
-  const [totalSentTransactions, setTotalSentTransactions] = useState();
-  const [totalFailedNumTransactions, setTotalFailedNumTransactions] = useState();
-  const [totalUsdFailedTotal, setTotalUsdFailedTotal] = useState();
+  const [totalSentSol, setTotalSentSol] = useState(0);
+  const [solToken, setSolToken] = useState();
+  const [totalFailedSol, setTotalFailedSol] = useState(0);
+  const [totalUsdFailedSol, setTotalUsdFailedSol] = useState(0);
 
   const [normalGasUsd, setNormalGasUsd] = useState(0);
   const [fastGasUsd, setFastGasUsd] = useState(0);
@@ -121,6 +123,9 @@ export default function Main(props) {
 
   let address = props.recentAccount.newAddress;
   let terraAddress = props.recentAccount.terraAccount;
+  let solAddress = props.recentAccount.solAccount;
+
+
   let evmChainId = props.recentAccount.activeChain;
   let terraChainID = props.recentAccount.terraChain;
   let x = 0;
@@ -139,16 +144,104 @@ export default function Main(props) {
   const [oneUsd, setOneUsd] = useState(0);
   const [movrUsd, setMovrUsd] = useState(0);
   const [auroraUsd, setAuroraUsd] = useState(0);
+  const [solUsd, setSolUsd] = useState(0);
   const [rEthUsd, setRethUsd] = useState(0);
 
+  // Terra History
   const getTerraTransactions = async(terraAddress) => {
-    const accountInfo = await terra.auth.accountInfo(terraAddress);
+    const terra = new LCDClient({
+      URL: 'https://lcd.terra.dev',
+      terraChainID: 'columbus-5'
+    });
+
+
+    const accountInfo = await terra.auth.accountInfo();
     console.log(terraAddress);
+    console.log(terra);
     console.log("terra accountInfo is ", accountInfo);
   }
 
-  
+  // Solana History
+  const getSolTransactions = async(solAddress) => {
+    let soltokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
+    let sol = `https://public-api.solscan.io/account/transactions?account=${solAddress}&limit=100`
+    let responseSol = await fetch(sol);
 
+    soltokenusd = soltokenusd["solana"].usd;
+    console.log("soltokenusd is ", soltokenusd);
+    if (responseSol.ok) {var soljson = await responseSol.json();} else {console.error("HTTP-Error: " + responseSol.status);}
+
+    let soltxs = soljson;
+
+    let solfrom, soltxsOut;
+    let solt = soltxs.length;
+
+    while (solt===100) {
+      solfrom = soljson[soljson.length - 1].txHash;
+      sol = `https://public-api.solscan.io/account/transactions?account=${solAddress}&beforeHash=${solfrom}&limit=100`;
+      responseSol = await fetch(sol)
+
+      if (responseSol.ok) {
+        soljson = await responseSol.json()
+        // console.log(soljson);
+      } else {
+        console.error('big pwoblam : ' + responseSol.status);
+        break
+      }
+
+      solt = soljson.length;
+      soltxs.push.apply(soltxs, soljson);
+      
+    };
+
+
+    soltxsOut = soltxs;
+    soltxsOut = soltxsOut.map(({ confirmations, ...item }) => item);
+    soltxsOut = new Set(soltxsOut.map(JSON.stringify));
+    soltxsOut = Array.from(soltxsOut).map(JSON.parse);
+
+    var sOut = soltxsOut.length;
+    
+
+    if (sOut > 0) {
+    let solfee = soltxs.map(item => item.fee);
+    let lamportTotal = solfee.reduce((a, b) => {return a + b;}, 0)
+    let solFeeUsd = soltokenusd * (lamportTotal * 0.000000001);
+    let status = soltxs.filter(item => item.status === "Fail");
+    let feeFail = status.map(item => item.fee);
+    let fTotal = feeFail.reduce((a, b) => {return a + b;}, 0)
+    let failFeeUsd = soltokenusd * (fTotal * 0.000000001);
+    setSolUsd(solFeeUsd);
+    setTotalSentSol(sOut);
+    setTotalFailedSol(status.length);
+    setTotalUsdFailedSol(failFeeUsd);
+    setGasData(solfee);
+
+    setNativeGasFeeTotal("sol" + (lamportTotal * 0.000000001).toFixed(4));
+    setUsdGasFeeTotal("$" + comma(formatter((solFeeUsd).toFixed(4))));
+    setSentNumTransactions(sOut);
+    // setAvarageGweiTotal(comma((gasPriceTotal / nOut / 1e9).toFixed(1)));
+    setFailedNumTransactions(comma(status.length));
+    setUsdFailedTotal("$" + (failFeeUsd).toFixed(4));
+
+    setNormalGas("5000 lamports");
+    setFastGas("10000 lamports");
+    setInstantGas("15000 lamports");
+    setNormalGasUsd("$" + comma(formatter((soltokenusd * 0.000005).toFixed(6))));
+    setFastGasUsd("$" + comma(formatter((soltokenusd * 0.00001).toFixed(6))));
+    setInstantGasUsd("$" + comma(formatter((soltokenusd * 0.000015).toFixed(6))));
+    
+    // console.log("feeFail is ", failFeeUsd);
+    // console.log("solfee is ", solfee);
+    // console.log("lamportTotal is ", lamportTotal);
+    // console.log("solFeeUsd is ", solFeeUsd);
+    // console.log("soltokenusd is ", soltokenusd);
+    setSolToken(<div className="token-types"><SOL_ICON height={"20px"} width={"20px"}/></div>)
+    }
+  }
+
+  
+// EVM chains History
   const getEvmTransactions = async(address) => {
 
       const gasChain = [{}]
@@ -192,9 +285,9 @@ export default function Main(props) {
         .catch(err => {console.log('Error', err)});
         console.log(chainName);
         // setActiveGasPrice(chainGasPrice);
-        setNormalGas((postLondon === "true" ? chainGasPrice.standard.baseFeePerGas : chainGasPrice.standard) + " gwei");
-        setFastGas((postLondon === "true" ? chainGasPrice.fast.baseFeePerGas : chainGasPrice.fast) + " gwei");
-        setInstantGas((postLondon === "true" ? chainGasPrice.instant.baseFeePerGas : chainGasPrice.instant) + " gwei");
+        setNormalGas((postLondon === "true" ? ((chainGasPrice.standard.baseFeePerGas) + "-" + (chainGasPrice.standard.maxFeePerGas)) : chainGasPrice.standard) + " gwei");
+        setFastGas((postLondon === "true" ? ((chainGasPrice.fast.baseFeePerGas) + "-" + (chainGasPrice.fast.maxFeePerGas)) : chainGasPrice.fast) + " gwei");
+        setInstantGas((postLondon === "true" ? ((chainGasPrice.instant.baseFeePerGas) + "-" + (chainGasPrice.instant.maxFeePerGas)) : chainGasPrice.instant) + " gwei");
 
         let standardgas = (postLondon === "true" ? chainGasPrice.standard.baseFeePerGas : chainGasPrice.standard);
         let fastgas = (postLondon === "true" ? chainGasPrice.fast.baseFeePerGas : chainGasPrice.fast);
@@ -1038,14 +1131,8 @@ export default function Main(props) {
 
     setTotalSentTransactions(+eOut + +bscOut + +opOut + +maticOut + +avaxOut + +arbiOut + +ftmOut + +oneOut + +movrOut);
     setTotalFailedNumTransactions(+eOutFail + +bscOutFail + +opOutFail + +maticOutFail + +avaxOutFail + +arbiOutFail + +ftmOutFail + +oneOutFail + +movrOutFail);
-    setTotalUsdFailedTotal("$" + (+eUsdFeeFail + +bscUsdFeeFail + +opUsdFeeFail + +maticUsdFeeFail + +avaxUsdFeeFail + +arbiUsdFeeFail + +ftmUsdFeeFail + +oneUsdFeeFail + +movrUsdFeeFail).toFixed(3));
-    // const tokens = [ethToken, bnbToken,  opToken, maticToken, avaxToken, arbiToken, ftmToken, oneToken, movrToken];
-    // const listItems = tokens.map((token) => 
-    //   <li key={token.toArray()} className="fee-tokens">
-    //     {token}
-    //   </li>
-    // );
-    setPaidTokenTypes(<li className="fee-tokens">{[ethToken, bnbToken,  opToken, maticToken, avaxToken, arbiToken, ftmToken, oneToken, movrToken]}</li>);
+    setTotalUsdFailedTotal(+eUsdFeeFail + +bscUsdFeeFail + +opUsdFeeFail + +maticUsdFeeFail + +avaxUsdFeeFail + +arbiUsdFeeFail + +ftmUsdFeeFail + +oneUsdFeeFail + +movrUsdFeeFail);
+    setPaidTokenTypes([ethToken, bnbToken,  opToken, maticToken, avaxToken, arbiToken, ftmToken, oneToken, movrToken]);
 
     setNormalGasUsd("$" + comma(formatter((tokenusd * standardgas * 65000 / 1e9).toFixed(2))));
     setFastGasUsd("$" + comma(formatter((tokenusd * fastgas * 65000 / 1e9).toFixed(2))));
@@ -1070,26 +1157,48 @@ export default function Main(props) {
 }
 
 
-const totalGasFeeTotal = (+ethUsd + +bscUsd + +opUsd + +maticUsd + +avaxUsd + +ftmUsd + +arbiUsd + +oneUsd + +movrUsd).toFixed(2);
+const totalPaidTokenTypes = (<li className="fee-tokens">{[solToken, paidTokenTypes]}</li>);
+const totalGasFeeTotal = (+ethUsd + +bscUsd + +opUsd + +maticUsd + +avaxUsd + +ftmUsd + +arbiUsd + +oneUsd + +movrUsd + +solUsd).toFixed(2);
+const totalSentTotal = (totalSentTransactions + +totalSentSol);
+const totalFailedNumTotal = (totalFailedNumTransactions + +totalFailedSol);
+const totalFailedCostTotal = ("$" + (totalUsdFailedTotal + +totalUsdFailedSol).toFixed(4));
 
 
 useEffect(() => {
   if (evmChainId !== undefined) {
       getEvmTransactions(address);
-  } else if (terraChainID !== undefined) {
-    getTerraTransactions(terraAddress);
-  }else {
+      console.log("getEvmTransactions was called")
+  } else {
     console.log("no chainID has arrived")
   }
   return () => {
     
   }
-}, [props.recentAccount.activeChain, props.recentAccount.terraChain]);
+}, [props.recentAccount.activeChain]);
 
+useEffect(() => {
+  if (terraAddress !== undefined) {
+    getTerraTransactions(terraAddress);
+    console.log("getTerraTransactions was called")
+  } else {
+    console.log("no chainID has arrived")
+  }
+  return () => {
+    
+  }
+}, [props.recentAccount.terraAccount]);
 
-
-
-
+useEffect(() => {
+  if (solAddress !== undefined) {
+    getSolTransactions(solAddress);
+    console.log("getSolTransactions was called")
+  } else {
+    console.log("no chainID has arrived")
+  }
+  return () => {
+    
+  }
+}, [props.recentAccount.solAccount]);
   
 
   return (
@@ -1109,6 +1218,7 @@ useEffect(() => {
               setOne={oneUsd}
               setMovr={movrUsd}
               setAurora={auroraUsd}
+              setSol={solUsd}
               setReth={rEthUsd}
               />
             <div className="about-chain">
@@ -1116,12 +1226,12 @@ useEffect(() => {
             </div>
           </div>
           <div className="usage-panels">
-            <div className="small-panel">paid fee token types: <p className="small-panel-feed"></p>{paidTokenTypes}</div>
+            <div className="small-panel">paid fee token types: <p className="small-panel-feed"></p>{totalPaidTokenTypes}</div>
             <div className="small-panel">total spent on gas: <p className="small-panel-feed">{("$" + comma(totalGasFeeTotal))}</p></div>
-            <div className="small-panel">total transactions made: <p className="small-panel-feed">{totalSentTransactions}</p></div>
+            <div className="small-panel">total transactions made: <p className="small-panel-feed">{totalSentTotal}</p></div>
             <div className="small-panel">avarage transaction cost: <p className="small-panel-feed">{avarageGweiTotal}</p></div>
-            <div className="small-panel">total transactions failed: <p className="small-panel-feed">{totalFailedNumTransactions}</p></div>
-            <div className="small-panel">failed cost: <p className="small-panel-feed">{totalUsdFailedTotal}</p></div>
+            <div className="small-panel">total transactions failed: <p className="small-panel-feed">{totalFailedNumTotal}</p></div>
+            <div className="small-panel">failed cost: <p className="small-panel-feed">{totalFailedCostTotal}</p></div>
             <div className="small-panel">gas prices: <p className="small-panel-feed"></p></div>
             <div className="small-panel">most recent address: <p >{props.recentAccount.newAddress}</p> </div>
           </div>
@@ -1163,9 +1273,9 @@ useEffect(() => {
         </div>
         <div className="usage-panels">
           <div className="live-gas-panel">
-            <div className="small-gas">normal: 🐌 <div className="small-gas-feed"><div className="normal-gas">{normalGas}</div> || <div className="usd-gas">{normalGasUsd}</div></div> </div>
-            <div className="small-gas">fast: 🏎️ <div className="small-gas-feed"><div className="fast-gas">{fastGas}</div>  || <div className="usd-gas">{fastGasUsd}</div></div></div>
-            <div className="small-gas">instant: 🚀 <div className="small-gas-feed"><div className="instant-gas">{instantGas}</div>  || <div className="usd-gas">{instantGasUsd}</div></div> </div>
+            <div className="small-gas">normal: 🐌 <div className="small-gas-feed"><div className="normal-gas">{normalGas}</div><div className="usd-gas">{normalGasUsd}</div></div> </div>
+            <div className="small-gas">fast: 🏎️ <div className="small-gas-feed"><div className="fast-gas">{fastGas}</div><div className="usd-gas">{fastGasUsd}</div></div></div>
+            <div className="small-gas">instant: 🚀 <div className="small-gas-feed"><div className="instant-gas">{instantGas}</div><div className="usd-gas">{instantGasUsd}</div></div> </div>
           </div>
         <div className="small-panel">spent in native token: <p className="small-panel-feed">{nativeGasFeeTotal}</p></div>
         <div className="small-panel">spent on gas: <p className="small-panel-feed">{usdGasFeeTotal}</p></div>

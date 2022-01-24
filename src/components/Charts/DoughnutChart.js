@@ -44,6 +44,7 @@ const DoughnutChart = (props) => {
     setOneGasFees(props.setOne);
     setMovrGasFees(props.setMovr);
     setAuroraGasFees(props.setAurora);
+    setSolGasFees(props.setSol);
 
     setRethGasFees(props.setReth);
 
@@ -61,7 +62,7 @@ const DoughnutChart = (props) => {
               ],
       datasets: [{
         label: '$ gas spent',
-        data: [(ethGasFees), (bscGasFees), (maticGasFees), (opGasFees), (arbiGasFees), (xdaiGasFees), (avaxGasFees), (ftmGasFees), (celoGasFees), (oneGasFees), (movrGasFees), (auroraGasFees), (rethGasFees), (atomGasFees), (solGasFees), (lunaGasFees), (adaGasFees)],
+        data: [(ethGasFees), (bscGasFees), (maticGasFees), (opGasFees), (arbiGasFees), (xdaiGasFees), (avaxGasFees), (ftmGasFees), (celoGasFees), (oneGasFees), (movrGasFees), (auroraGasFees), (atomGasFees), (solGasFees), (lunaGasFees), (adaGasFees), (dotGasFees)],
         backgroundColor: [
           '#582a2a',
           '#6f3832',
