@@ -22,7 +22,7 @@ import { ReactComponent as MetisIcon } from '../../assets/icons/metis.svg';
 import { ReactComponent as BobaIcon } from '../../assets/icons/boba.svg';
 import { ReactComponent as OECIcon } from '../../assets/icons/OEC.svg';
 import { ReactComponent as MoonbeamIcon } from '../../assets/icons/moonbeam.svg';
-import { ReactComponent as HecoIcon } from '../../assets/icons/heco.svg';
+import { ReactComponent as HecoIcon } from '../../assets/icons/HECO.svg';
 import { ReactComponent as EthIcon } from '../../../node_modules/cryptocurrency-icons/svg/color/eth.svg';
 import { ReactComponent as MaticIcon } from '../../../node_modules/cryptocurrency-icons/svg/color/matic.svg';
 import { ReactComponent as AtomIcon } from '../../../node_modules/cryptocurrency-icons/svg/color/atom.svg';
