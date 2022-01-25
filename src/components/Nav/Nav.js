@@ -314,7 +314,7 @@ const chainSwitchGlmr = () => (
 const chainSwitchHeco = () => (
   <Link to="heco">
     <button
-      onClick={() => {setNewChain("0x80"); setColor('#006286');}}
+      onClick={() => {setNewChain("0x80"); setColor('#007d8b');}}
       className="nav-cta-button mint-button"
       >
          Heco

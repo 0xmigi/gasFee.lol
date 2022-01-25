@@ -1,4 +1,4 @@
-export default function Polygon(props) {
+export default function Harmony(props) {
   return (
     <div className="about-chain">
       Harmony history
