@@ -922,7 +922,7 @@ const PasteAddressConnect = () => {
         onEnter={calcHeight}>
         <div className="menu">
           <DropdownItem goToMenu="main" leftIcon={<ARROW_ICON />}>
-            <h2>Other Chains</h2>
+            <h2>coming soon</h2>
           </DropdownItem>
           <DropdownItem leftIcon={<WC_ICON />}>{<WalletConnectButton />}</DropdownItem>
         </div>
