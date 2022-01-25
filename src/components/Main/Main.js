@@ -28,12 +28,14 @@ import Fantom from '../chains/Fantom';
 import Moonriver from '../chains/Moonriver';
 import Aurora from '../chains/Aurora';
 import Metis from '../chains/Metis';
+import Boba from '../chains/Boba';
+import Glmr from '../chains/Glmr';
 
 import Home from '../Home/Home';
 import mcPepe from '../../assets/icons/mcPepeSmol.png';
 import LineChart from '../Charts/LineChart';
 import { chain } from 'lodash';
-import { ETH_ICON, BNB_ICON, OP_ICON, MATIC_ICON, AVAX_ICON, ARBI_ICON, FTM_ICON, ONE_ICON, MOVR_ICON, SOL_ICON, CELO_ICON, GNOSIS_ICON, AURORA_ICON, METIS_ICON} from '../App/constants';
+import { ETH_ICON, BNB_ICON, OP_ICON, MATIC_ICON, AVAX_ICON, ARBI_ICON, FTM_ICON, ONE_ICON, MOVR_ICON, SOL_ICON, CELO_ICON, GNOSIS_ICON, AURORA_ICON, METIS_ICON, BOBA_ICON, GLMR_ICON } from '../App/constants';
 
 export const ETHERSCAN_KEY = "KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD";
 export const OPTISCAN_KEY = "84EIKB5YSF17UHZK2778T1HM3Q8DPN6F29";
@@ -46,9 +48,10 @@ export const ARBISCAN_KEY = "3S4P8WRXX34R5DVCCRG3GECVF5SFV5U3QW";
 
 
 
-export default function Main(props) {
-  // const [cooking, setCooking] = useState()
 
+
+export default function Main(props) {
+let chainColor = props.recentAccount.chainColor;
 
   // useEffect(() => {
   //   setCooking(
@@ -101,7 +104,7 @@ export default function Main(props) {
   const [usdGasFeeTotal, setUsdGasFeeTotal] = useState();
   const [gweiTotal, setGweiTotal] = useState();
   const [sentNumTransactions, setSentNumTransactions] = useState();
-  const [avarageGweiTotal, setAvarageGweiTotal] = useState();
+  const [avarageUsdTotal, setAvarageUsdTotal] = useState();
   const [failedNumTransactions, setFailedNumTransactions] = useState();
   const [usdFailedTotal, setUsdFailedTotal] = useState();
   const [paidTokenTypes, setPaidTokenTypes] = useState();
@@ -121,6 +124,9 @@ export default function Main(props) {
   const [normalGas, setNormalGas] = useState();
   const [fastGas, setFastGas] = useState();
   const [instantGas, setInstantGas] = useState();
+  const [evmWallets, setEvmWallets] = useState(0);
+  const [terraWallets, setTerraWallets] = useState(0);
+  const [solWallets, setSolWallets] = useState(0);
 
   let address = props.recentAccount.newAddress;
   let terraAddress = props.recentAccount.terraAccount;
@@ -146,6 +152,8 @@ export default function Main(props) {
   const [movrUsd, setMovrUsd] = useState(0);
   const [auroraUsd, setAuroraUsd] = useState(0);
   const [metisUsd, setMetisUsd] = useState(0);
+  const [bobaUsd, setBobaUsd] = useState(0);
+  const [glmrUsd, setGlmrUsd] = useState(0);
   const [solUsd, setSolUsd] = useState(0);
   const [rEthUsd, setRethUsd] = useState(0);
 
@@ -261,6 +269,8 @@ export default function Main(props) {
       gasChain['0x63564c40'] = {zapperName: "harmony"}
       gasChain['0x4e45152'] = {zapperName: "aurora"}
       gasChain['0x440'] = {zapperName: "metis"}
+      gasChain['0x120'] = {zapperName: "boba"}
+      gasChain['0x504'] = {zapperName: "moonbeam"}
       gasChain['0x4'] = {zapperName: "rinkeby-ethereum"}
   
   
@@ -313,8 +323,8 @@ export default function Main(props) {
     chainConfig['0x4e45152'] = {id: '0x4e45152', shortname: 'aurora', name:'Aurora', symbol: 'aurora', coingecko_name: 'aurora-near', token: 'aurora', color: '#ec1616', explorer_uri: 'https://explorer.mainnet.aurora.dev'}
     chainConfig['0xa'] = {id: '0xa', shortname: 'op', name:'Optimism', symbol: 'oeth', coingecko_name: 'ethereum', token: 'oeth', color: '#ec8816', explorer_uri: 'https://api-optimistic.etherscan.io', key: `${OPTISCAN_KEY}`}
     chainConfig['0x440'] = {id: '0x440', shortname: 'metis', name:'Metis', symbol: 'metis', coingecko_name: 'metis-token', token: 'metis', color: '#ec8816', explorer_uri: 'https://andromeda-explorer.metis.io'}
-    chainConfig['0xa'] = {id: '0xa', shortname: 'op', name:'Optimism', symbol: 'oeth', coingecko_name: 'ethereum', token: 'oΞ', color: '#ec8816', explorer_uri: 'https://api-optimistic.etherscan.io', key: `${OPTISCAN_KEY}`}
-    chainConfig['0xa'] = {id: '0xa', shortname: 'op', name:'Optimism', symbol: 'oeth', coingecko_name: 'ethereum', token: 'oΞ', color: '#ec8816', explorer_uri: 'https://api-optimistic.etherscan.io', key: `${OPTISCAN_KEY}`}
+    chainConfig['0x120'] = {id: '0x120', shortname: 'boba', name:'Boba', symbol: 'boba', coingecko_name: 'boba-network', token: 'boba', explorer_uri: 'https://blockexplorer.boba.network'}
+    chainConfig['0x504'] = {id: '0x504', shortname: 'glmr', name:'Moonbeam', symbol: 'glmr', coingecko_name: 'moonbeam', token: 'glmr', explorer_uri: 'https://blockscout.moonbeam.network'}
     // chainConfig['0xa'] = {id: '0xa', shortname: 'op', name:'Optimism', symbol: 'oeth', coingecko_name: 'opEthereum', token: 'oΞ', color: '#ec1616', explorer_uri: 'https://api.optimistic.etherscan.io', key: '84EIKB5YSF17UHZK2778T1HM3Q8DPN6F29'}
 
     //testnets
@@ -356,6 +366,10 @@ export default function Main(props) {
     let movrtokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=moonriver&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
     let auroratokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=aurora-near&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
     let metistokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=metis-token&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
+    let bobatokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=boba-network&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
+    let glmrtokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=moonbeam&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
+    // let metistokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
+    // let metistokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=metis-token&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
     let rethtokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
 
     ethtokenusd = ethtokenusd["ethereum"].usd;
@@ -371,6 +385,10 @@ export default function Main(props) {
     movrtokenusd = movrtokenusd["moonriver"].usd;
     auroratokenusd = auroratokenusd["aurora-near"].usd;
     metistokenusd = metistokenusd["metis-token"].usd;
+    bobatokenusd = bobatokenusd["boba-network"].usd;
+    glmrtokenusd = glmrtokenusd["moonbeam"].usd;
+    // metistokenusd = metistokenusd["metis-token"].usd;
+    // metistokenusd = metistokenusd["metis-token"].usd;
     rethtokenusd = rethtokenusd["ethereum"].usd;
 
     console.log("metistokenusd is ", metistokenusd);
@@ -410,6 +428,10 @@ export default function Main(props) {
     };
     let aurora = chainConfig["0x4e45152"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc`
     let metis = chainConfig["0x440"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc`
+    let boba = chainConfig["0x120"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc`
+    let glmr = chainConfig["0x504"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc`
+    // let metis = chainConfig["0x440"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc`
+    // let metis = chainConfig["0x440"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc`
     // let reth = chainConfig["0x4"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD`
 
 
@@ -428,6 +450,10 @@ export default function Main(props) {
     let responseOne = await fetch(APIurl, requestOptions);
     let responseAurora = await fetch(aurora);
     let responseMetis = await fetch(metis);
+    let responseBoba = await fetch(boba);
+    let responseGlmr = await fetch(glmr);
+    // let responseMetis = await fetch(metis);
+    // let responseMetis = await fetch(metis);
     // let responseReth = await fetch(reth);
 
     //  <<<<-------------------------------------------------------
@@ -444,6 +470,10 @@ export default function Main(props) {
     if (responseOne.ok) {var onejson = await responseOne.json([]);} else {console.error("HTTP-Error: " + responseOne.status);}
     if (responseAurora.ok) {var aurorajson = await responseAurora.json();} else {console.error("HTTP-Error: " + responseAurora.status);}
     if (responseMetis.ok) {var metisjson = await responseMetis.json();} else {console.error("HTTP-Error: " + responseMetis.status);}
+    if (responseBoba.ok) {var bobajson = await responseBoba.json();} else {console.error("HTTP-Error: " + responseBoba.status);}
+    if (responseGlmr.ok) {var glmrjson = await responseGlmr.json();} else {console.error("HTTP-Error: " + responseGlmr.status);}
+    // if (responseMetis.ok) {var metisjson = await responseMetis.json();} else {console.error("HTTP-Error: " + responseMetis.status);}
+    // if (responseMetis.ok) {var metisjson = await responseMetis.json();} else {console.error("HTTP-Error: " + responseMetis.status);}
     // if (responseReth.ok) {var rethjson = await responseReth.json();} else {console.error("HTTP-Error: " + responseReth.status);}
 
     console.log(responseOne);
@@ -464,6 +494,10 @@ export default function Main(props) {
     let onetxs = arr.result.transactions;
     let auroratxs = aurorajson['result'];
     let metistxs = metisjson['result'];
+    let bobatxs = bobajson['result'];
+    let glmrtxs = glmrjson['result'];
+    // let metistxs = metisjson['result'];
+    // let metistxs = metisjson['result'];
     // let rethtxs = rethjson['result'];
     
 
@@ -480,6 +514,10 @@ export default function Main(props) {
     let onet = onetxs.length;
     let aurorat = auroratxs.length;
     let metist = metistxs.length;
+    let bobat = bobatxs.length;
+    let glmrt = glmrtxs.length;
+    // let metist = metistxs.length;
+    // let metist = metistxs.length;
     // let retht = rethtxs.length;
 
     let efrom, etxs2;
@@ -495,6 +533,10 @@ export default function Main(props) {
     let onefrom, onetxs2;
     let aurorafrom, auroratxs2;
     let metisfrom, metistxs2;
+    let bobafrom, bobatxs2;
+    let glmrfrom, glmrtxs2;
+    // let metisfrom, metistxs2;
+    // let metisfrom, metistxs2;
     let rethfrom, rethtxs2;
     //  <<<<-------------------------------------------------------
     while (e===10000) {
@@ -746,6 +788,74 @@ export default function Main(props) {
       metist = metistxs2.length
       metistxs.push.apply(metistxs, metistxs2)
     };
+    while (bobat===10000) {
+      bobafrom = bobatxs[bobatxs.length - 1].blockNumber
+      boba = chainConfig["0x120"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${bobafrom}&endblock=99999999&sort=asc`
+      responseBoba = await fetch(boba)
+
+      if (responseBoba.ok) {
+        bobajson = await responseBoba.json();
+        console.log(bobajson)
+      } else {
+        console.log('big pwoblam : ' + responseBoba.status);
+        break
+      }
+
+      bobatxs2 = bobajson['result']
+      bobat = bobatxs2.length
+      bobatxs.push.apply(bobatxs, bobatxs2)
+    };
+    while (glmrt===10000) {
+      glmrfrom = glmrtxs[glmrtxs.length - 1].blockNumber
+      glmr = chainConfig["0x405"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${glmrfrom}&endblock=99999999&sort=asc`
+      responseGlmr = await fetch(glmr)
+
+      if (responseGlmr.ok) {
+        glmrjson = await responseGlmr.json();
+        console.log(glmrjson)
+      } else {
+        console.log('big pwoblam : ' + responseGlmr.status);
+        break
+      }
+
+      glmrtxs2 = glmrjson['result']
+      glmrt = glmrtxs2.length
+      glmrtxs.push.apply(glmrtxs, glmrtxs2)
+    };
+    // while (metist===10000) {
+    //   metisfrom = metistxs[metistxs.length - 1].blockNumber
+    //   metis = chainConfig["0xa4ec"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${metisfrom}&endblock=99999999&sort=asc`
+    //   responseMetis = await fetch(metis)
+
+    //   if (responseMetis.ok) {
+    //     metisjson = await responseMetis.json();
+    //     console.log(metisjson)
+    //   } else {
+    //     console.log('big pwoblam : ' + responseMetis.status);
+    //     break
+    //   }
+
+    //   metistxs2 = metisjson['result']
+    //   metist = metistxs2.length
+    //   metistxs.push.apply(metistxs, metistxs2)
+    // };
+    // while (metist===10000) {
+    //   metisfrom = metistxs[metistxs.length - 1].blockNumber
+    //   metis = chainConfig["0xa4ec"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${metisfrom}&endblock=99999999&sort=asc`
+    //   responseMetis = await fetch(metis)
+
+    //   if (responseMetis.ok) {
+    //     metisjson = await responseMetis.json();
+    //     console.log(metisjson)
+    //   } else {
+    //     console.log('big pwoblam : ' + responseMetis.status);
+    //     break
+    //   }
+
+    //   metistxs2 = metisjson['result']
+    //   metist = metistxs2.length
+    //   metistxs.push.apply(metistxs, metistxs2)
+    // };
     //  <<<<-------------------------------------------------------
     let etxsOut = $.grep(etxs, function(w) {
       return w.from === address.toLowerCase();
@@ -786,6 +896,18 @@ export default function Main(props) {
     let metistxsOut = $.grep(metistxs, function(e) {
       return e.from === address.toLowerCase();
     });
+    let bobatxsOut = $.grep(bobatxs, function(e) {
+      return e.from === address.toLowerCase();
+    });
+    let glmrtxsOut = $.grep(glmrtxs, function(e) {
+      return e.from === address.toLowerCase();
+    });
+    // let metistxsOut = $.grep(metistxs, function(e) {
+    //   return e.from === address.toLowerCase();
+    // });
+    // let metistxsOut = $.grep(metistxs, function(e) {
+    //   return e.from === address.toLowerCase();
+    // });
 
     //  <<<<-------------------------------------------------------
     etxsOut = etxsOut.map(({ confirmations, ...item }) => item);
@@ -801,6 +923,10 @@ export default function Main(props) {
     celotxsOut = celotxsOut.map(({ confirmations, ...item }) => item);
     auroratxsOut = auroratxsOut.map(({ confirmations, ...item }) => item);
     metistxsOut = metistxsOut.map(({ confirmations, ...item }) => item);
+    bobatxsOut = bobatxsOut.map(({ confirmations, ...item }) => item);
+    glmrtxsOut = glmrtxsOut.map(({ confirmations, ...item }) => item);
+    // metistxsOut = metistxsOut.map(({ confirmations, ...item }) => item);
+    // metistxsOut = metistxsOut.map(({ confirmations, ...item }) => item);
 
     etxsOut = new Set(etxsOut.map(JSON.stringify));
     bsctxsOut = new Set(bsctxsOut.map(JSON.stringify));
@@ -815,6 +941,10 @@ export default function Main(props) {
     celotxsOut = new Set(celotxsOut.map(JSON.stringify));
     auroratxsOut = new Set(auroratxsOut.map(JSON.stringify));
     metistxsOut = new Set(metistxsOut.map(JSON.stringify));
+    bobatxsOut = new Set(bobatxsOut.map(JSON.stringify));
+    glmrtxsOut = new Set(glmrtxsOut.map(JSON.stringify));
+    // metistxsOut = new Set(metistxsOut.map(JSON.stringify));
+    // metistxsOut = new Set(metistxsOut.map(JSON.stringify));
 
     etxsOut = Array.from(etxsOut).map(JSON.parse);
     bsctxsOut = Array.from(bsctxsOut).map(JSON.parse);
@@ -829,6 +959,10 @@ export default function Main(props) {
     celotxsOut = Array.from(celotxsOut).map(JSON.parse);
     auroratxsOut = Array.from(auroratxsOut).map(JSON.parse);
     metistxsOut = Array.from(metistxsOut).map(JSON.parse);
+    bobatxsOut = Array.from(bobatxsOut).map(JSON.parse);
+    glmrtxsOut = Array.from(glmrtxsOut).map(JSON.parse);
+    // metistxsOut = Array.from(metistxsOut).map(JSON.parse);
+    // metistxsOut = Array.from(metistxsOut).map(JSON.parse);
 
     console.log('All outgoing eth txs:', etxsOut)
     console.log('All outgoing bsc txs:', bsctxsOut)
@@ -843,6 +977,9 @@ export default function Main(props) {
     console.log('All outgoing celo txs:', celotxsOut)
     console.log('All outgoing aurora txs:', auroratxsOut)
     console.log('All outgoing metis txs:', metistxsOut)
+    console.log('All outgoing boba txs:', bobatxsOut)
+    console.log('All outgoing moonbeam txs:', glmrtxsOut)
+
     //  <<<<-------------------------------------------------------
     var eOut = etxsOut.length;
     var etxsOutFail = $.grep(etxsOut, function(w) {
@@ -896,6 +1033,14 @@ export default function Main(props) {
     var metistxsOutFail = $.grep(metistxsOut, function (e) {
         return e.isError === "1";
       });
+    var bobaOut = bobatxsOut.length;
+    var bobatxsOutFail = $.grep(bobatxsOut, function (e) {
+        return e.isError === "1";
+      });
+    var glmrOut = glmrtxsOut.length;
+    var glmrtxsOutFail = $.grep(glmrtxsOut, function (e) {
+        return e.isError === "1";
+      });
     //  <<<<-------------------------------------------------------
     var eOutFail = etxsOutFail.length;
     var bscOutFail = bsctxsOutFail.length;
@@ -910,6 +1055,8 @@ export default function Main(props) {
     var celoOutFail = celotxsOutFail.length;
     var auroraOutFail = auroratxsOutFail.length;
     var metisOutFail = metistxsOutFail.length;
+    var bobaOutFail = bobatxsOutFail.length;
+    var glmrOutFail = glmrtxsOutFail.length;
 
     var ethToken;
     var bnbToken;
@@ -924,6 +1071,8 @@ export default function Main(props) {
     var celoToken;
     var auroraToken;
     var metisToken;
+    var bobaToken;
+    var glmrToken;
 
         
     if (eOut > 0) {
@@ -1228,6 +1377,48 @@ export default function Main(props) {
       metisOutFail = 0;
       metisUsdFeeFail = 0;
     };
+    if (bobaOut > 0) {
+      var gasUsed = bobatxsOut.map(value => parseInt(value.gasUsed));
+      var gasUsedTotal = gasUsed.reduce((partial_sum, a) => partial_sum + a,0); 
+      var gasPrice = bobatxsOut.map(value => parseInt(value.gasPrice));
+      var gasPriceMin = Math.min(...gasPrice);
+      var gasPriceMax = Math.max(...gasPrice);
+      var gasFee = multiply(gasPrice, gasUsed);
+      var bobaGasFeeTotal = gasFee.reduce((partial_sum, a) => partial_sum + a,0); 
+
+      var gasUsedFail = bobatxsOutFail.map(value => parseInt(value.gasUsed));
+      var gasPriceFail = metistxsOutFail.map(value => parseInt(value.gasPrice));
+      var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
+      var bobaFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
+      var bobaUsdFeeFail = (bobaFeeTotalFail * bobatokenusd / 1e18);
+      bobaToken = <div className="token-types"><BOBA_ICON height={"20px"} width={"20px"}/></div>
+
+    } else {
+      bobaOut = 0;
+      bobaOutFail = 0;
+      bobaUsdFeeFail = 0;
+    };
+    if (glmrOut > 0) {
+      var gasUsed = glmrtxsOut.map(value => parseInt(value.gasUsed));
+      var gasUsedTotal = gasUsed.reduce((partial_sum, a) => partial_sum + a,0); 
+      var gasPrice = glmrtxsOut.map(value => parseInt(value.gasPrice));
+      var gasPriceMin = Math.min(...gasPrice);
+      var gasPriceMax = Math.max(...gasPrice);
+      var gasFee = multiply(gasPrice, gasUsed);
+      var glmrGasFeeTotal = gasFee.reduce((partial_sum, a) => partial_sum + a,0); 
+
+      var gasUsedFail = glmrtxsOutFail.map(value => parseInt(value.gasUsed));
+      var gasPriceFail = glmrtxsOutFail.map(value => parseInt(value.gasPrice));
+      var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
+      var glmrFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
+      var glmrUsdFeeFail = (glmrFeeTotalFail * glmrtokenusd / 1e18);
+      glmrToken = <div className="token-types"><GLMR_ICON height={"20px"} width={"20px"}/></div>
+
+    } else {
+      metisOut = 0;
+      metisOutFail = 0;
+      metisUsdFeeFail = 0;
+    };
 
 
     if (evmChainId !== "0x63564c40") {
@@ -1306,7 +1497,7 @@ export default function Main(props) {
       setUsdGasFeeTotal("$" + comma(formatter((tokenusd * gasFeeTotal / 1e18).toFixed(2))));
       setSentNumTransactions((nOut));
           // setGweiTotal(comma(formatter(gasUsedTotal)));
-      setAvarageGweiTotal(comma((gasPriceTotal / nOut / 1e9).toFixed(1)));
+      setAvarageUsdTotal("$" + comma((((tokenusd * gasFeeTotal) / 1e18) / nOut).toFixed(1)));
       setFailedNumTransactions(comma(nOutFail));
       setUsdFailedTotal(chainConfig[evmChainId].token + (gasFeeTotalFail / 1e18).toFixed(3));
   
@@ -1317,7 +1508,7 @@ export default function Main(props) {
       setUsdGasFeeTotal("$" + comma(formatter(((onetokenusd * oneGasFeeTotal) / 1e18).toFixed(4))));
       setSentNumTransactions((oneOut));
       // setGweiTotal(comma(formatter(gasUsedTotal)));
-      setAvarageGweiTotal(comma((gasPriceTotal / oneOut / 1e9).toFixed(1)));
+      setAvarageUsdTotal("$" + comma((((onetokenusd * oneGasFeeTotal) / 1e18) / oneOut).toFixed(1)));
       setFailedNumTransactions(comma(oneOutFail));
       setUsdFailedTotal("ONE" + (oneFeeTotalFail / 1e18).toFixed(3));
       console.log("oneGasFeeTotal is ", oneGasFeeTotal)
@@ -1325,10 +1516,10 @@ export default function Main(props) {
 
     
 
-    setTotalSentTransactions(+eOut + +bscOut + +opOut + +maticOut + +avaxOut + +arbiOut + +ftmOut + +oneOut + +movrOut + +celoOut + +xdaiOut + +auroraOut + +metisOut);
-    setTotalFailedNumTransactions(+eOutFail + +bscOutFail + +opOutFail + +maticOutFail + +avaxOutFail + +arbiOutFail + +ftmOutFail + +oneOutFail + +movrOutFail + +celoOutFail + +xdaiOutFail + +auroraOutFail + +metisOut);
-    setTotalUsdFailedTotal(+eUsdFeeFail + +bscUsdFeeFail + +opUsdFeeFail + +maticUsdFeeFail + +avaxUsdFeeFail + +arbiUsdFeeFail + +ftmUsdFeeFail + +oneUsdFeeFail + +movrUsdFeeFail + +celoUsdFeeFail + +xdaiUsdFeeFail + +auroraUsdFeeFail + +metisOut);
-    setPaidTokenTypes([ethToken, bnbToken,  opToken, maticToken, avaxToken, arbiToken, ftmToken, oneToken, movrToken, celoToken, xdaiToken, auroraToken, metisToken]);
+    setTotalSentTransactions(+eOut + +bscOut + +opOut + +maticOut + +avaxOut + +arbiOut + +ftmOut + +oneOut + +movrOut + +celoOut + +xdaiOut + +auroraOut + +metisOut + +bobaOut + +glmrOut);
+    setTotalFailedNumTransactions(+eOutFail + +bscOutFail + +opOutFail + +maticOutFail + +avaxOutFail + +arbiOutFail + +ftmOutFail + +oneOutFail + +movrOutFail + +celoOutFail + +xdaiOutFail + +auroraOutFail + +metisOut + +bobaOut + +glmrOut);
+    setTotalUsdFailedTotal(+eUsdFeeFail + +bscUsdFeeFail + +opUsdFeeFail + +maticUsdFeeFail + +avaxUsdFeeFail + +arbiUsdFeeFail + +ftmUsdFeeFail + +oneUsdFeeFail + +movrUsdFeeFail + +celoUsdFeeFail + +xdaiUsdFeeFail + +auroraUsdFeeFail + +metisOut + +bobaUsdFeeFail + +glmrUsdFeeFail);
+    setPaidTokenTypes([ethToken, bnbToken,  opToken, maticToken, avaxToken, arbiToken, ftmToken, oneToken, movrToken, celoToken, xdaiToken, auroraToken, metisToken, bobaToken, glmrToken]);
 
     setNormalGasUsd("$" + comma(formatter((tokenusd * standardgas * 65000 / 1e9).toFixed(2))));
     setFastGasUsd("$" + comma(formatter((tokenusd * fastgas * 65000 / 1e9).toFixed(2))));
@@ -1350,21 +1541,26 @@ export default function Main(props) {
     setMovrUsd(movrGasFeeTotal === undefined ? 0 : (formatter((movrtokenusd * movrGasFeeTotal / 1e18).toFixed(3))));
     setAuroraUsd(auroraGasFeeTotal === undefined ? 0 : (formatter((auroratokenusd * auroraGasFeeTotal / 1e18).toFixed(3))));
     setMetisUsd(metisGasFeeTotal === undefined ? 0 : (formatter((metistokenusd * metisGasFeeTotal / 1e18).toFixed(3))));
+    setBobaUsd(bobaGasFeeTotal === undefined ? 0 : (formatter((bobatokenusd * bobaGasFeeTotal / 1e18).toFixed(3))));
+    setGlmrUsd(metisGasFeeTotal === undefined ? 0 : (formatter((glmrtokenusd * glmrGasFeeTotal / 1e18).toFixed(3))));
     
 }
 
 
 const totalPaidTokenTypes = (<li className="fee-tokens">{[solToken, paidTokenTypes]}</li>);
-const totalGasFeeTotal = (+ethUsd + +bscUsd + +opUsd + +maticUsd + +avaxUsd + +ftmUsd + +arbiUsd + +oneUsd + +movrUsd + +celoUsd + +xdaiUsd + +auroraUsd  + +metisUsd + +solUsd).toFixed(2);
+const totalGasFeeTotal = (+ethUsd + +bscUsd + +opUsd + +maticUsd + +avaxUsd + +ftmUsd + +arbiUsd + +oneUsd + +movrUsd + +celoUsd + +xdaiUsd + +auroraUsd  + +metisUsd + +bobaUsd + +glmrUsd + +solUsd).toFixed(2);
 const totalSentTotal = (totalSentTransactions + +totalSentSol);
 const totalFailedNumTotal = (totalFailedNumTransactions + +totalFailedSol);
 const totalFailedCostTotal = ("$" + (totalUsdFailedTotal + +totalUsdFailedSol).toFixed(4));
+const totalWalletsTotal = (evmWallets + +terraWallets + +solWallets);
+const totalAverageUsdTransactionTotal = (totalGasFeeTotal / totalSentTotal);
 
 
 useEffect(() => {
   if (evmChainId !== undefined) {
-      getEvmTransactions(address);
-      console.log("getEvmTransactions was called")
+    getEvmTransactions(address);
+    setEvmWallets(1);
+    console.log("getEvmTransactions was called")
   } else {
     console.log("no chainID has arrived")
   }
@@ -1376,6 +1572,7 @@ useEffect(() => {
 useEffect(() => {
   if (terraAddress !== undefined) {
     getTerraTransactions(terraAddress);
+    setTerraWallets(1);
     console.log("getTerraTransactions was called")
   } else {
     console.log("no chainID has arrived")
@@ -1388,6 +1585,7 @@ useEffect(() => {
 useEffect(() => {
   if (solAddress !== undefined) {
     getSolTransactions(solAddress);
+    setSolWallets(1);
     console.log("getSolTransactions was called")
   } else {
     console.log("no chainID has arrived")
@@ -1416,6 +1614,8 @@ useEffect(() => {
               setMovr={movrUsd}
               setAurora={auroraUsd}
               setMetis={metisUsd}
+              setGlmr={glmrUsd}
+              setBoba={bobaUsd}
               setSol={solUsd}
               setReth={rEthUsd}
               />
@@ -1425,12 +1625,11 @@ useEffect(() => {
           </div>
           <div className="usage-panels">
             <div className="small-panel">paid fee token types: <p className="small-panel-feed"></p>{totalPaidTokenTypes}</div>
+            <div className="small-panel">number of address displayed: <p className="small-panel-feed">{totalWalletsTotal}</p></div>
             <div className="small-panel">total spent on gas: <p className="small-panel-feed">{("$" + comma(totalGasFeeTotal))}</p></div>
             <div className="small-panel">total transactions made: <p className="small-panel-feed">{totalSentTotal}</p></div>
-            <div className="small-panel">avarage transaction cost: <p className="small-panel-feed">{avarageGweiTotal}</p></div>
             <div className="small-panel">total transactions failed: <p className="small-panel-feed">{totalFailedNumTotal}</p></div>
             <div className="small-panel">failed cost: <p className="small-panel-feed">{totalFailedCostTotal}</p></div>
-            <div className="small-panel">gas prices: <p className="small-panel-feed"></p></div>
             <div className="small-panel">most recent address: <p >{props.recentAccount.newAddress}</p> </div>
           </div>
       </div>
@@ -1439,7 +1638,8 @@ useEffect(() => {
         <div className="chainSpecific-page">
           <LineChart 
             setPoint={sentNumTransactions}
-            setGasData={gasData}/>
+            setGasData={gasData}
+            setChainColor={chainColor}/>
           <Routes>
           <Route path="ethereum" element={<Ethereum />} />
           <Route path="binance" element={<BSC />} />
@@ -1461,6 +1661,8 @@ useEffect(() => {
           <Route path="moonriver" element={<Moonriver />} />
           <Route path="aurora" element={<Aurora />} />
           <Route path="metis" element={<Metis />} />
+          <Route path="boba" element={<Boba />} />
+          <Route path="glmr" element={<Glmr />} />
           <Route 
               path="home" 
               exact
@@ -1479,7 +1681,7 @@ useEffect(() => {
         <div className="small-panel">spent in native token: <p className="small-panel-feed">{nativeGasFeeTotal}</p></div>
         <div className="small-panel">spent on gas: <p className="small-panel-feed">{usdGasFeeTotal}</p></div>
         <div className="small-panel">transactions made: <p className="small-panel-feed">{sentNumTransactions}</p></div>
-        <div className="small-panel">avarage transaction cost: <p className="small-panel-feed">{avarageGweiTotal}</p></div>
+        <div className="small-panel">avarage transaction cost: <p className="small-panel-feed">{avarageUsdTotal}</p></div>
         <div className="small-panel">transactions failed: <p className="small-panel-feed">{failedNumTransactions}</p></div>
         <div className="small-panel">failed cost: <p className="small-panel-feed">{usdFailedTotal}</p></div>
         </div>

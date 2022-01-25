@@ -10,10 +10,12 @@ const LineChart = (props) => {
 
     const [points, setPoints] = useState({});
     const [gasData, setGasData] = useState({});
+    const [chainColor, setChainColor] = useState('#ffffff');
 
     useEffect(() => {
         setPoints(props.setPoint);
         setGasData(props.setGasData);
+        setChainColor(props.setChainColor);
     
         return () => {
           // console.log("gas fee data recieved", props.setPoint);
@@ -37,25 +39,17 @@ const LineChart = (props) => {
             labels: labels,
             datasets: [
                 {
-                label: 'gas price feed',
+                label: 'transaction fees',
                 data: datapoints,
-                borderColor: '#582a2a',
-                fill: false,
+                borderColor: (chainColor),
+                backgroundColor: (chainColor),
                 cubicInterpolationMode: 'monotone',
-                tension: 0.4
+                tension: 0,
+                fill: true,
+                pointStyle: 'circle',
+                pointRadius: 0,
+                borderWidth: 1,
                 }
-                // {
-                // label: 'coming',
-                // data: datapoints,
-                // borderColor: '#6f3832',
-                // fill: false,
-                // tension: 0.8
-                // }, {
-                // label: 'soon',
-                // data: datapoints,
-                // borderColor: '#864838',
-                // fill: false
-                // }
             ]
         })
     }
@@ -72,32 +66,27 @@ const LineChart = (props) => {
             <Line
             data={lineData}
             options= {{
+                scales: {
+                  xAxes: [{
+                    display: false,
+                  }],
+                  yAxes: [{
+                    display: false,
+                  }]
+                },
+                legend: {
+                  display: false,
+                },
                 responsive: true,
-                plugins: {
-                  title: {
-                    display: true
-                  },
+                tooltips:{
+                  intersect: false,
+                  enabled: true,
+                  mode: 'nearest',
+                  position: 'nearest',
                 },
                 interaction: {
                   intersect: false,
                 },
-                scales: {
-                  x: {
-                    display: true,
-                    title: {
-                      display: true
-                    }
-                  },
-                  y: {
-                    display: true,
-                    title: {
-                      display: true,
-                      text: 'Value'
-                    },
-                    suggestedMin: -10,
-                    suggestedMax: 200
-                  }
-                }
               }}
               />
         </div>

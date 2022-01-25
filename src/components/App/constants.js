@@ -19,6 +19,10 @@ import { ReactComponent as XdaiIcon } from '../../assets/icons/gnosis.svg';
 import { ReactComponent as MovrIcon } from '../../assets/icons/moonriver.svg';
 import { ReactComponent as AuroraIcon } from '../../assets/icons/aurora-near.svg';
 import { ReactComponent as MetisIcon } from '../../assets/icons/metis.svg';
+import { ReactComponent as BobaIcon } from '../../assets/icons/boba.svg';
+import { ReactComponent as OECIcon } from '../../assets/icons/OEC.svg';
+import { ReactComponent as MoonbeamIcon } from '../../assets/icons/moonbeam.svg';
+import { ReactComponent as HecoIcon } from '../../assets/icons/heco.svg';
 import { ReactComponent as EthIcon } from '../../../node_modules/cryptocurrency-icons/svg/color/eth.svg';
 import { ReactComponent as MaticIcon } from '../../../node_modules/cryptocurrency-icons/svg/color/matic.svg';
 import { ReactComponent as AtomIcon } from '../../../node_modules/cryptocurrency-icons/svg/color/atom.svg';
@@ -60,6 +64,10 @@ export const GNOSIS_ICON = XdaiIcon;
 export const MOVR_ICON = MovrIcon;
 export const AURORA_ICON = AuroraIcon;
 export const METIS_ICON = MetisIcon;
+export const BOBA_ICON = BobaIcon;
+export const OEC_ICON = OECIcon;
+export const GLMR_ICON = MoonbeamIcon;
+export const HECO_ICON = HecoIcon;
 export const ETH_ICON = EthIcon;
 export const MATIC_ICON = MaticIcon;
 export const ATOM_ICON = AtomIcon;
@@ -77,6 +85,7 @@ export const COSMOST_ICON = CosmoStIcon;
 export const XDEFI_ICON = XdefiIcon;
 export const CLOVER_ICON = CloverIcon;
 export const CBW_ICON = CbWalletIcon;
+
 
 
 

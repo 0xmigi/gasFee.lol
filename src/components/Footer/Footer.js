@@ -48,6 +48,11 @@ export default function Footer() {
                 </div>
                 <div className="footer-content">
                     <div className="footer-text">
+                        <div className="f-text">
+                        any feedback pls DM 
+                        </div>
+                    </div>
+                    <div className="footer-text">
                         <a
                         href={GITHUB_LINK}
                         target={githubLogo}

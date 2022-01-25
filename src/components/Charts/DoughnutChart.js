@@ -23,6 +23,8 @@ const DoughnutChart = (props) => {
   const [adaGasFees, setAdaGasFees] = useState({});
   const [dotGasFees, setDotGasFees] = useState({});
   const [metisGasFees, setMetisGasFees] = useState({});
+  const [bobaGasFees, setBobaGasFees] = useState({});
+  const [glmrGasFees, setGlmrGasFees] = useState({});
   const [wavesGasFees, setWavesGasFees] = useState({});
   const [algoGasFees, setAlgoGasFees] = useState({});
   
@@ -46,6 +48,8 @@ const DoughnutChart = (props) => {
     setMovrGasFees(props.setMovr);
     setAuroraGasFees(props.setAurora);
     setMetisGasFees(props.setMetis);
+    setBobaGasFees(props.setBoba);
+    setGlmrGasFees(props.setGlmr);
     setSolGasFees(props.setSol);
 
     setRethGasFees(props.setReth);
@@ -59,12 +63,12 @@ const DoughnutChart = (props) => {
   const data = () => {
     setChartData({
       type: 'doughnut',
-      labels: ['Ethereum', 'BSC', 'Polygon', 'Optimism', 'Arbitrum', 'xDai', 'Avalanche', 'Fantom', 'Celo', 'Harmony One', 'Moonriver', 'Aurora', 'Metis', 'Cosmos', 'Solana', 'Luna', 'Cardano', 'Polkadot'
+      labels: ['Ethereum', 'BSC', 'Polygon', 'Optimism', 'Arbitrum', 'xDai', 'Avalanche', 'Fantom', 'Celo', 'Harmony One', 'Moonriver', 'Aurora', 'Metis', 'Boba', 'Moonbeam', 'Cosmos', 'Solana', 'Luna', 'Cardano', 'Polkadot'
               // , 'Waves', 'Algorand'
               ],
       datasets: [{
         label: '$ gas spent',
-        data: [(ethGasFees), (bscGasFees), (maticGasFees), (opGasFees), (arbiGasFees), (xdaiGasFees), (avaxGasFees), (ftmGasFees), (celoGasFees), (oneGasFees), (movrGasFees), (auroraGasFees), (metisGasFees), (atomGasFees), (solGasFees), (lunaGasFees), (adaGasFees), (dotGasFees)],
+        data: [(ethGasFees), (bscGasFees), (maticGasFees), (opGasFees), (arbiGasFees), (xdaiGasFees), (avaxGasFees), (ftmGasFees), (celoGasFees), (oneGasFees), (movrGasFees), (auroraGasFees), (metisGasFees), (bobaGasFees), (glmrGasFees), (atomGasFees), (solGasFees), (lunaGasFees), (adaGasFees), (dotGasFees)],
         backgroundColor: [
           '#582a2a',
           '#6f3832',
@@ -81,13 +85,19 @@ const DoughnutChart = (props) => {
           '#64c987',
           '#23aa8f',
           '#00898a',
-          '#176877',
-          '#2a4858',
-          '#213c5d',
+          '#007d8b',
+          // '#00708a',
+          '#006286',
+          // '#00557f',
+          '#114775',
+          '#273968',
           '#322a58',
         ],
         borderWidth: 0.5,
         borderColor: [
+          '#141414',
+          '#141414',
+          '#141414',
           '#141414',
           '#141414',
           '#141414',
@@ -114,7 +124,7 @@ const DoughnutChart = (props) => {
 
   useEffect(() => {
     data()
-  }, [ethGasFees, bscGasFees, maticGasFees, opGasFees, arbiGasFees, xdaiGasFees, avaxGasFees, ftmGasFees, celoGasFees, oneGasFees, movrGasFees, auroraGasFees, metisGasFees, rethGasFees, atomGasFees, solGasFees, lunaGasFees, adaGasFees])
+  }, [ethGasFees, bscGasFees, maticGasFees, opGasFees, arbiGasFees, xdaiGasFees, avaxGasFees, bobaGasFees, glmrGasFees, ftmGasFees, celoGasFees, oneGasFees, movrGasFees, auroraGasFees, metisGasFees, rethGasFees, atomGasFees, solGasFees, lunaGasFees, adaGasFees])
 
 
   return (
