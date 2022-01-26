@@ -425,6 +425,23 @@
   justify-content: flex-end;
 }
 
+.small-pepe {
+  width: auto;
+  height: 80px;
+  margin: 5px;
+  padding: 60px;
+  min-width: fit-content;
+  flex-grow: 1;
+  flex-basis: 200px;
+  background-color: rgb(168, 74, 74);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  transition: height var(--speed) ease;
+  font-size: 12px;
+  font-weight: 600;
+  z-index: 990;
+}
+
 .plus-ultra {
   position: fixed;
   display: flex;
@@ -532,7 +549,7 @@
 
 .icon-button-nft:hover {
   background-color: rgb(155, 53, 53);
-  --text-color: black;
+  --text-color: #000000;
   padding: 6px;
 }
 
@@ -547,7 +564,7 @@
   width: var(--button-size);
   height: var(--button-size);
   /* background-color: #484a4d; */
-  border-radius: 50%;
+  /* border-radius: 50%; */
   padding: 0px;
   padding-left: 5px;
   margin: 2px;
@@ -555,7 +572,7 @@
   align-items: center;
   justify-content: center;
   transition: filter 300ms;
-  fill: var(--text-color);
+  /* fill: var(--text-color); */
   width: 25px;
   height: 25px;
 }
@@ -591,6 +608,7 @@
   height: 40px;
   display: flex;
   margin: 2px;
+  cursor: pointer;
   align-items: center;
   background-color: #141414;
   border-radius: var(--border-radius);

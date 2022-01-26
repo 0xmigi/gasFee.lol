@@ -1,5 +1,7 @@
 // chain icons
 import { ReactComponent as CogIcon } from '../../assets/icons/cog.svg';
+import { ReactComponent as CopyIcon } from '../../assets/icons/copyIcon.svg';
+import { ReactComponent as LightIcon } from '../../assets/icons/lightmode.svg';
 import { ReactComponent as ChevronIcon } from '../../assets/icons/chevron.svg';
 import { ReactComponent as ArrowIcon } from '../../assets/icons/arrow.svg';
 import { ReactComponent as BoltIcon } from '../../assets/icons/bolt.svg';
@@ -45,6 +47,8 @@ import { ReactComponent as CloverIcon } from '../../assets/icons/clover.svg';
 
 
 export const COG_ICON = CogIcon;
+export const COPY_ICON = CopyIcon;
+export const LIGHTMODE_ICON = LightIcon
 export const CHEVRON_ICON = ChevronIcon;
 export const ARROW_ICON = ArrowIcon;
 export const BOLT_ICON = BoltIcon;

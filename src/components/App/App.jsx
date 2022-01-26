@@ -5,6 +5,7 @@ import './App.css';
 import { ReactComponent as CaretIcon } from '../../assets/icons/caret.svg';
 import { ReactComponent as McPepeIcon } from '../../assets/icons/mcPepeSmol.svg';
 import mcPepe from '../../assets/icons/mcPepeSmol.png';
+import Home from '../Home/Home';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
@@ -78,8 +79,9 @@ export default function App(props) {
         <div className="plus-ultra">
           <div className="plus-ultra-panel">
             <p className="plus-ultra-text">+Ultra NFTs coming soon, a generative svg NFT based on your unfortunate transaction history, served fresh on Optimism or Polygon</p>
-          <img src={mcPepe} alt="McPepe"/>
-          <div className="sub-ultra-text">meanwhile, support the chefs down at McPepe's kitchen, anon:<br/> any EVM chain<p className="plus-ultra-text">0x2b3Ca2178e0dF323f413a8402eEF04Df8E5b8e3C</p></div>
+            <div className="small-pepe">
+              <img src={mcPepe} alt="McPepe"/>
+            </div>
           </div>
         </div>
       );

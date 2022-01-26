@@ -1694,13 +1694,8 @@ useEffect(() => {
           <Route path="boba" element={<Boba />} />
           <Route path="glmr" element={<Glmr />} />
           <Route path="heco" element={<Heco />} />
-          <Route 
-              path="home" 
-              exact
-              element={
-              <Home />
-              }
-          />
+          <Route path="home" element={<Home />} />
+          <Route path="" element={<div className="about-chain">Chain history</div>}/>
           </Routes>
         </div>
         <div className="usage-panels">

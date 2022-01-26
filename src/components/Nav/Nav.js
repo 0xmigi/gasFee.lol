@@ -12,8 +12,7 @@ import { ConnectType, useWallet } from '@terra-money/wallet-provider';
 import { ethers } from 'ethers';
 import { walletlink } from '../Connections/Button';
 import { useChain } from "react-moralis";
-import { ALGO_ICON, ARBI_ICON, ARROW_ICON, ATOM_ICON, AURORA_ICON, AVAX_ICON, BOBA_ICON, BONIFIDA_ICON, BSC_ICON, CBW_ICON, CELO_ICON, CLOVER_ICON, COG_ICON, COIN98_ICON, COSMOST_ICON, DOT_ICON, ETH_ICON, FTM_ICON, GNOSIS_ICON, GLMR_ICON, HECO_ICON, KEPLR_ICON, LUNA_ICON, MATIC_ICON, METIS_ICON, MM_ICON, MOVR_ICON, OEC_ICON, ONE_ICON, OP_ICON, PHANTOM_ICON, RABBY_ICON, SOL_ICON, TSTATION_ICON, WAVE_ICON, WC_ICON, XDEFI_ICON } from '../App/constants';
-
+import { LIGHTMODE_ICON, ALGO_ICON, ARBI_ICON, ARROW_ICON, ATOM_ICON, AURORA_ICON, AVAX_ICON, BOBA_ICON, BONIFIDA_ICON, BSC_ICON, CBW_ICON, CELO_ICON, CLOVER_ICON, COG_ICON, COIN98_ICON, COSMOST_ICON, DOT_ICON, ETH_ICON, FTM_ICON, GNOSIS_ICON, GLMR_ICON, HECO_ICON, KEPLR_ICON, LUNA_ICON, MATIC_ICON, METIS_ICON, MM_ICON, MOVR_ICON, OEC_ICON, ONE_ICON, OP_ICON, PHANTOM_ICON, RABBY_ICON, SOL_ICON, TSTATION_ICON, WAVE_ICON, WC_ICON, XDEFI_ICON, COPY_ICON} from '../App/constants';
 export default function Nav(props) {
 
 
@@ -573,6 +572,20 @@ const coin98Connect = () => (
   </button>
 );
 
+const lightMode = () => (
+  <button
+    // onClick={Chains()}
+    className="address-display"
+    >
+      Light
+      <div className="soon-width">
+        <div className="soon">
+            soon
+        </div>
+      </div>
+  </button>
+);
+
 const phantomConnect = () => (
       <button
          onClick={connectWallet}
@@ -581,6 +594,41 @@ const phantomConnect = () => (
            Phantom
       </button>
 );
+
+const [copySuccess, setCopySuccess] = useState(false);
+
+const donateButton = () => {
+
+  return (
+    <div className="donate-box">
+      <div className="donate-panel">
+        donations are appreciated ❤️ any EVM chain
+      </div>
+      <div className="copy-address">
+        {<div>
+            <button 
+              className="donate-button"
+              // onMouseLeave={setCopySuccess(false)}
+              onClick={() =>  {
+                navigator.clipboard.writeText('0x2b3Ca2178e0dF323f413a8402eEF04Df8E5b8e3C');
+                setCopySuccess(true);
+              }}
+              >
+                { copySuccess === true ? '👍' : <COPY_ICON/>}
+            </button> 
+          </div>
+        }
+        <div>
+          <div
+            className="donate-bar"
+            >
+              {_.truncate('0x2b3Ca2178e0dF323f413a8402eEF04Df8E5b8e3C', { 'length': 30 })}
+            </div>
+        </div>
+      </div>
+    </div> 
+  );
+}
 
 
 
@@ -639,6 +687,14 @@ const PasteAddressConnect = () => {
         <span className="icon-button-chain">{props.leftIcon}</span>
         {props.children}
         
+      </div>
+    );
+  }
+
+  function DropdownDonate(props) {
+    return (
+      <div href="#" className="donate-item" onClick={() => props.goToMenu && setActiveMenu(props.goToMenu)}>
+        {props.children}
       </div>
     );
   }
@@ -836,7 +892,7 @@ const PasteAddressConnect = () => {
         onEnter={calcHeight}>
         <div className="menu">
           <DropdownItem goToMenu="main" leftIcon={<ARROW_ICON />}>
-            <h2>choose a wallet</h2>
+            <h3>chains</h3>
           </DropdownItem>
           <DropdownItem leftIcon={<MM_ICON/>}>{metaMaskConnect()}</DropdownItem>
           <DropdownItem leftIcon={<WC_ICON />}>{walletConnect()}</DropdownItem>
@@ -854,7 +910,7 @@ const PasteAddressConnect = () => {
         onEnter={calcHeight}>
         <div className="menu">
           <DropdownItem goToMenu="main" leftIcon={<ARROW_ICON />}>
-            <h2>choose a wallet</h2>
+            <h3>chains</h3>
           </DropdownItem>
           <DropdownItem leftIcon={<PHANTOM_ICON />}>{!walletAddress && phantomConnect()}</DropdownItem>
           <DropdownItem leftIcon={<BONIFIDA_ICON />}>{!walletAddress && phantomConnect()}</DropdownItem>
@@ -870,7 +926,7 @@ const PasteAddressConnect = () => {
         onEnter={calcHeight}>
         <div className="menu">
           <DropdownItem goToMenu="main" leftIcon={<ARROW_ICON />}>
-            <h2>choose a wallet</h2>
+            <h3>chains</h3>
           </DropdownItem>
           <DropdownItem leftIcon={<TSTATION_ICON />}>{terraStConnect()}</DropdownItem>
           <DropdownItem leftIcon={<WC_ICON/>}>{walletConnect()}</DropdownItem>
@@ -887,7 +943,7 @@ const PasteAddressConnect = () => {
         onEnter={calcHeight}>
         <div className="menu">
           <DropdownItem goToMenu="main" leftIcon={<ARROW_ICON />}>
-            <h2>choose a wallet</h2>
+            <h3>chains</h3>
           </DropdownItem>
           <DropdownItem leftIcon={<KEPLR_ICON />}>{keplrConnect()}</DropdownItem>
           <DropdownItem leftIcon={<COSMOST_ICON />}>{cosmoStConnect()}</DropdownItem>
@@ -904,7 +960,7 @@ const PasteAddressConnect = () => {
         onEnter={calcHeight}>
         <div className="menu">
           <DropdownItem goToMenu="main" leftIcon={<ARROW_ICON />}>
-            <h2>choose a wallet</h2>
+            <h3>chains</h3>
           </DropdownItem>
           <DropdownItem leftIcon={<MM_ICON />}>{metaMaskConnect()}</DropdownItem>
           <DropdownItem leftIcon={<WC_ICON />}>{walletConnect()}</DropdownItem>
@@ -922,9 +978,11 @@ const PasteAddressConnect = () => {
         onEnter={calcHeight}>
         <div className="menu">
           <DropdownItem goToMenu="main" leftIcon={<ARROW_ICON />}>
-            <h2>coming soon</h2>
+            <h3>chains</h3>
           </DropdownItem>
-          <DropdownItem leftIcon={<WC_ICON />}>{<WalletConnectButton />}</DropdownItem>
+          {/* <DropdownItem leftIcon={<WC_ICON />}>{<WalletConnectButton />}</DropdownItem> */}
+          <DropdownItem leftIcon={<LIGHTMODE_ICON />}>{lightMode()}</DropdownItem>
+          <DropdownDonate>{donateButton()}</DropdownDonate>
         </div>
       </CSSTransition>
     </div>

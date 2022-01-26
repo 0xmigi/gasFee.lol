@@ -39,7 +39,7 @@ const LineChart = (props) => {
             labels: labels,
             datasets: [
                 {
-                label: 'transaction fees',
+                label: 'transaction fee',
                 data: datapoints,
                 borderColor: (chainColor),
                 backgroundColor: (chainColor),
