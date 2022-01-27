@@ -376,6 +376,8 @@ let chainColor = props.recentAccount.chainColor;
     // let metistokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=metis-token&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
     let rethtokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
 
+    console.log(ethtokenusd);
+
     ethtokenusd = ethtokenusd["ethereum"].usd;
     bsctokenusd = bsctokenusd["binancecoin"].usd;
     optokenusd = optokenusd["ethereum"].usd;
