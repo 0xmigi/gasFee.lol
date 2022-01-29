@@ -37,15 +37,15 @@ import LineChart from '../Charts/LineChart';
 import { chain } from 'lodash';
 import { ETH_ICON, BNB_ICON, OP_ICON, MATIC_ICON, AVAX_ICON, ARBI_ICON, FTM_ICON, ONE_ICON, MOVR_ICON, SOL_ICON, CELO_ICON, GNOSIS_ICON, AURORA_ICON, METIS_ICON, BOBA_ICON, GLMR_ICON, HECO_ICON} from '../App/constants';
 
-export const ETHERSCAN_KEY = "KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD";
-export const OPTISCAN_KEY = "84EIKB5YSF17UHZK2778T1HM3Q8DPN6F29";
-export const BSCSCAN_KEY = "UWB7YUCVQXT7TGFK41TNJSJBIHDQ1JGU9D";
-export const POLYGONSCAN_KEY = "QDPWKASEUSSYTKX9ZVMSSQGX4PTCZGHNC8";
-export const SNOWTRACE_KEY = "78X9UB1WYTRQQ9Q2G53TR6XQ8P662BDVVK";
-export const FTMSCAN_KEY = "B5UU3GDR3VJYVXFYT6RPK5RA6I8J5CV6B3";
-export const MOONSCAN_KEY = "54HHCHQRAEXBCTS2ZVTSJ991Q34MDB2CRD";
-export const ARBISCAN_KEY = "3S4P8WRXX34R5DVCCRG3GECVF5SFV5U3QW";
-export const HECOSCAN_KEY = "JIY4B62CFZBZMBVJS21TCX4U4NVGB84CVC";
+const ETHERSCAN_KEY = process.env.ETHERSCAN_KEY;
+const OPTISCAN_KEY = process.env.OPTISCAN_KEY;
+const BSCSCAN_KEY = process.env.BSCSCAN_KEY;
+const POLYGONSCAN_KEY = process.env.POLYGONSCAN_KEY;
+const SNOWTRACE_KEY = process.env.SNOWTRACE_KEY;
+const FTMSCAN_KEY = process.env.FTMSCAN_KEY;
+const MOONSCAN_KEY = process.env.MOONSCAN_KEY;
+const ARBISCAN_KEY = process.env.ARBISCAN_KEY;
+const HECOSCAN_KEY = process.env.HECOSCAN_KEY;
 
 
 
@@ -1244,13 +1244,14 @@ let chainColor = props.recentAccount.chainColor;
       ftmOutFail = 0;
       ftmUsdFeeFail = 0;
     };
+    let oneGasUsed;
     if (oneOut > 0) {
-      let gasUsed = onetxsOut.map((value) => value.hash);
-      console.log("txnN is", gasUsed);
+      oneGasUsed = onetxsOut.map((value) => value.hash);
+      console.log("oneGasUsed is", oneGasUsed);
 
       const gasUsedArr = async () => {
         return Promise.all(
-          gasUsed.map(async (item, index, array) => {
+          oneGasUsed.map(async (item, index, array) => {
 
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
@@ -1281,17 +1282,17 @@ let chainColor = props.recentAccount.chainColor;
         );
       };
 
-      gasUsed = await gasUsedArr();
-      console.log("gasUsed is", gasUsed);
+      oneGasUsed = await gasUsedArr();
+      console.log("oneGasUsed is", oneGasUsed);
 
-      var gasUsedTotal = gasUsed.reduce((partial_sum, a) => partial_sum + a, 0);
+      var gasUsedTotal = oneGasUsed.reduce((partial_sum, a) => partial_sum + a, 0);
       var gasPrice = onetxsOut.map((value) => parseInt(value.gasPrice));
       var gasPriceMin = Math.min(...gasPrice);
       var gasPriceMax = Math.max(...gasPrice);
       var gasPriceTotal = gasPrice.reduce((partial_sum, a) => partial_sum + a, 0);
-      var gasFee = multiply(gasPrice, gasUsed);
+      var gasFee = multiply(gasPrice, oneGasUsed);
       var oneGasFeeTotal = gasFee.reduce((partial_sum, a) => partial_sum + a, 0);
-      var gasUsedFail = onetxsOutFail.map((value) => parseInt(value.gasUsed));
+      var gasUsedFail = onetxsOutFail.map((value) => parseInt(value.oneGasUsed));
       var gasPriceFail = onetxsOutFail.map((value) => parseInt(value.gasPrice));
       var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
       var oneFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a, 0);
@@ -1497,6 +1498,7 @@ let chainColor = props.recentAccount.chainColor;
       txsOut = txsOut.map(({ confirmations, ...item }) => item);
       txsOut = new Set(txsOut.map(JSON.stringify));
       txsOut = Array.from(txsOut).map(JSON.parse);
+      console.log("txsOut ", txsOut);
   
       var nOut = txsOut.length;
       var txsOutFail = $.grep(txsOut, function(v) {
@@ -1537,6 +1539,8 @@ let chainColor = props.recentAccount.chainColor;
       setNativeGasFeeTotal("ONE" + comma((oneGasFeeTotal / 1e18).toFixed(3)));
       setUsdGasFeeTotal("$" + comma(formatter(((onetokenusd * oneGasFeeTotal) / 1e18).toFixed(4))));
       setSentNumTransactions((oneOut));
+      setGasData(oneGasUsed);
+      console.log("gas used for harmony is", oneGasUsed);
       // setGweiTotal(comma(formatter(gasUsedTotal)));
       setAvarageUsdTotal("$" + comma((((onetokenusd * oneGasFeeTotal) / 1e18) / oneOut).toFixed(1)));
       setFailedNumTransactions(comma(oneOutFail));
