@@ -1397,7 +1397,7 @@ let chainColor = props.recentAccount.chainColor;
       var bobaGasFeeTotal = gasFee.reduce((partial_sum, a) => partial_sum + a,0); 
 
       var gasUsedFail = bobatxsOutFail.map(value => parseInt(value.gasUsed));
-      var gasPriceFail = metistxsOutFail.map(value => parseInt(value.gasPrice));
+      var gasPriceFail = bobatxsOutFail.map(value => parseInt(value.gasPrice));
       var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
       var bobaFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
       var bobaUsdFeeFail = (bobaFeeTotalFail * bobatokenusd / 1e18);
@@ -1425,9 +1425,9 @@ let chainColor = props.recentAccount.chainColor;
       glmrToken = <div className="token-types"><GLMR_ICON height={"20px"} width={"20px"}/></div>
 
     } else {
-      metisOut = 0;
-      metisOutFail = 0;
-      metisUsdFeeFail = 0;
+      glmrOut = 0;
+      glmrOutFail = 0;
+      glmrUsdFeeFail = 0;
     };
     if (hecoOut > 0) {
       var gasUsed = hecotxsOut.map(value => parseInt(value.gasUsed));
@@ -1450,6 +1450,7 @@ let chainColor = props.recentAccount.chainColor;
       hecoOutFail = 0;
       hecoUsdFeeFail = 0;
     };
+    console.log("usdFeeFail is", bobaUsdFeeFail);
 
 
     if (evmChainId !== "0x63564c40") {
@@ -1460,7 +1461,7 @@ let chainColor = props.recentAccount.chainColor;
       if (chainConfig[evmChainId].key) { u += `&apikey=${key}` }
   
       let response = await fetch(u);
-      console.log("u is", response);
+      // console.log("u is", response);
   
   
       if (response.ok) { // if HTTP-status is 200-299
@@ -1498,7 +1499,6 @@ let chainColor = props.recentAccount.chainColor;
       txsOut = txsOut.map(({ confirmations, ...item }) => item);
       txsOut = new Set(txsOut.map(JSON.stringify));
       txsOut = Array.from(txsOut).map(JSON.parse);
-      console.log("txsOut ", txsOut);
   
       var nOut = txsOut.length;
       var txsOutFail = $.grep(txsOut, function(v) {
@@ -1552,7 +1552,7 @@ let chainColor = props.recentAccount.chainColor;
 
     setTotalSentTransactions(+eOut + +bscOut + +opOut + +maticOut + +avaxOut + +arbiOut + +ftmOut + +oneOut + +movrOut + +celoOut + +xdaiOut + +auroraOut + +metisOut + +bobaOut + +glmrOut + +hecoOut);
     setTotalFailedNumTransactions(+eOutFail + +bscOutFail + +opOutFail + +maticOutFail + +avaxOutFail + +arbiOutFail + +ftmOutFail + +oneOutFail + +movrOutFail + +celoOutFail + +xdaiOutFail + +auroraOutFail + +metisOut + +bobaOut + +glmrOut + +hecoOut);
-    setTotalUsdFailedTotal(+eUsdFeeFail + +bscUsdFeeFail + +opUsdFeeFail + +maticUsdFeeFail + +avaxUsdFeeFail + +arbiUsdFeeFail + +ftmUsdFeeFail + +oneUsdFeeFail + +movrUsdFeeFail + +celoUsdFeeFail + +xdaiUsdFeeFail + +auroraUsdFeeFail + +metisOut + +bobaUsdFeeFail + +glmrUsdFeeFail + +hecoUsdFeeFail);
+    setTotalUsdFailedTotal(+eUsdFeeFail + +bscUsdFeeFail + +opUsdFeeFail + +maticUsdFeeFail + +avaxUsdFeeFail + +arbiUsdFeeFail + +ftmUsdFeeFail + +oneUsdFeeFail + +movrUsdFeeFail + +celoUsdFeeFail + +xdaiUsdFeeFail + +auroraUsdFeeFail + +metisUsdFeeFail + +bobaUsdFeeFail + +glmrUsdFeeFail + +hecoUsdFeeFail);
     setPaidTokenTypes([ethToken, bnbToken,  opToken, maticToken, avaxToken, arbiToken, ftmToken, oneToken, movrToken, celoToken, xdaiToken, auroraToken, metisToken, bobaToken, glmrToken, hecoToken]);
 
     setNormalGasUsd("$" + comma(formatter((tokenusd * standardgas * 65000 / 1e9).toFixed(2))));

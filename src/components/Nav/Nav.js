@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 
 import { Link } from 'react-router-dom';
+import ENS, { getEnsAddress } from '@ensdomains/ensjs'
 import { WalletConnectButton } from '../Connections/Button';
 // import { NETWORKS } from 'react-router-dom';
 import './nav.css';
@@ -634,6 +635,7 @@ const donateButton = () => {
 
 const PasteAddressConnect = () => {
   const [inputAddress, setInputAddress] = useState("paste address");
+  // const ens = new ENS({ ensAddress: getEnsAddress('1') })
   let newValue;
 
   let displayAddress = (event) => {
@@ -654,6 +656,11 @@ const PasteAddressConnect = () => {
       props.setRecentAccount({ activeChain, newAddress, chainColor });
     }
   }
+
+
+  // ens.name('resolver.eth').getAddress()
+
+  // console.log("ens address is", ens);
 
 
   return (
