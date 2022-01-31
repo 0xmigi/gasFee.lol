@@ -313,19 +313,19 @@ let chainColor = props.recentAccount.chainColor;
 
     const chainConfig = [{}]
 
-    chainConfig['0x1'] = {id: '0x1', shortname: 'eth', name:'Ethereum', symbol: 'eth', coingecko_name: 'ethereum', token: 'eth', color: '#582a2a', explorer_uri: 'https://api.etherscan.io', key: `${ETHERSCAN_KEY}`}
-    chainConfig['0x38'] = {id: '0x38', shortname: 'bsc', name:'Binance Smart Chain', symbol: 'bnb', coingecko_name: 'binancecoin', token: 'bsc', color: "#f4ce03", explorer_uri: 'https://api.bscscan.com', key: `${BSCSCAN_KEY}`}
-    chainConfig['0x64'] = {id: '0x64', shortname: 'xdai', name:'xDai', symbol: 'xdai', coingecko_name: 'gnosis', token: 'gno', color: '#48a9a6', explorer_uri: 'https://blockscout.com/xdai/mainnet'}
-    chainConfig['0x89'] = {id: '0x89', shortname: 'matic', name:'Polygon', symbol: 'matic', coingecko_name: 'matic-network', token: 'matic', color: '#9d03f4', explorer_uri: 'https://api.polygonscan.com', key: `${POLYGONSCAN_KEY}`}
-    chainConfig['0xfa'] = {id: '0xfa', shortname: 'ftm', name:'Fantom', symbol: 'ftm', coingecko_name: 'fantom', token: 'ƒtm', color: '#00dbff', explorer_uri: 'https://api.ftmscan.com', key: `${FTMSCAN_KEY}`}
-    chainConfig['0xa86a'] = {id: '0xa86a', shortname: 'avax', name:'Avalanche', symbol: 'avax', coingecko_name: 'avalanche-2', token: 'avax', color: '#ec1616', explorer_uri: 'https://api.snowtrace.io', key: `${SNOWTRACE_KEY}`}
+    chainConfig['0x1'] = {id: '0x1', shortname: 'eth', name:'Ethereum', symbol: 'eth', coingecko_name: 'ethereum', token: 'eth', explorer_uri: 'https://api.etherscan.io', key: `${ETHERSCAN_KEY}`}
+    chainConfig['0x38'] = {id: '0x38', shortname: 'bsc', name:'Binance Smart Chain', symbol: 'bnb', coingecko_name: 'binancecoin', token: 'bsc', explorer_uri: 'https://api.bscscan.com', key: `${BSCSCAN_KEY}`}
+    chainConfig['0x64'] = {id: '0x64', shortname: 'xdai', name:'xDai', symbol: 'xdai', coingecko_name: 'gnosis', token: 'gno', explorer_uri: 'https://blockscout.com/xdai/mainnet'}
+    chainConfig['0x89'] = {id: '0x89', shortname: 'matic', name:'Polygon', symbol: 'matic', coingecko_name: 'matic-network', token: 'matic', explorer_uri: 'https://api.polygonscan.com', key: `${POLYGONSCAN_KEY}`}
+    chainConfig['0xfa'] = {id: '0xfa', shortname: 'ftm', name:'Fantom', symbol: 'ftm', coingecko_name: 'fantom', token: 'ƒtm', explorer_uri: 'https://api.ftmscan.com', key: `${FTMSCAN_KEY}`}
+    chainConfig['0xa86a'] = {id: '0xa86a', shortname: 'avax', name:'Avalanche', symbol: 'avax', coingecko_name: 'avalanche-2', token: 'avax', explorer_uri: 'https://api.snowtrace.io', key: `${SNOWTRACE_KEY}`}
     chainConfig['0x63564c40'] = {id: '0x63564c40', shortname: 'one', name:'Harmoney One', symbol: 'one', coingecko_name: 'harmony', token: 'one', color: '#ec1616', explorer_uri: 'https://api.harmony.one'}
-    chainConfig['0xa4ec'] = {id: '0xa4ec', shortname: 'celo', name:'Celo', symbol: 'celo', coingecko_name: 'celo', token: 'celo', color: '#ec1616', explorer_uri: 'https://explorer.celo.org'}
-    chainConfig['0xa4b1'] = {id: '0xa4b1', shortname: 'arbi', name:'Arbitrum', symbol: 'aeth', coingecko_name: 'ethereum', token: 'aeth', color: '#ec1616', explorer_uri: 'https://api.arbiscan.io', key: `${ARBISCAN_KEY}`}
-    chainConfig['0x505'] = {id: '0x505', shortname: 'movr', name:'Moonriver', symbol: 'movr', coingecko_name: 'moonriver', token: 'movr', color: '#ec1690', explorer_uri: 'https://api-moonriver.moonscan.io', key: `${MOONSCAN_KEY}`}
-    chainConfig['0x4e45152'] = {id: '0x4e45152', shortname: 'aurora', name:'Aurora', symbol: 'aurora', coingecko_name: 'aurora-near', token: 'aurora', color: '#ec1616', explorer_uri: 'https://explorer.mainnet.aurora.dev'}
-    chainConfig['0xa'] = {id: '0xa', shortname: 'op', name:'Optimism', symbol: 'oeth', coingecko_name: 'ethereum', token: 'oeth', color: '#ec8816', explorer_uri: 'https://api-optimistic.etherscan.io', key: `${OPTISCAN_KEY}`}
-    chainConfig['0x440'] = {id: '0x440', shortname: 'metis', name:'Metis', symbol: 'metis', coingecko_name: 'metis-token', token: 'metis', color: '#ec8816', explorer_uri: 'https://andromeda-explorer.metis.io'}
+    chainConfig['0xa4ec'] = {id: '0xa4ec', shortname: 'celo', name:'Celo', symbol: 'celo', coingecko_name: 'celo', token: 'celo', explorer_uri: 'https://explorer.celo.org'}
+    chainConfig['0xa4b1'] = {id: '0xa4b1', shortname: 'arbi', name:'Arbitrum', symbol: 'aeth', coingecko_name: 'ethereum', token: 'aeth', explorer_uri: 'https://api.arbiscan.io', key: `${ARBISCAN_KEY}`}
+    chainConfig['0x505'] = {id: '0x505', shortname: 'movr', name:'Moonriver', symbol: 'movr', coingecko_name: 'moonriver', token: 'movr', explorer_uri: 'https://api-moonriver.moonscan.io', key: `${MOONSCAN_KEY}`}
+    chainConfig['0x4e45152'] = {id: '0x4e45152', shortname: 'aurora', name:'Aurora', symbol: 'aurora', coingecko_name: 'aurora-near', token: 'aurora', explorer_uri: 'https://explorer.mainnet.aurora.dev'}
+    chainConfig['0xa'] = {id: '0xa', shortname: 'op', name:'Optimism', symbol: 'oeth', coingecko_name: 'ethereum', token: 'oeth', explorer_uri: 'https://api-optimistic.etherscan.io', key: `${OPTISCAN_KEY}`}
+    chainConfig['0x440'] = {id: '0x440', shortname: 'metis', name:'Metis', symbol: 'metis', coingecko_name: 'metis-token', token: 'metis', explorer_uri: 'https://andromeda-explorer.metis.io'}
     chainConfig['0x120'] = {id: '0x120', shortname: 'boba', name:'Boba', symbol: 'boba', coingecko_name: 'boba-network', token: 'boba', explorer_uri: 'https://blockexplorer.boba.network'}
     chainConfig['0x504'] = {id: '0x504', shortname: 'glmr', name:'Moonbeam', symbol: 'glmr', coingecko_name: 'moonbeam', token: 'glmr', explorer_uri: 'https://blockscout.moonbeam.network'}
     chainConfig['0x80'] = {id: '0x80', shortname: 'ht', name:'Heco', symbol: 'ht', coingecko_name: 'huobi-token', token: 'ht', explorer_uri: 'https://api.hecoinfo.com', key: `${HECOSCAN_KEY}`}
@@ -1602,7 +1602,7 @@ useEffect(() => {
   return () => {
     
   }
-}, [props.recentAccount.activeChain]);
+}, [props.recentAccount.activeChain, props.recentAccount.newAddress]);
 
 useEffect(() => {
   if (terraAddress !== undefined) {

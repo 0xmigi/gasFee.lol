@@ -4,9 +4,12 @@ import _ from 'lodash';
 
 
 import { Link } from 'react-router-dom';
-import ENS, { getEnsAddress } from '@ensdomains/ensjs'
 import { WalletConnectButton } from '../Connections/Button';
-// import { NETWORKS } from 'react-router-dom';
+import {
+  useMoralis,
+  useMoralisWeb3Api,
+  useMoralisWeb3ApiCall,
+} from "react-moralis";
 import './nav.css';
 import '../App/App.css';
 import { ConnectType, useWallet } from '@terra-money/wallet-provider'; 
@@ -14,8 +17,10 @@ import { ethers } from 'ethers';
 import { walletlink } from '../Connections/Button';
 import { useChain } from "react-moralis";
 import { LIGHTMODE_ICON, ALGO_ICON, ARBI_ICON, ARROW_ICON, ATOM_ICON, AURORA_ICON, AVAX_ICON, BOBA_ICON, BONIFIDA_ICON, BSC_ICON, CBW_ICON, CELO_ICON, CLOVER_ICON, COG_ICON, COIN98_ICON, COSMOST_ICON, DOT_ICON, ETH_ICON, FTM_ICON, GNOSIS_ICON, GLMR_ICON, HECO_ICON, KEPLR_ICON, LUNA_ICON, MATIC_ICON, METIS_ICON, MM_ICON, MOVR_ICON, OEC_ICON, ONE_ICON, OP_ICON, PHANTOM_ICON, RABBY_ICON, SOL_ICON, TSTATION_ICON, WAVE_ICON, WC_ICON, XDEFI_ICON, COPY_ICON} from '../App/constants';
-export default function Nav(props) {
 
+
+
+export default function Nav(props) {
 
   
   const [activeMenu, setActiveMenu] = useState('main');
@@ -336,7 +341,7 @@ const chainSwitchSol = () => (
 
   //Injected browser wallet connections EVM chains   <<------------------------------------------------------------->>
 
-  console.log(newChain);
+  // console.log(newChain);
 
   const Chains = () => {
     const { chainId, chain } = useChain();
@@ -596,6 +601,15 @@ const phantomConnect = () => (
       </button>
 );
 
+const bonifidaConnect = () => (
+  <button
+     onClick={connectWallet}
+     className="address-display"
+  > 
+       Bonifida
+  </button>
+);
+
 const [copySuccess, setCopySuccess] = useState(false);
 
 const donateButton = () => {
@@ -631,11 +645,15 @@ const donateButton = () => {
   );
 }
 
-
+const { web3, enableWeb3, isWeb3Enabled } = useMoralis();
+const Web3Api = useMoralisWeb3Api();
+const [domainName, setDomainName] = useState("");
+const [ensAddress, setEnsAddress] = useState("");
 
 const PasteAddressConnect = () => {
   const [inputAddress, setInputAddress] = useState("paste address");
-  // const ens = new ENS({ ensAddress: getEnsAddress('1') })
+  
+
   let newValue;
 
   let displayAddress = (event) => {
@@ -645,42 +663,100 @@ const PasteAddressConnect = () => {
 
   let saveAddress = () => {
     setInputAddress(newValue);
-    if (newChain === "solana") {
-      solAccount = newValue;
-      chainColor = color;
-      props.setRecentAccount({ solAccount, chainColor })
+    activeChain = newChain;
+    chainColor = color;
+
+    if (_.truncate(newValue, { 'length': 5 }) !== "0x...") {
+      web3.eth.ens.getAddress(newValue).then((address) => {
+        setEnsAddress(address);
+
+        newAddress = address;
+        props.setRecentAccount({ activeChain, newAddress, chainColor });
+
+      });
+
+      if (newChain === "solana") {
+        solAccount = newValue;
+        chainColor = color;
+        props.setRecentAccount({ solAccount, chainColor }) 
+      }
     } else {
-      activeChain = newChain;
+      
+
       newAddress = newValue;
-      chainColor = color;
       props.setRecentAccount({ activeChain, newAddress, chainColor });
     }
+    
   }
 
-
-  // ens.name('resolver.eth').getAddress()
-
-  // console.log("ens address is", ens);
-
+  useEffect(() => {
+    if (!isWeb3Enabled) {
+      enableWeb3();
+    }
+  }, [isWeb3Enabled, enableWeb3]);
 
   return (
-    <div className="type-address">
+      <div className="type-address">
       <input
         className="paste-bar"
         type="text"
         placeholder={inputAddress}
         onChange={displayAddress}
         />
+      
         <button
         className="submit-button" 
         onClick={saveAddress}
         >
           +
       </button>
-    </div>
+      </div>
   );
 };
 
+// const { web3, enableWeb3, isWeb3Enabled } = useMoralis();
+// const Web3Api = useMoralisWeb3Api();
+// const [domainName, setDomainName] = useState("");
+// const [ensAddres, setEnsAddress] = useState("");
+
+// const Ens = () => {
+  
+
+//   const handleDomainChange = (event) => setDomainName(event.target.value);
+//   console.log("domainName is ", domainName);
+
+//   const ensCall = () => {
+//     web3.eth.ens.getAddress(domainName).then(function (address) {
+//       setEnsAddress(address);
+//     });
+//   };
+
+//   useEffect(() => {
+//     if (!isWeb3Enabled) {
+//       enableWeb3();
+//     }
+//   }, [isWeb3Enabled, enableWeb3]);
+
+//   return (
+//     <div >
+//         <input
+//           value={domainName}
+//           onChange={handleDomainChange}
+//           placeholder="Enter Unstoppable domain name"
+//         />
+//         <button 
+//           onClick={ensCall}
+//           >
+//           Resolve the ENS Domain
+//         </button>
+//       <div >
+//         ENS Domain: {ensAddres ? ensAddres : "Enter valid ENS domain"}
+//       </div>
+//     </div>
+//   );
+// };
+  
+        
 
 
   function calcHeight(el) {
@@ -807,12 +883,12 @@ const PasteAddressConnect = () => {
             >
             <h2>{chainSwitchBoba()}</h2>
           </DropdownItem>
-          <DropdownItem
+          {/* <DropdownItem
             leftIcon={<OEC_ICON />}
             goToMenu="evmChains"
             >
             <h2>{chainSwitchOEC()}</h2>
-          </DropdownItem>
+          </DropdownItem> */}
           <DropdownItem
             leftIcon={<HECO_ICON />}
             goToMenu="evmChains"
@@ -906,6 +982,7 @@ const PasteAddressConnect = () => {
           <DropdownItem leftIcon={<CBW_ICON />}>{coinBaseConnect()}</DropdownItem>
           <DropdownItem leftIcon={<RABBY_ICON />}>{rabbyConnect()}</DropdownItem>
           <DropdownItem >{PasteAddressConnect()}</DropdownItem>
+          {/* <DropdownDonate >{Ens()}</DropdownDonate> */}
         </div>
       </CSSTransition>
 
@@ -920,7 +997,7 @@ const PasteAddressConnect = () => {
             <h3>chains</h3>
           </DropdownItem>
           <DropdownItem leftIcon={<PHANTOM_ICON />}>{!walletAddress && phantomConnect()}</DropdownItem>
-          <DropdownItem leftIcon={<BONIFIDA_ICON />}>{!walletAddress && phantomConnect()}</DropdownItem>
+          <DropdownItem leftIcon={<BONIFIDA_ICON />}>{!walletAddress && bonifidaConnect()}</DropdownItem>
           <DropdownItem >{PasteAddressConnect()}</DropdownItem>
         </div>
       </CSSTransition>
