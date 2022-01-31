@@ -651,7 +651,7 @@ const [domainName, setDomainName] = useState("");
 const [ensAddress, setEnsAddress] = useState("");
 
 const PasteAddressConnect = () => {
-  const [inputAddress, setInputAddress] = useState("paste address");
+  const [inputAddress, setInputAddress] = useState("address/ENS");
   
 
   let newValue;

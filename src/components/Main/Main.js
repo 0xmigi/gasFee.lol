@@ -37,15 +37,25 @@ import LineChart from '../Charts/LineChart';
 import { chain } from 'lodash';
 import { ETH_ICON, BNB_ICON, OP_ICON, MATIC_ICON, AVAX_ICON, ARBI_ICON, FTM_ICON, ONE_ICON, MOVR_ICON, SOL_ICON, CELO_ICON, GNOSIS_ICON, AURORA_ICON, METIS_ICON, BOBA_ICON, GLMR_ICON, HECO_ICON} from '../App/constants';
 
-const ETHERSCAN_KEY = process.env.ETHERSCAN_KEY;
-const OPTISCAN_KEY = process.env.OPTISCAN_KEY;
-const BSCSCAN_KEY = process.env.BSCSCAN_KEY;
-const POLYGONSCAN_KEY = process.env.POLYGONSCAN_KEY;
-const SNOWTRACE_KEY = process.env.SNOWTRACE_KEY;
-const FTMSCAN_KEY = process.env.FTMSCAN_KEY;
-const MOONSCAN_KEY = process.env.MOONSCAN_KEY;
-const ARBISCAN_KEY = process.env.ARBISCAN_KEY;
-const HECOSCAN_KEY = process.env.HECOSCAN_KEY;
+// const ETHERSCAN_KEY = process.env.ETHERSCAN_KEY;
+// const OPTISCAN_KEY = process.env.OPTISCAN_KEY;
+// const BSCSCAN_KEY = process.env.BSCSCAN_KEY;
+// const POLYGONSCAN_KEY = process.env.POLYGONSCAN_KEY;
+// const SNOWTRACE_KEY = process.env.SNOWTRACE_KEY;
+// const FTMSCAN_KEY = process.env.FTMSCAN_KEY;
+// const MOONSCAN_KEY = process.env.MOONSCAN_KEY;
+// const ARBISCAN_KEY = process.env.ARBISCAN_KEY;
+// const HECOSCAN_KEY = process.env.HECOSCAN_KEY;
+
+const ETHERSCAN_KEY = "KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD"
+const OPTISCAN_KEY = "84EIKB5YSF17UHZK2778T1HM3Q8DPN6F29"
+const BSCSCAN_KEY = "UWB7YUCVQXT7TGFK41TNJSJBIHDQ1JGU9D"
+const POLYGONSCAN_KEY = "QDPWKASEUSSYTKX9ZVMSSQGX4PTCZGHNC8"
+const SNOWTRACE_KEY= "78X9UB1WYTRQQ9Q2G53TR6XQ8P662BDVVK"
+const FTMSCAN_KEY = "B5UU3GDR3VJYVXFYT6RPK5RA6I8J5CV6B3"
+const MOONSCAN_KEY = "54HHCHQRAEXBCTS2ZVTSJ991Q34MDB2CRD"
+const ARBISCAN_KEY = "3S4P8WRXX34R5DVCCRG3GECVF5SFV5U3QW"
+const HECOSCAN_KEY = "JIY4B62CFZBZMBVJS21TCX4U4NVGB84CVC"
 
 
 
@@ -318,7 +328,7 @@ let chainColor = props.recentAccount.chainColor;
     chainConfig['0x64'] = {id: '0x64', shortname: 'xdai', name:'xDai', symbol: 'xdai', coingecko_name: 'gnosis', token: 'gno', explorer_uri: 'https://blockscout.com/xdai/mainnet'}
     chainConfig['0x89'] = {id: '0x89', shortname: 'matic', name:'Polygon', symbol: 'matic', coingecko_name: 'matic-network', token: 'matic', explorer_uri: 'https://api.polygonscan.com', key: `${POLYGONSCAN_KEY}`}
     chainConfig['0xfa'] = {id: '0xfa', shortname: 'ftm', name:'Fantom', symbol: 'ftm', coingecko_name: 'fantom', token: 'ƒtm', explorer_uri: 'https://api.ftmscan.com', key: `${FTMSCAN_KEY}`}
-    chainConfig['0xa86a'] = {id: '0xa86a', shortname: 'avax', name:'Avalanche', symbol: 'avax', coingecko_name: 'avalanche-2', token: 'avax', explorer_uri: 'https://api.snowtrace.io', key: `${SNOWTRACE_KEY}`}
+    chainConfig['0xa86a'] = {id: '0xa86a', shortname: 'avax', name:'Avalanche', symbol: 'avax', coingecko_name: 'avalanche-2', token: 'avax', explorer_uri: 'https://api.snowtrace.io', key: SNOWTRACE_KEY}
     chainConfig['0x63564c40'] = {id: '0x63564c40', shortname: 'one', name:'Harmoney One', symbol: 'one', coingecko_name: 'harmony', token: 'one', color: '#ec1616', explorer_uri: 'https://api.harmony.one'}
     chainConfig['0xa4ec'] = {id: '0xa4ec', shortname: 'celo', name:'Celo', symbol: 'celo', coingecko_name: 'celo', token: 'celo', explorer_uri: 'https://explorer.celo.org'}
     chainConfig['0xa4b1'] = {id: '0xa4b1', shortname: 'arbi', name:'Arbitrum', symbol: 'aeth', coingecko_name: 'ethereum', token: 'aeth', explorer_uri: 'https://api.arbiscan.io', key: `${ARBISCAN_KEY}`}
@@ -1461,7 +1471,7 @@ let chainColor = props.recentAccount.chainColor;
       if (chainConfig[evmChainId].key) { u += `&apikey=${key}` }
   
       let response = await fetch(u);
-      // console.log("u is", response);
+      console.log("u is", chainConfig[evmChainId]);
   
   
       if (response.ok) { // if HTTP-status is 200-299
@@ -1473,6 +1483,7 @@ let chainColor = props.recentAccount.chainColor;
       let txs = json['result'];
       let n = txs.length;
       let from, txs2;
+      // console.log("txs is ", txs);
   
   
       while (n===10000) {
@@ -1496,6 +1507,7 @@ let chainColor = props.recentAccount.chainColor;
         return v.from === address.toLowerCase();
       });
   
+      
       txsOut = txsOut.map(({ confirmations, ...item }) => item);
       txsOut = new Set(txsOut.map(JSON.stringify));
       txsOut = Array.from(txsOut).map(JSON.parse);
@@ -1506,6 +1518,7 @@ let chainColor = props.recentAccount.chainColor;
       });
   
       var nOutFail = txsOutFail.length;
+      
   
       if (nOut > 0) {
         var gasUsed = txsOut.map(value => parseInt(value.gasUsed));
