@@ -341,11 +341,8 @@ const chainSwitchSol = () => (
 
   //Injected browser wallet connections EVM chains   <<------------------------------------------------------------->>
 
-  // console.log(newChain);
-
   const Chains = () => {
     const { chainId, chain } = useChain();
-    // console.log("chainId is ", chainId);
    
     return() => {
 
@@ -714,47 +711,6 @@ const PasteAddressConnect = () => {
   );
 };
 
-// const { web3, enableWeb3, isWeb3Enabled } = useMoralis();
-// const Web3Api = useMoralisWeb3Api();
-// const [domainName, setDomainName] = useState("");
-// const [ensAddres, setEnsAddress] = useState("");
-
-// const Ens = () => {
-  
-
-//   const handleDomainChange = (event) => setDomainName(event.target.value);
-//   console.log("domainName is ", domainName);
-
-//   const ensCall = () => {
-//     web3.eth.ens.getAddress(domainName).then(function (address) {
-//       setEnsAddress(address);
-//     });
-//   };
-
-//   useEffect(() => {
-//     if (!isWeb3Enabled) {
-//       enableWeb3();
-//     }
-//   }, [isWeb3Enabled, enableWeb3]);
-
-//   return (
-//     <div >
-//         <input
-//           value={domainName}
-//           onChange={handleDomainChange}
-//           placeholder="Enter Unstoppable domain name"
-//         />
-//         <button 
-//           onClick={ensCall}
-//           >
-//           Resolve the ENS Domain
-//         </button>
-//       <div >
-//         ENS Domain: {ensAddres ? ensAddres : "Enter valid ENS domain"}
-//       </div>
-//     </div>
-//   );
-// };
   
         
 
@@ -959,7 +915,7 @@ const PasteAddressConnect = () => {
           <DropdownItem goToMenu="main" leftIcon={<ARROW_ICON />}>
               <h3>chains</h3>
           </DropdownItem>
-          <DropdownItem leftIcon={<MM_ICON/>} >{metaMaskConnect()}</DropdownItem>
+          <DropdownItem leftIcon={<MM_ICON/>}>{metaMaskConnect()}</DropdownItem>
           <DropdownItem leftIcon={<WC_ICON />}>{walletConnect()}</DropdownItem>
           <DropdownItem leftIcon={<CBW_ICON/>}>{coinBaseConnect()}</DropdownItem>
           <DropdownItem leftIcon={<RABBY_ICON />}>{rabbyConnect()}</DropdownItem>
