@@ -6,6 +6,8 @@ import { LCDClient } from '@terra-money/terra.js';
 import * as web3 from '@solana/web3.js';
 import $ from 'jquery';
 import DoughnutChart from '../Charts/DoughnutChart';
+import { BarLoader } from 'react-spinners';
+import { css } from '@emotion/react';
 
 
 import Ethereum from '../chains/Ethereum';
@@ -56,12 +58,18 @@ const FTMSCAN_KEY = "B5UU3GDR3VJYVXFYT6RPK5RA6I8J5CV6B3"
 const MOONSCAN_KEY = "54HHCHQRAEXBCTS2ZVTSJ991Q34MDB2CRD"
 const ARBISCAN_KEY = "3S4P8WRXX34R5DVCCRG3GECVF5SFV5U3QW"
 const HECOSCAN_KEY = "JIY4B62CFZBZMBVJS21TCX4U4NVGB84CVC"
+const CRONOSCAN_KEY = "ITIWUNX3A6DN2WAF181MTZMP25BQ19HXYT"
 
-
+const loaderCSS = css`
+  background-color: #5c5c5c;
+  width: 100%;
+  height: 0.8px;
+  `
 
 
 export default function Main(props) {
-let chainColor = props.recentAccount.chainColor;
+  const [loading , setLoading] = useState(false);
+  let chainColor = props.recentAccount.chainColor;
 
   // useEffect(() => {
   //   setCooking(
@@ -1591,6 +1599,7 @@ let chainColor = props.recentAccount.chainColor;
     setBobaUsd(bobaGasFeeTotal === undefined ? 0 : (formatter((bobatokenusd * bobaGasFeeTotal / 1e18).toFixed(3))));
     setGlmrUsd(metisGasFeeTotal === undefined ? 0 : (formatter((glmrtokenusd * glmrGasFeeTotal / 1e18).toFixed(3))));
     setHecoUsd(hecoGasFeeTotal === undefined ? 0 : (formatter((hecotokenusd * hecoGasFeeTotal / 1e18).toFixed(3))));
+    setLoading(false);
     
 }
 
@@ -1608,6 +1617,7 @@ useEffect(() => {
   if (evmChainId !== undefined) {
     getEvmTransactions(address);
     setEvmWallets(1);
+    setLoading(true);
     console.log("getEvmTransactions was called")
   } else {
     console.log("no chainID has arrived")
@@ -1621,6 +1631,7 @@ useEffect(() => {
   if (terraAddress !== undefined) {
     getTerraTransactions(terraAddress);
     setTerraWallets(1);
+    setLoading(true);
     console.log("getTerraTransactions was called")
   } else {
     console.log("no chainID has arrived")
@@ -1634,6 +1645,7 @@ useEffect(() => {
   if (solAddress !== undefined) {
     getSolTransactions(solAddress);
     setSolWallets(1);
+    setLoading(true);
     console.log("getSolTransactions was called")
   } else {
     console.log("no chainID has arrived")
@@ -1668,9 +1680,12 @@ useEffect(() => {
               setSol={solUsd}
               setReth={rEthUsd}
               />
-            <div className="about-chain">
-              Net history
-            </div>
+              <div className="about-chainBox">
+                <BarLoader css={loaderCSS} loading={loading}/>
+                <div className="about-chain">
+                  Net history 
+                </div>
+              </div>
           </div>
           <div className="usage-panels">
             <div className="small-panel">paid fee token types: <p className="small-panel-feed"></p>{totalPaidTokenTypes}</div>
@@ -1689,33 +1704,36 @@ useEffect(() => {
             setPoint={sentNumTransactions}
             setGasData={gasData}
             setChainColor={chainColor}/>
-          <Routes>
-          <Route path="ethereum" element={<Ethereum />} />
-          <Route path="binance" element={<BSC />} />
-          <Route path="xdai" element={<Xdai />} />
-          <Route path="polygon" element={<Polygon />} />
-          <Route path="fantom" element={<Fantom />} />
-          <Route path="optimism" element={<Optimism/>} />
-          <Route path="arbitrum" element={<Arbitrum />} />
-          <Route path="avalanche" element={<Avalanche />} />
-          <Route path="celo" element={<Celo />} />
-          <Route path="harmony" element={<Harmony />} />
-          <Route path="cosmos" element={<Cosmos />} />
-          <Route path="solana" element={<Solana />} />
-          <Route path="terra" element={<Terra />} />
-          <Route path="cardano" element={<Cardano />} />
-          <Route path="polkadot" element={<Polkadot />} />
-          <Route path="waves" element={<Waves />} />
-          <Route path="algo" element={<Algorand />} />
-          <Route path="moonriver" element={<Moonriver />} />
-          <Route path="aurora" element={<Aurora />} />
-          <Route path="metis" element={<Metis />} />
-          <Route path="boba" element={<Boba />} />
-          <Route path="glmr" element={<Glmr />} />
-          <Route path="heco" element={<Heco />} />
-          <Route path="home" element={<Home />} />
-          <Route path="" element={<div className="about-chain">Chain history</div>}/>
-          </Routes>
+          <div className="about-chainBox">
+            <BarLoader css={loaderCSS} loading={loading}/>
+            <Routes>
+            <Route path="ethereum" element={<Ethereum />} />
+            <Route path="binance" element={<BSC />} />
+            <Route path="xdai" element={<Xdai />} />
+            <Route path="polygon" element={<Polygon />} />
+            <Route path="fantom" element={<Fantom />} />
+            <Route path="optimism" element={<Optimism/>} />
+            <Route path="arbitrum" element={<Arbitrum />} />
+            <Route path="avalanche" element={<Avalanche />} />
+            <Route path="celo" element={<Celo />} />
+            <Route path="harmony" element={<Harmony />} />
+            <Route path="cosmos" element={<Cosmos />} />
+            <Route path="solana" element={<Solana />} />
+            <Route path="terra" element={<Terra />} />
+            <Route path="cardano" element={<Cardano />} />
+            <Route path="polkadot" element={<Polkadot />} />
+            <Route path="waves" element={<Waves />} />
+            <Route path="algo" element={<Algorand />} />
+            <Route path="moonriver" element={<Moonriver />} />
+            <Route path="aurora" element={<Aurora />} />
+            <Route path="metis" element={<Metis />} />
+            <Route path="boba" element={<Boba />} />
+            <Route path="glmr" element={<Glmr />} />
+            <Route path="heco" element={<Heco />} />
+            <Route path="home" element={<Home />} />
+            <Route path="" element={<div className="about-chain">Chain history</div>}/>
+            </Routes>
+          </div>
         </div>
         <div className="usage-panels">
           <div className="live-gas-panel">
