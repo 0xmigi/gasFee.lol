@@ -26,6 +26,7 @@ const DoughnutChart = (props) => {
   const [bobaGasFees, setBobaGasFees] = useState({});
   const [glmrGasFees, setGlmrGasFees] = useState({});
   const [hecoGasFees, setHecoGasFees] = useState({});
+  const [croGasFees, setCroGasFees] = useState({});
   const [wavesGasFees, setWavesGasFees] = useState({});
   const [algoGasFees, setAlgoGasFees] = useState({});
   
@@ -53,6 +54,7 @@ const DoughnutChart = (props) => {
     setGlmrGasFees(props.setGlmr);
     setHecoGasFees(props.setHeco);
     setSolGasFees(props.setSol);
+    setCroGasFees(props.setCro);
 
     setRethGasFees(props.setReth);
 
@@ -65,12 +67,12 @@ const DoughnutChart = (props) => {
   const data = () => {
     setChartData({
       type: 'doughnut',
-      labels: ['Ethereum', 'BSC', 'Polygon', 'Optimism', 'Arbitrum', 'xDai', 'Avalanche', 'Fantom', 'Celo', 'Harmony One', 'Moonriver', 'Aurora', 'Metis', 'Boba', 'Moonbeam', 'Heco', 'Cosmos', 'Solana', 'Luna', 'Cardano', 'Polkadot'
+      labels: ['Ethereum', 'BSC', 'Polygon', 'Optimism', 'Arbitrum', 'xDai', 'Avalanche', 'Fantom', 'Celo', 'Harmony One', 'Moonriver', 'Aurora', 'Metis', 'Boba', 'Moonbeam', 'Heco', 'Cronos', 'Cosmos', 'Solana', 'Luna', 'Cardano', 'Polkadot'
               // , 'Waves', 'Algorand'
               ],
       datasets: [{
         label: '$ gas spent',
-        data: [(ethGasFees), (bscGasFees), (maticGasFees), (opGasFees), (arbiGasFees), (xdaiGasFees), (avaxGasFees), (ftmGasFees), (celoGasFees), (oneGasFees), (movrGasFees), (auroraGasFees), (metisGasFees), (bobaGasFees), (glmrGasFees), (hecoGasFees), (atomGasFees), (solGasFees), (lunaGasFees), (adaGasFees), (dotGasFees)],
+        data: [(ethGasFees), (bscGasFees), (maticGasFees), (opGasFees), (arbiGasFees), (xdaiGasFees), (avaxGasFees), (ftmGasFees), (celoGasFees), (oneGasFees), (movrGasFees), (auroraGasFees), (metisGasFees), (bobaGasFees), (glmrGasFees), (hecoGasFees), (croGasFees), (atomGasFees), (solGasFees), (lunaGasFees), (adaGasFees), (dotGasFees)],
         backgroundColor: [
           '#582a2a',
           '#6f3832',
@@ -127,7 +129,7 @@ const DoughnutChart = (props) => {
 
   useEffect(() => {
     data()
-  }, [ethGasFees, bscGasFees, maticGasFees, opGasFees, arbiGasFees, xdaiGasFees, avaxGasFees, bobaGasFees, glmrGasFees, ftmGasFees, celoGasFees, oneGasFees, movrGasFees, auroraGasFees, metisGasFees, hecoGasFees, rethGasFees, atomGasFees, solGasFees, lunaGasFees, adaGasFees])
+  }, [ethGasFees, bscGasFees, maticGasFees, opGasFees, arbiGasFees, xdaiGasFees, avaxGasFees, bobaGasFees, glmrGasFees, ftmGasFees, celoGasFees, oneGasFees, movrGasFees, auroraGasFees, metisGasFees, hecoGasFees, croGasFees, rethGasFees, atomGasFees, solGasFees, lunaGasFees, adaGasFees])
 
 
   return (
@@ -135,6 +137,7 @@ const DoughnutChart = (props) => {
       <Doughnut
         data={chartData}
         options={{
+          cutoutPercentage: 70,
           resopnsive: true,
           hoverOffset: 4,
           legend: {

@@ -16,7 +16,7 @@ import { ConnectType, useWallet } from '@terra-money/wallet-provider';
 import { ethers } from 'ethers';
 import { walletlink } from '../Connections/Button';
 import { useChain } from "react-moralis";
-import { LIGHTMODE_ICON, ALGO_ICON, ARBI_ICON, ARROW_ICON, ATOM_ICON, AURORA_ICON, AVAX_ICON, BOBA_ICON, BONIFIDA_ICON, BSC_ICON, CBW_ICON, CELO_ICON, CLOVER_ICON, COG_ICON, COIN98_ICON, COSMOST_ICON, DOT_ICON, ETH_ICON, FTM_ICON, GNOSIS_ICON, GLMR_ICON, HECO_ICON, KEPLR_ICON, LUNA_ICON, MATIC_ICON, METIS_ICON, MM_ICON, MOVR_ICON, OEC_ICON, ONE_ICON, OP_ICON, PHANTOM_ICON, RABBY_ICON, SOL_ICON, TSTATION_ICON, WAVE_ICON, WC_ICON, XDEFI_ICON, COPY_ICON} from '../App/constants';
+import { LIGHTMODE_ICON, ALGO_ICON, ARBI_ICON, ARROW_ICON, ATOM_ICON, AURORA_ICON, AVAX_ICON, BOBA_ICON, BONIFIDA_ICON, BSC_ICON, CBW_ICON, CELO_ICON, CLOVER_ICON, COG_ICON, COIN98_ICON, COSMOST_ICON, CRONOS_ICON, DOT_ICON, ETH_ICON, FTM_ICON, GNOSIS_ICON, GLMR_ICON, HECO_ICON, KEPLR_ICON, LUNA_ICON, MATIC_ICON, METIS_ICON, MM_ICON, MOVR_ICON, OEC_ICON, ONE_ICON, OP_ICON, PHANTOM_ICON, RABBY_ICON, SOL_ICON, TSTATION_ICON, WAVE_ICON, WC_ICON, XDEFI_ICON, COPY_ICON} from '../App/constants';
 
 
 
@@ -323,6 +323,17 @@ const chainSwitchHeco = () => (
       className="nav-cta-button mint-button"
       >
          Heco
+    </button>
+  </Link>
+);
+
+const chainSwitchCronos = () => (
+  <Link to="cro">
+    <button
+      onClick={() => {setNewChain("0x19"); setColor('#006286');}}
+      className="nav-cta-button mint-button"
+      >
+         Cronos
     </button>
   </Link>
 );
@@ -678,12 +689,9 @@ const PasteAddressConnect = () => {
         props.setRecentAccount({ solAccount, chainColor }) 
       }
     } else {
-      
-
       newAddress = newValue;
       props.setRecentAccount({ activeChain, newAddress, chainColor });
-    }
-    
+    }  
   }
 
   useEffect(() => {
@@ -850,6 +858,12 @@ const PasteAddressConnect = () => {
             goToMenu="evmChains"
             >
             <h2>{chainSwitchHeco()}</h2>
+          </DropdownItem>
+          <DropdownItem
+            leftIcon={<CRONOS_ICON />}
+            goToMenu="evmChains"
+            >
+            <h2>{chainSwitchCronos()}</h2>
           </DropdownItem>
           <DropdownItem
             leftIcon={<ATOM_ICON />}

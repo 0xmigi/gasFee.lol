@@ -33,11 +33,12 @@ import Metis from '../chains/Metis';
 import Boba from '../chains/Boba';
 import Glmr from '../chains/Glmr';
 import Heco from '../chains/Heco';
+import Cro from '../chains/Cronos';
 
 import Home from '../Home/Home';
 import LineChart from '../Charts/LineChart';
 import { chain } from 'lodash';
-import { ETH_ICON, BNB_ICON, OP_ICON, MATIC_ICON, AVAX_ICON, ARBI_ICON, FTM_ICON, ONE_ICON, MOVR_ICON, SOL_ICON, CELO_ICON, GNOSIS_ICON, AURORA_ICON, METIS_ICON, BOBA_ICON, GLMR_ICON, HECO_ICON} from '../App/constants';
+import { ETH_ICON, BNB_ICON, OP_ICON, MATIC_ICON, AVAX_ICON, ARBI_ICON, FTM_ICON, ONE_ICON, MOVR_ICON, SOL_ICON, CELO_ICON, GNOSIS_ICON, AURORA_ICON, METIS_ICON, BOBA_ICON, GLMR_ICON, HECO_ICON, CRONOS_ICON} from '../App/constants';
 
 // const ETHERSCAN_KEY = process.env.ETHERSCAN_KEY;
 // const OPTISCAN_KEY = process.env.OPTISCAN_KEY;
@@ -70,19 +71,6 @@ const loaderCSS = css`
 export default function Main(props) {
   const [loading , setLoading] = useState(false);
   let chainColor = props.recentAccount.chainColor;
-
-  // useEffect(() => {
-  //   setCooking(
-  //     <div className="plus-ultra">
-  //       <div className="plus-ultra-panel">
-  //         <img src={mcPepe} alt="McPepe"/>
-  //       </div>
-  //     </div>
-  //   )
-  //   return(() => {
-  //     props.setCookingStatus={cooking}
-  //   })
-  // }, []);
   
   
 
@@ -173,6 +161,7 @@ export default function Main(props) {
   const [bobaUsd, setBobaUsd] = useState(0);
   const [glmrUsd, setGlmrUsd] = useState(0);
   const [hecoUsd, setHecoUsd] = useState(0);
+  const [croUsd, setCroUsd] = useState(0);
   const [solUsd, setSolUsd] = useState(0);
   const [rEthUsd, setRethUsd] = useState(0);
 
@@ -260,11 +249,6 @@ export default function Main(props) {
     setFastGasUsd("$" + comma(formatter((soltokenusd * 0.00001).toFixed(6))));
     setInstantGasUsd("$" + comma(formatter((soltokenusd * 0.000015).toFixed(6))));
     
-    // console.log("feeFail is ", failFeeUsd);
-    // console.log("solfee is ", solfee);
-    // console.log("lamportTotal is ", lamportTotal);
-    // console.log("solFeeUsd is ", solFeeUsd);
-    // console.log("soltokenusd is ", soltokenusd);
     setSolToken(<div className="token-types"><SOL_ICON height={"20px"} width={"20px"}/></div>)
     }
   }
@@ -291,6 +275,7 @@ export default function Main(props) {
       gasChain['0x120'] = {zapperName: "boba"}
       gasChain['0x504'] = {zapperName: "moonbeam"}
       gasChain['0x80'] = {zapperName: "heco"}
+      gasChain['0x19'] = {zapperName: "cronos"}
       gasChain['0x42'] = {zapperName: "OEC"}
       gasChain['0x4'] = {zapperName: "rinkeby-ethereum"}
   
@@ -347,7 +332,7 @@ export default function Main(props) {
     chainConfig['0x120'] = {id: '0x120', shortname: 'boba', name:'Boba', symbol: 'boba', coingecko_name: 'boba-network', token: 'boba', explorer_uri: 'https://blockexplorer.boba.network'}
     chainConfig['0x504'] = {id: '0x504', shortname: 'glmr', name:'Moonbeam', symbol: 'glmr', coingecko_name: 'moonbeam', token: 'glmr', explorer_uri: 'https://blockscout.moonbeam.network'}
     chainConfig['0x80'] = {id: '0x80', shortname: 'ht', name:'Heco', symbol: 'ht', coingecko_name: 'huobi-token', token: 'ht', explorer_uri: 'https://api.hecoinfo.com', key: `${HECOSCAN_KEY}`}
-    // chainConfig['0xa'] = {id: '0xa', shortname: 'op', name:'Optimism', symbol: 'oeth', coingecko_name: 'opEthereum', token: 'oΞ', color: '#ec1616', explorer_uri: 'https://api.optimistic.etherscan.io'}
+    chainConfig['0x19'] = {id: '0x19', shortname: 'cro', name:'Cronos', symbol: 'cro', coingecko_name: 'crypto-com-chain', token: 'cro', explorer_uri: 'https://api.cronoscan.com', key: `${CRONOSCAN_KEY}`}
 
     //testnets
     chainConfig['0x4'] = {id: '0x4', shortname: 'eth', name:'Rinkeby', symbol: 'eth', coingecko_name: 'ethereum', token: 'Ξ', color: '#03a9f4', explorer_uri: 'https://api-rinkeby.etherscan.io', key: 'KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD'}
@@ -391,7 +376,7 @@ export default function Main(props) {
     let bobatokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=boba-network&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
     let glmrtokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=moonbeam&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
     let hecotokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=huobi-token&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
-    // let metistokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=metis-token&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
+    let crotokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=crypto-com-chain&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
     let rethtokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
 
     console.log(ethtokenusd);
@@ -412,7 +397,7 @@ export default function Main(props) {
     bobatokenusd = bobatokenusd["boba-network"].usd;
     glmrtokenusd = glmrtokenusd["moonbeam"].usd;
     hecotokenusd = hecotokenusd["huobi-token"].usd;
-    // metistokenusd = metistokenusd["metis-token"].usd;
+    crotokenusd = crotokenusd["crypto-com-chain"].usd;
     rethtokenusd = rethtokenusd["ethereum"].usd;
 
 
@@ -452,8 +437,8 @@ export default function Main(props) {
     let metis = chainConfig["0x440"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc`
     let boba = chainConfig["0x120"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc`
     let glmr = chainConfig["0x504"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc`
-    let heco = chainConfig["0x80"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc=&apikey=${HECOSCAN_KEY}`
-    // let metis = chainConfig["0x440"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc`
+    let heco = chainConfig["0x80"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${HECOSCAN_KEY}`
+    let cro = chainConfig["0x19"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${CRONOSCAN_KEY}`
     // let reth = chainConfig["0x4"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD`
 
 
@@ -475,7 +460,7 @@ export default function Main(props) {
     let responseBoba = await fetch(boba);
     let responseGlmr = await fetch(glmr);
     let responseHeco = await fetch(heco);
-    // let responseMetis = await fetch(metis);
+    let responseCro = await fetch(cro);
     // let responseReth = await fetch(reth);
 
     //  <<<<-------------------------------------------------------
@@ -495,7 +480,7 @@ export default function Main(props) {
     if (responseBoba.ok) {var bobajson = await responseBoba.json();} else {console.error("HTTP-Error: " + responseBoba.status);}
     if (responseGlmr.ok) {var glmrjson = await responseGlmr.json();} else {console.error("HTTP-Error: " + responseGlmr.status);}
     if (responseHeco.ok) {var hecojson = await responseHeco.json();} else {console.error("HTTP-Error: " + responseHeco.status);}
-    // if (responseMetis.ok) {var metisjson = await responseMetis.json();} else {console.error("HTTP-Error: " + responseMetis.status);}
+    if (responseCro.ok) {var crojson = await responseCro.json();} else {console.error("HTTP-Error: " + responseCro.status);}
     // if (responseReth.ok) {var rethjson = await responseReth.json();} else {console.error("HTTP-Error: " + responseReth.status);}
 
     const arr = await onejson;
@@ -518,7 +503,7 @@ export default function Main(props) {
     let bobatxs = bobajson['result'];
     let glmrtxs = glmrjson['result'];
     let hecotxs = hecojson['result'];
-    // let metistxs = metisjson['result'];
+    let crotxs = crojson['result'];
     // let rethtxs = rethjson['result'];
     
 
@@ -538,7 +523,7 @@ export default function Main(props) {
     let bobat = bobatxs.length;
     let glmrt = glmrtxs.length;
     let hecot = hecotxs.length;
-    // let metist = metistxs.length;
+    let crot = crotxs.length;
     // let retht = rethtxs.length;
 
     let efrom, etxs2;
@@ -557,7 +542,7 @@ export default function Main(props) {
     let bobafrom, bobatxs2;
     let glmrfrom, glmrtxs2;
     let hecofrom, hecotxs2;
-    // let metisfrom, metistxs2;
+    let crofrom, crotxs2;
     let rethfrom, rethtxs2;
     //  <<<<-------------------------------------------------------
     while (e===10000) {
@@ -845,7 +830,7 @@ export default function Main(props) {
     };
     while (hecot===10000) {
       hecofrom = hecotxs[hecotxs.length - 1].blockNumber
-      heco = chainConfig["0x80"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${hecofrom}&endblock=99999999&sort=asc`
+      heco = chainConfig["0x80"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${hecofrom}&endblock=99999999&sort=asc&apikey=${HECOSCAN_KEY}`
       responseHeco = await fetch(heco)
 
       if (responseMetis.ok) {
@@ -860,23 +845,23 @@ export default function Main(props) {
       hecot = hecotxs2.length
       hecotxs.push.apply(hecotxs, hecotxs2)
     };
-    // while (metist===10000) {
-    //   metisfrom = metistxs[metistxs.length - 1].blockNumber
-    //   metis = chainConfig["0xa4ec"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${metisfrom}&endblock=99999999&sort=asc`
-    //   responseMetis = await fetch(metis)
+    while (crot===10000) {
+      crofrom = crotxs[crotxs.length - 1].blockNumber
+      cro = chainConfig["0x19"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=${crofrom}&endblock=99999999&sort=asc&apikey=${CRONOSCAN_KEY}`
+      responseCro = await fetch(cro)
 
-    //   if (responseMetis.ok) {
-    //     metisjson = await responseMetis.json();
-    //     console.log(metisjson)
-    //   } else {
-    //     console.log('big pwoblam : ' + responseMetis.status);
-    //     break
-    //   }
+      if (responseCro.ok) {
+        crojson = await responseCro.json();
+        console.log(crojson)
+      } else {
+        console.log('big pwoblam : ' + responseCro.status);
+        break
+      }
 
-    //   metistxs2 = metisjson['result']
-    //   metist = metistxs2.length
-    //   metistxs.push.apply(metistxs, metistxs2)
-    // };
+      crotxs2 = crojson['result']
+      crot = crotxs2.length
+      crotxs.push.apply(crotxs, crotxs2)
+    };
     //  <<<<-------------------------------------------------------
     let etxsOut = $.grep(etxs, function(w) {
       return w.from === address.toLowerCase();
@@ -926,9 +911,9 @@ export default function Main(props) {
     let hecotxsOut = $.grep(hecotxs, function(e) {
       return e.from === address.toLowerCase();
     });
-    // let metistxsOut = $.grep(metistxs, function(e) {
-    //   return e.from === address.toLowerCase();
-    // });
+    let crotxsOut = $.grep(crotxs, function(e) {
+      return e.from === address.toLowerCase();
+    });
 
     //  <<<<-------------------------------------------------------
     etxsOut = etxsOut.map(({ confirmations, ...item }) => item);
@@ -947,7 +932,7 @@ export default function Main(props) {
     bobatxsOut = bobatxsOut.map(({ confirmations, ...item }) => item);
     glmrtxsOut = glmrtxsOut.map(({ confirmations, ...item }) => item);
     hecotxsOut =hecotxsOut.map(({ confirmations, ...item }) => item);
-    // metistxsOut = metistxsOut.map(({ confirmations, ...item }) => item);
+    crotxsOut = crotxsOut.map(({ confirmations, ...item }) => item);
 
     etxsOut = new Set(etxsOut.map(JSON.stringify));
     bsctxsOut = new Set(bsctxsOut.map(JSON.stringify));
@@ -965,7 +950,7 @@ export default function Main(props) {
     bobatxsOut = new Set(bobatxsOut.map(JSON.stringify));
     glmrtxsOut = new Set(glmrtxsOut.map(JSON.stringify));
     hecotxsOut = new Set(hecotxsOut.map(JSON.stringify));
-    // metistxsOut = new Set(metistxsOut.map(JSON.stringify));
+    crotxsOut = new Set(crotxsOut.map(JSON.stringify));
 
     etxsOut = Array.from(etxsOut).map(JSON.parse);
     bsctxsOut = Array.from(bsctxsOut).map(JSON.parse);
@@ -983,7 +968,7 @@ export default function Main(props) {
     bobatxsOut = Array.from(bobatxsOut).map(JSON.parse);
     glmrtxsOut = Array.from(glmrtxsOut).map(JSON.parse);
     hecotxsOut = Array.from(hecotxsOut).map(JSON.parse);
-    // metistxsOut = Array.from(metistxsOut).map(JSON.parse);
+    crotxsOut = Array.from(crotxsOut).map(JSON.parse);
 
     console.log('All outgoing eth txs:', etxsOut)
     console.log('All outgoing bsc txs:', bsctxsOut)
@@ -1000,6 +985,7 @@ export default function Main(props) {
     console.log('All outgoing metis txs:', metistxsOut)
     console.log('All outgoing boba txs:', bobatxsOut)
     console.log('All outgoing moonbeam txs:', glmrtxsOut)
+    console.log('All outgoing cronos txs:', crotxsOut)
 
     //  <<<<-------------------------------------------------------
     var eOut = etxsOut.length;
@@ -1066,6 +1052,10 @@ export default function Main(props) {
     var hecotxsOutFail = $.grep(hecotxsOut, function (e) {
         return e.isError === "1";
       });
+    var croOut = crotxsOut.length;
+    var crotxsOutFail = $.grep(crotxsOut, function (e) {
+        return e.isError === "1";
+      });
     //  <<<<-------------------------------------------------------
     var eOutFail = etxsOutFail.length;
     var bscOutFail = bsctxsOutFail.length;
@@ -1083,6 +1073,7 @@ export default function Main(props) {
     var bobaOutFail = bobatxsOutFail.length;
     var glmrOutFail = glmrtxsOutFail.length;
     var hecoOutFail = hecotxsOutFail.length;
+    var croOutFail = crotxsOutFail.length;
 
     var ethToken;
     var bnbToken;
@@ -1100,6 +1091,7 @@ export default function Main(props) {
     var bobaToken;
     var glmrToken;
     var hecoToken;
+    var croToken;
 
         
     if (eOut > 0) {
@@ -1468,8 +1460,27 @@ export default function Main(props) {
       hecoOutFail = 0;
       hecoUsdFeeFail = 0;
     };
-    console.log("usdFeeFail is", bobaUsdFeeFail);
+    if (croOut > 0) {
+      var gasUsed = crotxsOut.map(value => parseInt(value.gasUsed));
+      var gasUsedTotal = gasUsed.reduce((partial_sum, a) => partial_sum + a,0); 
+      var gasPrice = crotxsOut.map(value => parseInt(value.gasPrice));
+      var gasPriceMin = Math.min(...gasPrice);
+      var gasPriceMax = Math.max(...gasPrice);
+      var gasFee = multiply(gasPrice, gasUsed);
+      var croGasFeeTotal = gasFee.reduce((partial_sum, a) => partial_sum + a,0); 
 
+      var gasUsedFail = crotxsOutFail.map(value => parseInt(value.gasUsed));
+      var gasPriceFail = crotxsOutFail.map(value => parseInt(value.gasPrice));
+      var gasFeeFail = multiply(gasPriceFail, gasUsedFail);
+      var croFeeTotalFail = gasFeeFail.reduce((partial_sum, a) => partial_sum + a,0);
+      var croUsdFeeFail = (croFeeTotalFail * crotokenusd / 1e18);
+      croToken = <div className="token-types"><CRONOS_ICON height={"20px"} width={"20px"}/></div>
+
+    } else {
+      croOut = 0;
+      croOutFail = 0;
+      croUsdFeeFail = 0;
+    };
 
     if (evmChainId !== "0x63564c40") {
 
@@ -1571,10 +1582,10 @@ export default function Main(props) {
 
     
 
-    setTotalSentTransactions(+eOut + +bscOut + +opOut + +maticOut + +avaxOut + +arbiOut + +ftmOut + +oneOut + +movrOut + +celoOut + +xdaiOut + +auroraOut + +metisOut + +bobaOut + +glmrOut + +hecoOut);
-    setTotalFailedNumTransactions(+eOutFail + +bscOutFail + +opOutFail + +maticOutFail + +avaxOutFail + +arbiOutFail + +ftmOutFail + +oneOutFail + +movrOutFail + +celoOutFail + +xdaiOutFail + +auroraOutFail + +metisOut + +bobaOut + +glmrOut + +hecoOut);
-    setTotalUsdFailedTotal(+eUsdFeeFail + +bscUsdFeeFail + +opUsdFeeFail + +maticUsdFeeFail + +avaxUsdFeeFail + +arbiUsdFeeFail + +ftmUsdFeeFail + +oneUsdFeeFail + +movrUsdFeeFail + +celoUsdFeeFail + +xdaiUsdFeeFail + +auroraUsdFeeFail + +metisUsdFeeFail + +bobaUsdFeeFail + +glmrUsdFeeFail + +hecoUsdFeeFail);
-    setPaidTokenTypes([ethToken, bnbToken,  opToken, maticToken, avaxToken, arbiToken, ftmToken, oneToken, movrToken, celoToken, xdaiToken, auroraToken, metisToken, bobaToken, glmrToken, hecoToken]);
+    setTotalSentTransactions(+eOut + +bscOut + +opOut + +maticOut + +avaxOut + +arbiOut + +ftmOut + +oneOut + +movrOut + +celoOut + +xdaiOut + +auroraOut + +metisOut + +bobaOut + +glmrOut + +hecoOut + +croOut);
+    setTotalFailedNumTransactions(+eOutFail + +bscOutFail + +opOutFail + +maticOutFail + +avaxOutFail + +arbiOutFail + +ftmOutFail + +oneOutFail + +movrOutFail + +celoOutFail + +xdaiOutFail + +auroraOutFail + +metisOut + +bobaOut + +glmrOut + +hecoOut + +croOut);
+    setTotalUsdFailedTotal(+eUsdFeeFail + +bscUsdFeeFail + +opUsdFeeFail + +maticUsdFeeFail + +avaxUsdFeeFail + +arbiUsdFeeFail + +ftmUsdFeeFail + +oneUsdFeeFail + +movrUsdFeeFail + +celoUsdFeeFail + +xdaiUsdFeeFail + +auroraUsdFeeFail + +metisUsdFeeFail + +bobaUsdFeeFail + +glmrUsdFeeFail + +hecoUsdFeeFail + +croUsdFeeFail);
+    setPaidTokenTypes([ethToken, bnbToken,  opToken, maticToken, avaxToken, arbiToken, ftmToken, oneToken, movrToken, celoToken, xdaiToken, auroraToken, metisToken, bobaToken, glmrToken, hecoToken, croToken]);
 
     setNormalGasUsd("$" + comma(formatter((tokenusd * standardgas * 65000 / 1e9).toFixed(2))));
     setFastGasUsd("$" + comma(formatter((tokenusd * fastgas * 65000 / 1e9).toFixed(2))));
@@ -1599,13 +1610,14 @@ export default function Main(props) {
     setBobaUsd(bobaGasFeeTotal === undefined ? 0 : (formatter((bobatokenusd * bobaGasFeeTotal / 1e18).toFixed(3))));
     setGlmrUsd(metisGasFeeTotal === undefined ? 0 : (formatter((glmrtokenusd * glmrGasFeeTotal / 1e18).toFixed(3))));
     setHecoUsd(hecoGasFeeTotal === undefined ? 0 : (formatter((hecotokenusd * hecoGasFeeTotal / 1e18).toFixed(3))));
+    setCroUsd(croGasFeeTotal === undefined ? 0 : (formatter((crotokenusd * croGasFeeTotal / 1e18).toFixed(3))));
     setLoading(false);
     
 }
 
 
 const totalPaidTokenTypes = (<li className="fee-tokens">{[solToken, paidTokenTypes]}</li>);
-const totalGasFeeTotal = (+ethUsd + +bscUsd + +opUsd + +maticUsd + +avaxUsd + +ftmUsd + +arbiUsd + +oneUsd + +movrUsd + +celoUsd + +xdaiUsd + +auroraUsd  + +metisUsd + +bobaUsd + +glmrUsd + +hecoUsd + +solUsd).toFixed(2);
+const totalGasFeeTotal = (+ethUsd + +bscUsd + +opUsd + +maticUsd + +avaxUsd + +ftmUsd + +arbiUsd + +oneUsd + +movrUsd + +celoUsd + +xdaiUsd + +auroraUsd  + +metisUsd + +bobaUsd + +glmrUsd + +hecoUsd + +croUsd + +solUsd).toFixed(2);
 const totalSentTotal = (totalSentTransactions + +totalSentSol);
 const totalFailedNumTotal = (totalFailedNumTransactions + +totalFailedSol);
 const totalFailedCostTotal = ("$" + (totalUsdFailedTotal + +totalUsdFailedSol).toFixed(4));
@@ -1677,6 +1689,7 @@ useEffect(() => {
               setGlmr={glmrUsd}
               setBoba={bobaUsd}
               setHeco={hecoUsd}
+              setCro={croUsd}
               setSol={solUsd}
               setReth={rEthUsd}
               />
@@ -1730,6 +1743,7 @@ useEffect(() => {
             <Route path="boba" element={<Boba />} />
             <Route path="glmr" element={<Glmr />} />
             <Route path="heco" element={<Heco />} />
+            <Route path="cro" element={<Cro />} />
             <Route path="home" element={<Home />} />
             <Route path="" element={<div className="about-chain">Chain history</div>}/>
             </Routes>

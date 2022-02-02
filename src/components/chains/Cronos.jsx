@@ -1,7 +1,7 @@
-export default function Polygon(props) {
+export default function Cronos(props) {
     return (
       <div className="about-chain">
-        Algorand history
+        Cronos history
       </div>
     );
   }

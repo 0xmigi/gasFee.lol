@@ -4,12 +4,14 @@ import ethscanIcon from '../../assets/icons/etherscan.svg';
 import coingeckoIcon from '../../assets/icons/coingecko.svg';
 import twitterLogo from '../../assets/twitter-logo.svg';
 import githubLogo from '../../assets/github-mark.svg';
+import heartLogo from '../../assets/icons/heart.svg';
 
 const ZAPPER_LINK = `https://docs.zapper.fi/zapper-api/api-getting-started`;
 const ETHERSCAN_LINK = `https://etherscan.io/apis`;
 const COINGECKO_LINK = `https://www.coingecko.com/en/api`;
 const TWITTER_LINK = `https://twitter.com/0xmigi`;
 const GITHUB_LINK = `https://github.com/0xmigi`;
+const DONATE_LINK = `https://etherscan.io/address/0x2b3Ca2178e0dF323f413a8402eEF04Df8E5b8e3C`
 
 export default function Footer() {
 
@@ -54,6 +56,15 @@ export default function Footer() {
                     </div>
                     <div className="footer-text">
                         <a
+                        href={TWITTER_LINK}
+                        target={twitterLogo}
+                        rel="noreferrer"
+                        >
+                            {<img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />}
+                        </a>
+                    </div>
+                    <div className="footer-text">
+                        <a
                         href={GITHUB_LINK}
                         target={githubLogo}
                         rel="noreferrer"
@@ -63,11 +74,11 @@ export default function Footer() {
                     </div>
                     <div className="footer-text">
                         <a
-                        href={TWITTER_LINK}
-                        target={twitterLogo}
+                        href={DONATE_LINK}
+                        target={heartLogo}
                         rel="noreferrer"
                         >
-                            {<img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />}
+                            {<img alt="Donate Logo" className="twitter-logo" src={heartLogo} />}
                         </a>
                     </div>
                 </div>
