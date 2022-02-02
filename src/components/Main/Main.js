@@ -250,6 +250,7 @@ export default function Main(props) {
     setInstantGasUsd("$" + comma(formatter((soltokenusd * 0.000015).toFixed(6))));
     
     setSolToken(<div className="token-types"><SOL_ICON height={"20px"} width={"20px"}/></div>)
+    setLoading(false);
     }
   }
 
@@ -1257,7 +1258,7 @@ export default function Main(props) {
     let oneGasUsed;
     if (oneOut > 0) {
       oneGasUsed = onetxsOut.map((value) => value.hash);
-      console.log("oneGasUsed is", oneGasUsed);
+      // console.log("oneGasUsed is", oneGasUsed);
 
       const gasUsedArr = async () => {
         return Promise.all(
@@ -1293,7 +1294,7 @@ export default function Main(props) {
       };
 
       oneGasUsed = await gasUsedArr();
-      console.log("oneGasUsed is", oneGasUsed);
+      // console.log("oneGasUsed is", oneGasUsed);
 
       var gasUsedTotal = oneGasUsed.reduce((partial_sum, a) => partial_sum + a, 0);
       var gasPrice = onetxsOut.map((value) => parseInt(value.gasPrice));
@@ -1572,12 +1573,12 @@ export default function Main(props) {
       setUsdGasFeeTotal("$" + comma(formatter(((onetokenusd * oneGasFeeTotal) / 1e18).toFixed(4))));
       setSentNumTransactions((oneOut));
       setGasData(oneGasUsed);
-      console.log("gas used for harmony is", oneGasUsed);
+      // console.log("gas used for harmony is", oneGasUsed);
       // setGweiTotal(comma(formatter(gasUsedTotal)));
       setAvarageUsdTotal("$" + comma((((onetokenusd * oneGasFeeTotal) / 1e18) / oneOut).toFixed(1)));
       setFailedNumTransactions(comma(oneOutFail));
       setUsdFailedTotal("ONE" + (oneFeeTotalFail / 1e18).toFixed(3));
-      console.log("oneGasFeeTotal is ", oneGasFeeTotal)
+      // console.log("oneGasFeeTotal is ", oneGasFeeTotal)
     }
 
     

@@ -59,7 +59,6 @@ const DoughnutChart = (props) => {
     setRethGasFees(props.setReth);
 
     return () => {
-      // console.log("gas fee data recieved", props.setEth);
     }
   })
 
@@ -67,12 +66,12 @@ const DoughnutChart = (props) => {
   const data = () => {
     setChartData({
       type: 'doughnut',
-      labels: ['Ethereum', 'BSC', 'Polygon', 'Optimism', 'Arbitrum', 'xDai', 'Avalanche', 'Fantom', 'Celo', 'Harmony One', 'Moonriver', 'Aurora', 'Metis', 'Boba', 'Moonbeam', 'Heco', 'Cronos', 'Cosmos', 'Solana', 'Luna', 'Cardano', 'Polkadot'
+      labels: ['Ethereum', 'BSC', 'Polygon', 'Optimism', 'Arbitrum', 'xDai', 'Avalanche', 'Fantom', 'Celo', 'Harmony One', 'Moonriver', 'Aurora', 'Metis', 'Boba', 'Moonbeam', 'Heco', 'Cronos', 'Cosmos', 'Solana', 'Luna', 'Polkadot'
               // , 'Waves', 'Algorand'
               ],
       datasets: [{
         label: '$ gas spent',
-        data: [(ethGasFees), (bscGasFees), (maticGasFees), (opGasFees), (arbiGasFees), (xdaiGasFees), (avaxGasFees), (ftmGasFees), (celoGasFees), (oneGasFees), (movrGasFees), (auroraGasFees), (metisGasFees), (bobaGasFees), (glmrGasFees), (hecoGasFees), (croGasFees), (atomGasFees), (solGasFees), (lunaGasFees), (adaGasFees), (dotGasFees)],
+        data: [(ethGasFees), (bscGasFees), (maticGasFees), (opGasFees), (arbiGasFees), (xdaiGasFees), (avaxGasFees), (ftmGasFees), (celoGasFees), (oneGasFees), (movrGasFees), (auroraGasFees), (metisGasFees), (bobaGasFees), (glmrGasFees), (hecoGasFees), (croGasFees), (atomGasFees), (solGasFees), (lunaGasFees), (dotGasFees)],
         backgroundColor: [
           '#582a2a',
           '#6f3832',
@@ -129,7 +128,7 @@ const DoughnutChart = (props) => {
 
   useEffect(() => {
     data()
-  }, [ethGasFees, bscGasFees, maticGasFees, opGasFees, arbiGasFees, xdaiGasFees, avaxGasFees, bobaGasFees, glmrGasFees, ftmGasFees, celoGasFees, oneGasFees, movrGasFees, auroraGasFees, metisGasFees, hecoGasFees, croGasFees, rethGasFees, atomGasFees, solGasFees, lunaGasFees, adaGasFees])
+  }, [ethGasFees, bscGasFees, maticGasFees, opGasFees, arbiGasFees, xdaiGasFees, avaxGasFees, bobaGasFees, glmrGasFees, ftmGasFees, celoGasFees, oneGasFees, movrGasFees, auroraGasFees, metisGasFees, hecoGasFees, croGasFees, rethGasFees, atomGasFees, solGasFees, lunaGasFees])
 
 
   return (

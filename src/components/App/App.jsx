@@ -1,6 +1,7 @@
 import React, { useCallback, useState, useEffect, useRef } from 'react';
 import  Nav, { StartKitchen }  from '../Nav/Nav';
 import './App.css';
+import _ from 'lodash';
 
 import { ReactComponent as CaretIcon } from '../../assets/icons/caret.svg';
 import { ReactComponent as McPepeIcon } from '../../assets/icons/mcPepeSmol.svg';
@@ -54,23 +55,39 @@ export default function App(props) {
   
   function NavItemChains(props) {
     return (
-      <li ref={domNode} className="nav-item">
-        <a href="#" className="icon-button" onClick={() => setOpen(!open)}>
-          {props.icon}
-        </a>
-        {open && props.children}
-      </li>
+      recentAccount.displayAccount === undefined ?
+        <li ref={domNode} className="nav-item">
+          <a href="#" className="icon-button" onClick={() => setOpen(!open)}>
+            {props.icon}
+          </a>
+          {open && props.children}
+        </li>
+      :
+        <li ref={domNode} className="nav-item-nft">
+          <a href="#" className="icon-button-nft" onClick={() => setOpen(!open)}>
+            {_.truncate(recentAccount.displayAccount, { 'length': 16 })}
+          </a>
+          {open && props.children}
+        </li>
     );
   }
 
   function NavItemNfts(props) {
     return (
-      <li ref={domNode} className="nav-item-nft">
-        <a href="#" className="icon-button-nft" onClick={() => setOpenNft(!openNft)}>
-          {props.icon}
-        </a>
-        {openNft && PlusUltraDropdown()}
-      </li>
+      recentAccount.displayAccount === undefined ?
+        <li ref={domNode} className="nav-item-nft">
+          <a href="#" className="icon-button-nft" onClick={() => setOpenNft(!openNft)}>
+            {props.icon}
+          </a>
+          {openNft && PlusUltraDropdown()}
+        </li>
+      :
+        <li ref={domNode} className="nav-item-nft">
+          <a href="#" className="icon-button" onClick={() => setOpenNft(!openNft)}>
+            {<div className="connected-icon-nft">+</div>}
+          </a>
+          {openNft && PlusUltraDropdown()}
+        </li>
     );
   }
 
@@ -101,22 +118,21 @@ export default function App(props) {
   }, [recentAccount])
 
 
-
   return (
    <div >
      <Navbar >
       <Header icon={<McPepeIcon/>} domain={name} />
-      <NavItemNfts icon={<div>+Ultra</div>}></NavItemNfts>
-      <NavItemChains icon={<CaretIcon />}>
-        <Nav setRecentAccount={setRecentAccount} />
-      </NavItemChains>
+      <div className="nav-item-nft">
+        <NavItemNfts icon={<div>+Ultra</div>}></NavItemNfts>
+        <NavItemChains icon={<CaretIcon />} >
+          <Nav setRecentAccount={setRecentAccount} />
+        </NavItemChains>
+      </div>
     </Navbar>
 
     <div className="App"> 
-      {/* {cookingStatus} */}
          <main className="content">
              <Main recentAccount={recentAccount}
-                  //  setCookingStatus={setCookingStatus} 
                    />
          </main>
          <Footer />

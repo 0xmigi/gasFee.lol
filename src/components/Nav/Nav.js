@@ -53,6 +53,7 @@ export default function Nav(props) {
   let activeChain = useRef();
   let terraChain = useRef();
   let newAddress;
+  let displayAccount;
   let solAccount;
   let chainColor;
 
@@ -383,10 +384,11 @@ const chainSwitchSol = () => (
             
             console.log(newAccount);
 
-            newAddress = newAccount      
+            newAddress = newAccount;
+            displayAccount = newAccount;   
             activeChain = newChain;
             chainColor = color;
-            props.setRecentAccount({ activeChain, newAddress, chainColor });
+            props.setRecentAccount({ activeChain, newAddress, chainColor, displayAccount });
       
             console.log(chainId);
             console.log(chainColor);
@@ -439,8 +441,9 @@ const chainSwitchSol = () => (
       console.log('Connected with Public Key:', response.publicKey.toString());
       setWalletAddress(response.publicKey.toString());
       solAccount = response.publicKey.toString();
+      displayAccount = response.publicKey.toString();
       chainColor = color;
-      props.setRecentAccount({ solAccount, chainColor })
+      props.setRecentAccount({ solAccount, chainColor, displayAccount })
     }
   };
 
@@ -672,6 +675,7 @@ const PasteAddressConnect = () => {
   let saveAddress = () => {
     setInputAddress(newValue);
     activeChain = newChain;
+    displayAccount = newValue;
     chainColor = color;
 
     if (_.truncate(newValue, { 'length': 5 }) !== "0x...") {
@@ -679,18 +683,18 @@ const PasteAddressConnect = () => {
         setEnsAddress(address);
 
         newAddress = address;
-        props.setRecentAccount({ activeChain, newAddress, chainColor });
+        props.setRecentAccount({ activeChain, newAddress, chainColor, displayAccount });
 
       });
 
       if (newChain === "solana") {
         solAccount = newValue;
         chainColor = color;
-        props.setRecentAccount({ solAccount, chainColor }) 
+        props.setRecentAccount({ solAccount, chainColor, displayAccount }) 
       }
     } else {
       newAddress = newValue;
-      props.setRecentAccount({ activeChain, newAddress, chainColor });
+      props.setRecentAccount({ activeChain, newAddress, chainColor, displayAccount });
     }  
   }
 

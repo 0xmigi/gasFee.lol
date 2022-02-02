@@ -1,7 +1,6 @@
 
 .App {
   overflow: visible;
-  /* height: 100%; */
   height: 100%;
   display: flex;
   background-color: rgb(20, 20, 20);
@@ -420,6 +419,7 @@
 
 .nav-item-nft {
   width: 100%;
+  max-width: 384px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -522,6 +522,15 @@
   transition: filter 300ms;
 }
 
+.connected-icon-nft {
+  display: flex;
+  height: 100%;
+  color: #141414;
+  font-size: 25px;
+  font-weight: bolder;
+
+}
+
 .icon-button-nft {
   --button-size: calc(var(--nav-size) * 0.45);
   max-width: calc(var(--button-size) * 5.5);
@@ -535,7 +544,7 @@
   border-radius: 10px;
   font-weight: bolder;
   padding: 5px;
-  margin: 10px;
+  margin: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -587,6 +596,7 @@
 .dropdown {
   position: absolute;
   top: 75px;
+  right: -115px;
   width: 300px;
   transform: translateX(-45%);
   background-color: #1c1c1c;
