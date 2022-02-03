@@ -138,27 +138,24 @@
   height: 80px;
   margin: 5px;
   padding: 10px;
-  /* max-width: 400px; */
   min-width: fit-content;
   flex-grow: 1;
   flex-basis: 200px;
   background-color: var(--bg);
-  /* border: var(--border); */
   border-radius: var(--border-radius);
   overflow: hidden;
   transition: height var(--speed) ease;
-  /* text-align: left; */
   font-size: 12px;
   font-weight: 600;
-  color: rgb(160, 160, 160);
+  color: #a0a0a0;
   z-index: 990;
-  /* flex-direction: column; */
 }
 
 .small-panel-feed {
   font-size: 22px;
   font-weight: 600;
   margin-top: 18px;
+  color:#d6d6d6;
 }
 
 .live-gas-panel {

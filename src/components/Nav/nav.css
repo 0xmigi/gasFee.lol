@@ -84,7 +84,7 @@
   }
 
   .donate-panel {
-    margin-top: 30px;
+    margin-top: 10px;
     text-align: center; 
     font-size: 12px;
     font-weight: 600;
@@ -121,7 +121,7 @@
   }
 
   .donate-item {
-    height: 100px;
+    height: 70px;
     display: flex;
     margin: 2px;
     align-items: flex-end;

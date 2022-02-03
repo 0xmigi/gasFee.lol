@@ -1558,18 +1558,18 @@ export default function Main(props) {
         // set display value to nothing
       }
 
-      setNativeGasFeeTotal(chainConfig[evmChainId].token + comma((gasFeeTotal / 1e18).toFixed(3)));
+      setNativeGasFeeTotal(comma((gasFeeTotal / 1e18).toFixed(3)) + " " + chainConfig[evmChainId].token);
       setUsdGasFeeTotal("$" + comma(formatter((tokenusd * gasFeeTotal / 1e18).toFixed(2))));
       setSentNumTransactions((nOut));
           // setGweiTotal(comma(formatter(gasUsedTotal)));
       setAvarageUsdTotal("$" + comma((((tokenusd * gasFeeTotal) / 1e18) / nOut).toFixed(1)));
       setFailedNumTransactions(comma(nOutFail));
-      setUsdFailedTotal(chainConfig[evmChainId].token + (gasFeeTotalFail / 1e18).toFixed(3));
+      setUsdFailedTotal((gasFeeTotalFail / 1e18).toFixed(3) + " " + chainConfig[evmChainId].token);
   
 
     } else {
 
-      setNativeGasFeeTotal("ONE" + comma((oneGasFeeTotal / 1e18).toFixed(3)));
+      setNativeGasFeeTotal(comma((oneGasFeeTotal / 1e18).toFixed(3)) + " " + "one");
       setUsdGasFeeTotal("$" + comma(formatter(((onetokenusd * oneGasFeeTotal) / 1e18).toFixed(4))));
       setSentNumTransactions((oneOut));
       setGasData(oneGasUsed);
@@ -1577,7 +1577,7 @@ export default function Main(props) {
       // setGweiTotal(comma(formatter(gasUsedTotal)));
       setAvarageUsdTotal("$" + comma((((onetokenusd * oneGasFeeTotal) / 1e18) / oneOut).toFixed(1)));
       setFailedNumTransactions(comma(oneOutFail));
-      setUsdFailedTotal("ONE" + (oneFeeTotalFail / 1e18).toFixed(3));
+      setUsdFailedTotal((oneFeeTotalFail / 1e18).toFixed(3) + " " + "one");
       // console.log("oneGasFeeTotal is ", oneGasFeeTotal)
     }
 
