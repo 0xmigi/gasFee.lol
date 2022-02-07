@@ -55,6 +55,7 @@ const DoughnutChart = (props) => {
     setHecoGasFees(props.setHeco);
     setSolGasFees(props.setSol);
     setCroGasFees(props.setCro);
+    setLunaGasFees(props.setTerra);
 
     setRethGasFees(props.setReth);
 

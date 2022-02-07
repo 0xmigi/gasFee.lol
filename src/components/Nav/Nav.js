@@ -55,6 +55,7 @@ export default function Nav(props) {
   let newAddress;
   let displayAccount;
   let solAccount;
+  let terraAccount;
   let chainColor;
 
 
@@ -214,7 +215,7 @@ const chainSwitchWaves = () => (
 const chainSwitchLuna = () => (
         <Link to="terra">
           <button
-            onClick={() => {setNewChain("terra"); setColor('#114775');}}
+            onClick={() => {setNewChain("terra"); setColor('#273968');}}
             className="nav-cta-button mint-button"
             >
                Terra
@@ -433,27 +434,29 @@ const chainSwitchSol = () => (
   };
 
 
-  const connectWallet = async () => {
-    const { solana } = window;
+const connectWallet = async () => {
+  const { solana } = window;
 
-    if (solana) {
-      const response = await solana.connect();
-      console.log('Connected with Public Key:', response.publicKey.toString());
-      setWalletAddress(response.publicKey.toString());
-      solAccount = response.publicKey.toString();
-      displayAccount = response.publicKey.toString();
-      chainColor = color;
-      props.setRecentAccount({ solAccount, chainColor, displayAccount })
-    }
-  };
+  if (solana) {
+    const response = await solana.connect();
+    console.log('Connected with Public Key:', response.publicKey.toString());
+    setWalletAddress(response.publicKey.toString());
+    solAccount = response.publicKey.toString();
+    displayAccount = response.publicKey.toString();
+    chainColor = color;
+    props.setRecentAccount({ solAccount, chainColor, displayAccount })
+  }
+};
 
 const onConnect = useCallback(() => {
   connect(ConnectType.EXTENSION);
-  let terraAccount = wallets[0].terraAddress;
+  terraAccount = wallets[0].terraAddress;
+  displayAccount = terraAccount;
   terraChain = newChain;
-  chainColor = color;
+  chainColor = '#273968';
+  console.log("color is ", color);
 
-  props.setRecentAccount({ terraAccount, terraChain, chainColor });
+  props.setRecentAccount({ terraAccount, chainColor, displayAccount });
   console.log("connected to terra address", wallets[0].terraAddress);
 }, [connect]);
   
@@ -530,7 +533,7 @@ const terraStConnect = () => (
     onClick={onConnect} 
     className="address-display"
     >
-      Terra Station 
+      TerraStation 
       <div className="soon-width">
         <div className="soon">
             soon
@@ -691,6 +694,10 @@ const PasteAddressConnect = () => {
         solAccount = newValue;
         chainColor = color;
         props.setRecentAccount({ solAccount, chainColor, displayAccount }) 
+      } else if (newChain === "terra") {
+        terraAccount = newValue;
+        chainColor = color;
+        props.setRecentAccount({terraAccount, chainColor, displayAccount})
       }
     } else {
       newAddress = newValue;
@@ -749,6 +756,9 @@ const PasteAddressConnect = () => {
       </div>
     );
   }
+
+
+  console.log("color is ", color);
 
 
   return (

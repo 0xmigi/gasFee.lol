@@ -38,7 +38,8 @@ import Cro from '../chains/Cronos';
 import Home from '../Home/Home';
 import LineChart from '../Charts/LineChart';
 import { chain } from 'lodash';
-import { ETH_ICON, BNB_ICON, OP_ICON, MATIC_ICON, AVAX_ICON, ARBI_ICON, FTM_ICON, ONE_ICON, MOVR_ICON, SOL_ICON, CELO_ICON, GNOSIS_ICON, AURORA_ICON, METIS_ICON, BOBA_ICON, GLMR_ICON, HECO_ICON, CRONOS_ICON} from '../App/constants';
+import { ETH_ICON, BNB_ICON, OP_ICON, MATIC_ICON, AVAX_ICON, ARBI_ICON, FTM_ICON, ONE_ICON, MOVR_ICON, SOL_ICON, CELO_ICON, GNOSIS_ICON, AURORA_ICON, METIS_ICON, BOBA_ICON, GLMR_ICON, HECO_ICON, CRONOS_ICON, LUNA_ICON} from '../App/constants';
+import { array } from 'prop-types';
 
 // const ETHERSCAN_KEY = process.env.ETHERSCAN_KEY;
 // const OPTISCAN_KEY = process.env.OPTISCAN_KEY;
@@ -123,6 +124,11 @@ export default function Main(props) {
   const [totalFailedSol, setTotalFailedSol] = useState(0);
   const [totalUsdFailedSol, setTotalUsdFailedSol] = useState(0);
 
+  const [totalSentTerra, setTotalSentTerra] = useState(0);
+  const [terraToken, setTerraToken] = useState();
+  const [totalFailedTerra, setTotalFailedTerra] = useState(0);
+  const [totalUsdFailedTerra, setTotalUsdFailedTerra] = useState(0);
+
   const [normalGasUsd, setNormalGasUsd] = useState(0);
   const [fastGasUsd, setFastGasUsd] = useState(0);
   const [instantGasUsd, setInstantGasUsd] = useState(0);
@@ -162,21 +168,163 @@ export default function Main(props) {
   const [glmrUsd, setGlmrUsd] = useState(0);
   const [hecoUsd, setHecoUsd] = useState(0);
   const [croUsd, setCroUsd] = useState(0);
+  const [terraUsd, setTerraUsd] = useState(0);
   const [solUsd, setSolUsd] = useState(0);
   const [rEthUsd, setRethUsd] = useState(0);
 
   // Terra History
   const getTerraTransactions = async(terraAddress) => {
-    const terra = new LCDClient({
-      URL: 'https://lcd.terra.dev',
-      terraChainID: 'columbus-5'
-    });
+    let terra = `https://fcd.terra.dev/v1/txs?account=${terraAddress}&limit=100`
+    let responseTerra = await fetch(terra);
+    
+    let uUnit = await fetch(`https://fcd.terra.dev/v1/txs/gas_prices`);
+    let uUnitGas = await uUnit.json();
+    // let terraluna = uUnitGas.uluna;
+    // let ust = uUnitGas.uusd;
+    // let terrakrw = uUnitGas.ukrw;
+    console.log("uUnintGas is ", uUnitGas);
+    // let figmentSearch = await fetch('https://terra--search.datahub.figment.io/apikey/0d7476f7b2599f4da99573ba14b82be6/health');
+    // let figmentResult = await figmentSearch.json();
+    // console.log("figmentResult is", figmentResult);
+
+    if (responseTerra.ok) {var terrajson = await responseTerra.json();} else {console.log("HTTP-Error: " + responseTerra.status);}
+
+    let terratxs = terrajson.txs;
+    console.log("terratxs is ", terratxs);
+    let tt = terratxs.map(item => item.tx.value.fee.amount[0].denom);
+    console.log("terra denom is", tt)
+
+    let terrafrom, terratxsOut;
+    let terrat = terratxs.length;
+    console.log("terrat is", terrat);
+
+    let terrakrw = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=terra-krw&vs_currencies=usd`).then(response => {return response.json()}).catch(err => {console.log('Error', err)});
+    let ust = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=terrausd&vs_currencies=usd`).then(response => {return response.json()}).catch(err => {console.log('Error', err)});
+    let terraluna = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=terra-luna&vs_currencies=usd`).then(response => {return response.json()}).catch(err => {console.log('Error', err)});
+    terrakrw = terrakrw["terra-krw"].usd;
+    ust = ust["terrausd"].usd;
+    terraluna = terraluna["terra-luna"].usd;
+
+    
+    let terratoken = "terra-luna";
+    let terratokenusd 
+    // = terratokenusd["terra-luna"].usd;
+    // let gasToken = await Promise.allSettled(terratokenusd);
+    // gasToken = gasToken.map(item => item.value);
+    // console.log("terratokenusd is ", gasToken);
+
+    // while (terrat===100) {
+    //   terrafrom = terrajson[terrajson.txs.length -1].id;
+    //   terra = `https://fcd.terra.dev/v1/txs?account=${terraAddress}&beforeHash=${terrafrom}&limit=100`;
+    //   responseTerra = await fetch(terra);
+
+    //   if (responseTerra.ok) {
+    //     terrajson = await responseTerra.json()
+    //     console.log(terrajson);
+    //   } else {
+    //     console.error('big pwoblam : ' + responseTerra.status);
+    //     break
+    //   }
+
+    //   terrat = terrajson.txs.length;
+    //   terratxs.txs.push.apply(terratxs, terrajson);
+
+    // };
+
+    terratxsOut = terratxs;
+    terratxsOut = terratxsOut.map(({ confirmations, ...item }) => item);
+    terratxsOut = new Set(terratxsOut.map(JSON.stringify));
+    terratxsOut = Array.from(terratxsOut).map(JSON.parse);
+
+    var tOut = terratxsOut.length;
+    var uMultiplier = 0.000001;
+    var ukrwIndex;
+    var uustIndex;
+    var ulunaIndex;
+    var ultrail, ustrail, krtrail;
+    var ulunaItem, uustItem, ukrwItem;
+
+    if (tOut > 0 ) {
+      let terrafee = terratxs.map(item => item.tx.value.fee.amount[0].amount);
+      let terrafeeNum = terrafee.map(Number);
+      let gasDenom = tt.map((item, index, array) => {
+        if (item === "ukrw") {
+          ukrwIndex = index;
+        } else if (item === "uusd") {
+          uustIndex = index;
+        } else if (item === "uluna") {
+          ulunaIndex = index;
+          ulunaItem = item;
+        }
+
+        const uTokenUsd = terrafeeNum.map((item, index, array) => {
+          if (index === ulunaIndex) {
+            ultrail = terraluna * (item * uMultiplier);
+            // console.log("terra-luna is", terraluna);
+            var ularray = [ultrail];
+            ularray = ularray.filter((item) => item!==undefined);
+            ultrail = ularray[0];
+            
+
+            return ultrail;
+          } else if (index === uustIndex) {
+            ustrail = item * uMultiplier;
+            var usarray = [ustrail];
+            usarray = usarray.filter((item) => item!==undefined);
+            ustrail = usarray[0];
+
+            return usarray;
+          } else if (index === ukrwIndex) {
+            krtrail = terrakrw * (item * uMultiplier);
+            var krarray = [krtrail];
+            krarray = krarray.filter((item) => item!==undefined);
+
+            return krarray;
+          }
 
 
-    const accountInfo = await terra.auth.accountInfo();
-    console.log(terraAddress);
-    console.log(terra);
-    console.log("terra accountInfo is ", accountInfo);
+          array = [ultrail, ustrail];
+          // // array = array.filter((item) => item!==undefined);
+          // // // console.log(ulunaIndex);
+          // // // console.log("trail is", index[0], "ulunaIndex is", ulunaIndex);
+          console.log(array);
+          // return (
+          //   ultrail, ustrail, krtrail
+          //   );
+        });
+
+        // array = uTokenUsd;
+        // // array = array.filter((item) => item!==undefined);
+        
+        // console.log(array);
+        // return item;
+      });
+      
+      let ulunaTotal = terrafeeNum.reduce((a, b) => {return a + b;}, 0)
+      let terraFeeUsd = terratokenusd * (ulunaTotal * 0.000001);
+      // let tstatus = terratxs.filter(item => item.status === "Fail")
+      // let feeFail = tstatus.map(item => item.gas_used);
+      // let fTotal = feeFail.reduce((a, b) => {return a + b;}, 0)
+      // let failFeeUsd = terratokenusd * (fTotal * 0.000001);
+      setTerraUsd(terraFeeUsd);
+      setTotalSentTerra(tOut);
+      // setTotalFailedTerra(tstatus.length);
+      // setTotalUsdFailedTerra(failFeeusd);
+      setGasData(terrafee);
+
+      setNativeGasFeeTotal((ulunaTotal * 0.000001).toFixed(4) + " " + "luna");
+      setUsdGasFeeTotal("$" + comma(formatter((terraFeeUsd).toFixed(4))));
+      setSentNumTransactions(tOut);
+      // setAvarageGweiTotal(comma((gasPriceTotal / nOut / 1e9).toFixed(1)));
+      // setFailedNumTransactions(comma(status.length));
+      // setUsdFailedTotal("$" + (failFeeUsd).toFixed(4));
+      setTerraToken(<div className="token-types"><LUNA_ICON height={"20px"} width={"20px"}/></div>)
+
+      console.log("terrafeeNum is", terrafeeNum);
+      console.log("terraFeeUsd is", terraFeeUsd);
+      console.log("gasDenom is ", gasDenom);
+    }
+    setLoading(false);
   }
 
   // Solana History
@@ -223,6 +371,7 @@ export default function Main(props) {
 
     if (sOut > 0) {
     let solfee = soltxs.map(item => item.fee);
+    console.log("soltxsOut is ", soltxsOut);
     let lamportTotal = solfee.reduce((a, b) => {return a + b;}, 0)
     let solFeeUsd = soltokenusd * (lamportTotal * 0.000000001);
     let status = soltxs.filter(item => item.status === "Fail");
@@ -235,7 +384,7 @@ export default function Main(props) {
     setTotalUsdFailedSol(failFeeUsd);
     setGasData(solfee);
 
-    setNativeGasFeeTotal("sol" + (lamportTotal * 0.000000001).toFixed(4));
+    setNativeGasFeeTotal((lamportTotal * 0.000000001).toFixed(4) + " " + "sol");
     setUsdGasFeeTotal("$" + comma(formatter((solFeeUsd).toFixed(4))));
     setSentNumTransactions(sOut);
     // setAvarageGweiTotal(comma((gasPriceTotal / nOut / 1e9).toFixed(1)));
@@ -250,8 +399,8 @@ export default function Main(props) {
     setInstantGasUsd("$" + comma(formatter((soltokenusd * 0.000015).toFixed(6))));
     
     setSolToken(<div className="token-types"><SOL_ICON height={"20px"} width={"20px"}/></div>)
-    setLoading(false);
     }
+   setLoading(false);
   }
 
   
@@ -1617,11 +1766,11 @@ export default function Main(props) {
 }
 
 
-const totalPaidTokenTypes = (<li className="fee-tokens">{[solToken, paidTokenTypes]}</li>);
-const totalGasFeeTotal = (+ethUsd + +bscUsd + +opUsd + +maticUsd + +avaxUsd + +ftmUsd + +arbiUsd + +oneUsd + +movrUsd + +celoUsd + +xdaiUsd + +auroraUsd  + +metisUsd + +bobaUsd + +glmrUsd + +hecoUsd + +croUsd + +solUsd).toFixed(2);
-const totalSentTotal = (totalSentTransactions + +totalSentSol);
-const totalFailedNumTotal = (totalFailedNumTransactions + +totalFailedSol);
-const totalFailedCostTotal = ("$" + (totalUsdFailedTotal + +totalUsdFailedSol).toFixed(4));
+const totalPaidTokenTypes = (<li className="fee-tokens">{[solToken, terraToken, paidTokenTypes]}</li>);
+const totalGasFeeTotal = (+ethUsd + +bscUsd + +opUsd + +maticUsd + +avaxUsd + +ftmUsd + +arbiUsd + +oneUsd + +movrUsd + +celoUsd + +xdaiUsd + +auroraUsd  + +metisUsd + +bobaUsd + +glmrUsd + +hecoUsd + +croUsd + +terraUsd + +solUsd).toFixed(2);
+const totalSentTotal = (totalSentTransactions + +totalSentTerra + +totalSentSol);
+const totalFailedNumTotal = (totalFailedNumTransactions +  + totalFailedTerra + +totalFailedSol);
+const totalFailedCostTotal = ("$" + (totalUsdFailedTotal + +totalUsdFailedTerra +totalUsdFailedSol).toFixed(4));
 const totalWalletsTotal = (evmWallets + +terraWallets + +solWallets);
 const totalAverageUsdTransactionTotal = (totalGasFeeTotal / totalSentTotal);
 
@@ -1669,6 +1818,8 @@ useEffect(() => {
 }, [props.recentAccount.solAccount]);
   
 
+console.log("chain color is ", chainColor);
+
   return (
     <div className="panels-container">
       <div className="left-panel">
@@ -1691,6 +1842,7 @@ useEffect(() => {
               setBoba={bobaUsd}
               setHeco={hecoUsd}
               setCro={croUsd}
+              setTerra={terraUsd}
               setSol={solUsd}
               setReth={rEthUsd}
               />
