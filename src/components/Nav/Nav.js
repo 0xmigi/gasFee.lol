@@ -219,11 +219,11 @@ const chainSwitchLuna = () => (
             className="nav-cta-button mint-button"
             >
                Terra
-               <div className="soon-width">
+               {/* <div className="soon-width">
                   <div className="soon">
                       soon
                   </div>
-                </div>
+                </div> */}
           </button>
         </Link>
 );
@@ -513,11 +513,11 @@ const xdefiConnect = () => (
     className="address-display"
     >
       Xdefi
-      <div className="soon-width">
+      {/* <div className="soon-width">
         <div className="soon">
             soon
         </div>
-      </div>
+      </div> */}
     </button>
 
   // <button
@@ -534,11 +534,11 @@ const terraStConnect = () => (
     className="address-display"
     >
       TerraStation 
-      <div className="soon-width">
+      {/* <div className="soon-width">
         <div className="soon">
             soon
         </div>
-      </div>
+      </div> */}
   </button>
 );
 
@@ -880,12 +880,6 @@ const PasteAddressConnect = () => {
             <h2>{chainSwitchCronos()}</h2>
           </DropdownItem>
           <DropdownItem
-            leftIcon={<ATOM_ICON />}
-            goToMenu="Cosmos"
-            >
-            <h2>{chainSwitchAtom()}</h2>
-          </DropdownItem>
-          <DropdownItem
             leftIcon={<SOL_ICON/>}
             goToMenu="Solana"
             >
@@ -903,6 +897,12 @@ const PasteAddressConnect = () => {
             >
             <h2>{chainSwitchAda()}</h2>
           </DropdownItem> */}
+           <DropdownItem
+            leftIcon={<ATOM_ICON />}
+            goToMenu="Cosmos"
+            >
+            <h2>{chainSwitchAtom()}</h2>
+          </DropdownItem>
           <DropdownItem
             leftIcon={<DOT_ICON />}
             goToMenu="Polkadot"

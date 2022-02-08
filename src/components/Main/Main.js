@@ -185,8 +185,6 @@ export default function Main(props) {
     if (responseTerra.ok) {var terrajson = await responseTerra.json();} else {console.log("HTTP-Error: " + responseTerra.status);}
 
     let terratxs = terrajson.txs;
-    console.log("terratxs is ", terratxs);
-
     let terrafrom, terratxs2, terratxsOut;
     let terrat = terratxs.length;
     console.log("terrat is", terrat);
@@ -197,14 +195,6 @@ export default function Main(props) {
     terrakrw = terrakrw["terra-krw"].usd;
     ust = ust["terrausd"].usd;
     terraluna = terraluna["terra-luna"].usd;
-
-    
-    let terratoken = "terra-luna";
-    let terratokenusd 
-    // = terratokenusd["terra-luna"].usd;
-    // let gasToken = await Promise.allSettled(terratokenusd);
-    // gasToken = gasToken.map(item => item.value);
-    // console.log("terratokenusd is ", gasToken);
 
     while (terrat===100) {
       terrafrom = terratxs[terratxs.length -1].id;
@@ -1802,7 +1792,6 @@ useEffect(() => {
 }, [props.recentAccount.solAccount]);
   
 
-console.log("chain color is ", chainColor);
 
   return (
     <div className="panels-container">
