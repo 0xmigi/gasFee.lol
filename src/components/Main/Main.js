@@ -8,6 +8,7 @@ import $ from 'jquery';
 import DoughnutChart from '../Charts/DoughnutChart';
 import { BarLoader } from 'react-spinners';
 import { css } from '@emotion/react';
+import _ from 'lodash';
 
 
 import Ethereum from '../chains/Ethereum';
@@ -118,6 +119,7 @@ export default function Main(props) {
   const [totalSentTransactions, setTotalSentTransactions] = useState(0);
   const [totalFailedNumTransactions, setTotalFailedNumTransactions] = useState(0);
   const [totalUsdFailedTotal, setTotalUsdFailedTotal] = useState(0);
+  const [recentAddress, setRecentAddress] = useState(0);
 
   const [totalSentSol, setTotalSentSol] = useState(0);
   const [solToken, setSolToken] = useState();
@@ -179,22 +181,13 @@ export default function Main(props) {
     
     let uUnit = await fetch(`https://fcd.terra.dev/v1/txs/gas_prices`);
     let uUnitGas = await uUnit.json();
-    // let terraluna = uUnitGas.uluna;
-    // let ust = uUnitGas.uusd;
-    // let terrakrw = uUnitGas.ukrw;
-    console.log("uUnintGas is ", uUnitGas);
-    // let figmentSearch = await fetch('https://terra--search.datahub.figment.io/apikey/0d7476f7b2599f4da99573ba14b82be6/health');
-    // let figmentResult = await figmentSearch.json();
-    // console.log("figmentResult is", figmentResult);
 
     if (responseTerra.ok) {var terrajson = await responseTerra.json();} else {console.log("HTTP-Error: " + responseTerra.status);}
 
     let terratxs = terrajson.txs;
     console.log("terratxs is ", terratxs);
-    let tt = terratxs.map(item => item.tx.value.fee.amount[0].denom);
-    console.log("terra denom is", tt)
 
-    let terrafrom, terratxsOut;
+    let terrafrom, terratxs2, terratxsOut;
     let terrat = terratxs.length;
     console.log("terrat is", terrat);
 
@@ -213,28 +206,30 @@ export default function Main(props) {
     // gasToken = gasToken.map(item => item.value);
     // console.log("terratokenusd is ", gasToken);
 
-    // while (terrat===100) {
-    //   terrafrom = terrajson[terrajson.txs.length -1].id;
-    //   terra = `https://fcd.terra.dev/v1/txs?account=${terraAddress}&beforeHash=${terrafrom}&limit=100`;
-    //   responseTerra = await fetch(terra);
+    while (terrat===100) {
+      terrafrom = terratxs[terratxs.length -1].id;
+      terra = `https://fcd.terra.dev/v1/txs?account=${terraAddress}&offset=${terrafrom}&limit=100`;
+      responseTerra = await fetch(terra);
 
-    //   if (responseTerra.ok) {
-    //     terrajson = await responseTerra.json()
-    //     console.log(terrajson);
-    //   } else {
-    //     console.error('big pwoblam : ' + responseTerra.status);
-    //     break
-    //   }
+      if (responseTerra.ok) {
+        terrajson = await responseTerra.json()
+        console.log(terrajson);
+      } else {
+        console.error('big pwoblam : ' + responseTerra.status);
+        break
+      }
 
-    //   terrat = terrajson.txs.length;
-    //   terratxs.txs.push.apply(terratxs, terrajson);
+      terratxs2 = terrajson.txs;
+      terrat = terrajson.txs.length;
+      terratxs.push.apply(terratxs, terratxs2);
+    };
 
-    // };
-
+    let tt = terratxs.map(item => item.tx.value.fee.amount[0].denom);
     terratxsOut = terratxs;
     terratxsOut = terratxsOut.map(({ confirmations, ...item }) => item);
     terratxsOut = new Set(terratxsOut.map(JSON.stringify));
     terratxsOut = Array.from(terratxsOut).map(JSON.parse);
+    
 
     var tOut = terratxsOut.length;
     var uMultiplier = 0.000001;
@@ -254,75 +249,61 @@ export default function Main(props) {
           uustIndex = index;
         } else if (item === "uluna") {
           ulunaIndex = index;
-          ulunaItem = item;
         }
 
-        const uTokenUsd = terrafeeNum.map((item, index, array) => {
+        const uTokenUsd = terrafeeNum.map((item, index) => {
           if (index === ulunaIndex) {
-            ultrail = terraluna * (item * uMultiplier);
-            // console.log("terra-luna is", terraluna);
-            var ularray = [ultrail];
-            ularray = ularray.filter((item) => item!==undefined);
-            ultrail = ularray[0];
-            
-
-            return ultrail;
+            ulunaItem = terraluna * (item * uMultiplier);
+            return {ulunaItem, ulunaIndex};
           } else if (index === uustIndex) {
-            ustrail = item * uMultiplier;
-            var usarray = [ustrail];
-            usarray = usarray.filter((item) => item!==undefined);
-            ustrail = usarray[0];
-
-            return usarray;
+            uustItem = item * uMultiplier;
+            return {uustItem, uustIndex};
           } else if (index === ukrwIndex) {
-            krtrail = terrakrw * (item * uMultiplier);
-            var krarray = [krtrail];
-            krarray = krarray.filter((item) => item!==undefined);
-
-            return krarray;
+            ukrwItem = terrakrw * (item * uMultiplier);
+            return {ukrwItem, ukrwIndex};
           }
-
-
-          array = [ultrail, ustrail];
-          // // array = array.filter((item) => item!==undefined);
-          // // // console.log(ulunaIndex);
-          // // // console.log("trail is", index[0], "ulunaIndex is", ulunaIndex);
-          console.log(array);
-          // return (
-          //   ultrail, ustrail, krtrail
-          //   );
         });
-
-        // array = uTokenUsd;
-        // // array = array.filter((item) => item!==undefined);
-        
-        // console.log(array);
-        // return item;
+        array = uTokenUsd.filter(item => (item !== undefined));
+        return array;
       });
+      const convertedTxsUunit = gasDenom.map((item) => {
+        var index0uust = item[0].uustItem;
+        var index0uluna = item[0].ulunaItem;
+        if (item.length === 2) {
+          var index1uust = item[1].uustItem;
+          var index1uluna = item[1].ulunaItem; 
+        }
+        item = [index0uust,index0uluna, index1uust, index1uluna];
+        item = item.filter(item => (item !== undefined));
+        item = item.slice(-1);
+        return item;
+      });
+      const arrTxsUunit = convertedTxsUunit.map(Number);
+      console.log("arrTxsUunit is ", arrTxsUunit);
       
-      let ulunaTotal = terrafeeNum.reduce((a, b) => {return a + b;}, 0)
-      let terraFeeUsd = terratokenusd * (ulunaTotal * 0.000001);
-      // let tstatus = terratxs.filter(item => item.status === "Fail")
-      // let feeFail = tstatus.map(item => item.gas_used);
-      // let fTotal = feeFail.reduce((a, b) => {return a + b;}, 0)
-      // let failFeeUsd = terratokenusd * (fTotal * 0.000001);
+      let ulunaTotal = arrTxsUunit.reduce((a, b) => {return a + b;}, 0)
+      let terraFeeUsd = ulunaTotal;
+      let tstatus = terratxs.filter(item => (_.truncate(item.raw_log, { 'length': 9 }) === "failed..."));
+      let feeFail = tstatus.map(item => item.tx.value.fee.amount[0].amount);
+      feeFail = feeFail.map(Number);
+      let fTotal = feeFail.reduce((a, b) => {return a + b;}, 0)
+      let failFeeUsd = fTotal * uMultiplier;
       setTerraUsd(terraFeeUsd);
       setTotalSentTerra(tOut);
-      // setTotalFailedTerra(tstatus.length);
-      // setTotalUsdFailedTerra(failFeeusd);
-      setGasData(terrafee);
+      setTotalFailedTerra(tstatus.length);
+      setTotalUsdFailedTerra((failFeeUsd).toFixed(4));
+      setGasData(arrTxsUunit);
 
-      setNativeGasFeeTotal((ulunaTotal * 0.000001).toFixed(4) + " " + "luna");
+      setNativeGasFeeTotal((ulunaTotal / terraluna).toFixed(4) + " " + "luna");
       setUsdGasFeeTotal("$" + comma(formatter((terraFeeUsd).toFixed(4))));
       setSentNumTransactions(tOut);
-      // setAvarageGweiTotal(comma((gasPriceTotal / nOut / 1e9).toFixed(1)));
-      // setFailedNumTransactions(comma(status.length));
-      // setUsdFailedTotal("$" + (failFeeUsd).toFixed(4));
+      setAvarageUsdTotal("$" + comma((terraFeeUsd / tOut ).toFixed(4)));
+      setFailedNumTransactions(comma(tstatus.length));
+      setUsdFailedTotal("$" + (failFeeUsd).toFixed(4));
       setTerraToken(<div className="token-types"><LUNA_ICON height={"20px"} width={"20px"}/></div>)
 
-      console.log("terrafeeNum is", terrafeeNum);
-      console.log("terraFeeUsd is", terraFeeUsd);
-      console.log("gasDenom is ", gasDenom);
+      // console.log("tstatus is", tstatus);
+      // console.log("terraFeeUsd is", terraFeeUsd);
     }
     setLoading(false);
   }
@@ -1778,6 +1759,7 @@ const totalAverageUsdTransactionTotal = (totalGasFeeTotal / totalSentTotal);
 useEffect(() => {
   if (evmChainId !== undefined) {
     getEvmTransactions(address);
+    setRecentAddress(address);
     setEvmWallets(1);
     setLoading(true);
     console.log("getEvmTransactions was called")
@@ -1792,6 +1774,7 @@ useEffect(() => {
 useEffect(() => {
   if (terraAddress !== undefined) {
     getTerraTransactions(terraAddress);
+    setRecentAddress(terraAddress);
     setTerraWallets(1);
     setLoading(true);
     console.log("getTerraTransactions was called")
@@ -1806,6 +1789,7 @@ useEffect(() => {
 useEffect(() => {
   if (solAddress !== undefined) {
     getSolTransactions(solAddress);
+    setRecentAddress(solAddress);
     setSolWallets(1);
     setLoading(true);
     console.log("getSolTransactions was called")
@@ -1849,7 +1833,7 @@ console.log("chain color is ", chainColor);
               <div className="about-chainBox">
                 <BarLoader css={loaderCSS} loading={loading}/>
                 <div className="about-chain">
-                  Net history 
+                  Net history
                 </div>
               </div>
           </div>
@@ -1860,7 +1844,7 @@ console.log("chain color is ", chainColor);
             <div className="small-panel">total transactions made: <p className="small-panel-feed">{totalSentTotal}</p></div>
             <div className="small-panel">total transactions failed: <p className="small-panel-feed">{totalFailedNumTotal}</p></div>
             <div className="small-panel">failed cost: <p className="small-panel-feed">{totalFailedCostTotal}</p></div>
-            <div className="small-panel">most recent address: <p >{props.recentAccount.newAddress}</p> </div>
+            <div className="small-panel">most recent address: <p >{recentAddress}</p> </div>
           </div>
       </div>
 
