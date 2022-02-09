@@ -226,7 +226,7 @@ export default function Main(props) {
     var ukrwIndex;
     var uustIndex;
     var ulunaIndex;
-    var ultrail, ustrail, krtrail;
+    var failedtxs, failedtxsIndex;
     var ulunaItem, uustItem, ukrwItem;
 
     if (tOut > 0 ) {
@@ -257,13 +257,15 @@ export default function Main(props) {
         return array;
       });
       const convertedTxsUunit = gasDenom.map((item) => {
-        var index0uust = item[0].uustItem;
         var index0uluna = item[0].ulunaItem;
+        var index0uust = item[0].uustItem;
+        var index0ukrw = item[0].ukrwItem;
         if (item.length === 2) {
-          var index1uust = item[1].uustItem;
           var index1uluna = item[1].ulunaItem; 
+          var index1uust = item[1].uustItem;
+          var index1ukrw = item[1].ukrwItem; 
         }
-        item = [index0uust,index0uluna, index1uust, index1uluna];
+        item = [index0uust,index0uluna, index0ukrw, index1uust, index1uluna, index1ukrw];
         item = item.filter(item => (item !== undefined));
         item = item.slice(-1);
         return item;
@@ -273,14 +275,33 @@ export default function Main(props) {
       
       let ulunaTotal = arrTxsUunit.reduce((a, b) => {return a + b;}, 0)
       let terraFeeUsd = ulunaTotal;
-      let tstatus = terratxs.filter(item => (_.truncate(item.raw_log, { 'length': 9 }) === "failed..."));
-      let feeFail = tstatus.map(item => item.tx.value.fee.amount[0].amount);
-      feeFail = feeFail.map(Number);
-      let fTotal = feeFail.reduce((a, b) => {return a + b;}, 0)
-      let failFeeUsd = fTotal * uMultiplier;
+      let tstatus = terratxs.map((item, index, array) => {
+        if (_.truncate(item.raw_log, { 'length': 9 }) === "failed...") {
+          failedtxsIndex = index;
+        }
+        array = failedtxsIndex;
+        return array;
+      });
+      failedtxsIndex = [...new Set(tstatus)];
+      console.log("failedtxsIndex is", failedtxsIndex.length);
+      failedtxsIndex = failedtxsIndex.filter(item => (item !== undefined));
+      const arrFaliedTxsUunit = arrTxsUunit.map((item1, index1, array) => {
+        failedtxsIndex.forEach((item) => {
+          if (item === index1) {
+            failedtxs = item1;
+          }
+        });
+        array = failedtxs;
+        return array; 
+      });
+      failedtxs = [...new Set(arrFaliedTxsUunit)];
+      failedtxs = failedtxs.filter(item => (item !== undefined));
+      let fTotal = failedtxs.reduce((a, b) => {return a + b;}, 0)
+      console.log("failedtxs is", failedtxs);
+      let failFeeUsd = fTotal;
       setTerraUsd(terraFeeUsd);
       setTotalSentTerra(tOut);
-      setTotalFailedTerra(tstatus.length);
+      setTotalFailedTerra(failedtxs.length);
       setTotalUsdFailedTerra((failFeeUsd).toFixed(4));
       setGasData(arrTxsUunit);
 
@@ -288,7 +309,7 @@ export default function Main(props) {
       setUsdGasFeeTotal("$" + comma(formatter((terraFeeUsd).toFixed(4))));
       setSentNumTransactions(tOut);
       setAvarageUsdTotal("$" + comma((terraFeeUsd / tOut ).toFixed(4)));
-      setFailedNumTransactions(comma(tstatus.length));
+      setFailedNumTransactions(comma(failedtxs.length));
       setUsdFailedTotal("$" + (failFeeUsd).toFixed(4));
       setTerraToken(<div className="token-types"><LUNA_ICON height={"20px"} width={"20px"}/></div>)
 
