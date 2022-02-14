@@ -39,7 +39,7 @@ import Cro from '../chains/Cronos';
 import Home from '../Home/Home';
 import LineChart from '../Charts/LineChart';
 import { chain } from 'lodash';
-import { ETH_ICON, BNB_ICON, OP_ICON, MATIC_ICON, AVAX_ICON, ARBI_ICON, FTM_ICON, ONE_ICON, MOVR_ICON, SOL_ICON, CELO_ICON, GNOSIS_ICON, AURORA_ICON, METIS_ICON, BOBA_ICON, GLMR_ICON, HECO_ICON, CRONOS_ICON, LUNA_ICON, ETHERSCAN_KEY, OPTISCAN_KEY, BSCSCAN_KEY, POLYGONSCAN_KEY, SNOWTRACE_KEY, FTMSCAN_KEY, MOONSCAN_KEY, ARBISCAN_KEY, HECOSCAN_KEY, CRONOSCAN_KEY} from '../App/constants';
+import { ETH_ICON, BNB_ICON, OP_ICON, MATIC_ICON, AVAX_ICON, ARBI_ICON, FTM_ICON, ONE_ICON, MOVR_ICON, SOL_ICON, CELO_ICON, GNOSIS_ICON, AURORA_ICON, METIS_ICON, BOBA_ICON, GLMR_ICON, HECO_ICON, CRONOS_ICON, LUNA_ICON, ETHERSCAN_KEY, OPTISCAN_KEY, BSCSCAN_KEY, POLYGONSCAN_KEY, SNOWTRACE_KEY, FTMSCAN_KEY, MOONSCAN_KEY, ARBISCAN_KEY, HECOSCAN_KEY, CRONOSCAN_KEY, ZAPPER_KEY} from '../App/constants';
 import { array } from 'prop-types';
 
 
@@ -420,7 +420,7 @@ export default function Main(props) {
       const postLondon = testNum(chainName);
       console.log("postLondon gas >", postLondon);
       
-      let connectedGasPrice = `https://api.zapper.fi/v1/gas-price?network=${chainName}&eip1559=${postLondon}&api_key=96e0cc51-a62e-42ca-acee-910ea7d2a241`;
+      let connectedGasPrice = `https://api.zapper.fi/v1/gas-price?network=${chainName}&eip1559=${postLondon}&api_key=${ZAPPER_KEY}`;
   
       // const getGasPrice = async() => {
         const chainGasPrice = await fetch(connectedGasPrice)
@@ -459,7 +459,7 @@ export default function Main(props) {
     chainConfig['0x19'] = {id: '0x19', shortname: 'cro', name:'Cronos', symbol: 'cro', coingecko_name: 'crypto-com-chain', token: 'cro', explorer_uri: 'https://api.cronoscan.com', key: `${CRONOSCAN_KEY}`}
 
     //testnets
-    chainConfig['0x4'] = {id: '0x4', shortname: 'eth', name:'Rinkeby', symbol: 'eth', coingecko_name: 'ethereum', token: 'Ξ', color: '#03a9f4', explorer_uri: 'https://api-rinkeby.etherscan.io', key: 'KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD'}
+    chainConfig['0x4'] = {id: '0x4', shortname: 'eth', name:'Rinkeby', symbol: 'eth', coingecko_name: 'ethereum', token: 'Ξ', color: '#03a9f4', explorer_uri: 'https://api-rinkeby.etherscan.io'}
 
     
     let coingeckoSymbol = chainConfig[evmChainId].coingecko_name;
@@ -563,7 +563,7 @@ export default function Main(props) {
     let glmr = chainConfig["0x504"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc`
     let heco = chainConfig["0x80"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${HECOSCAN_KEY}`
     let cro = chainConfig["0x19"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${CRONOSCAN_KEY}`
-    // let reth = chainConfig["0x4"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD`
+    // let reth = chainConfig["0x4"].explorer_uri+`/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc`
 
 
     console.log("celo is ", celo)

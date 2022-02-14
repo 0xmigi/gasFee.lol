@@ -105,6 +105,8 @@ export const ARBISCAN_KEY = process.env.REACT_APP_ARBISCAN_KEY
 export const HECOSCAN_KEY = process.env.REACT_APP_HECOSCAN_KEY
 export const CRONOSCAN_KEY = process.env.REACT_APP_CRONOSCAN_KEY
 
+export const ZAPPER_KEY = process.env.REACT_APP_ZAPPER_KEY
+
 
 
 
