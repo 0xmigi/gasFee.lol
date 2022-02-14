@@ -47,6 +47,7 @@ import { ReactComponent as XdefiIcon } from '../../assets/icons/xdefi.svg';
 import { ReactComponent as CloverIcon } from '../../assets/icons/clover.svg';
 
 
+
 export const COG_ICON = CogIcon;
 export const COPY_ICON = CopyIcon;
 export const LIGHTMODE_ICON = LightIcon
@@ -92,6 +93,18 @@ export const XDEFI_ICON = XdefiIcon;
 export const CLOVER_ICON = CloverIcon;
 export const CBW_ICON = CbWalletIcon;
 
+export const TRACKING_CODE = process.env.REACT_APP_TRACKING_CODE
+export const ETHERSCAN_KEY = process.env.REACT_APP_ETHERSCAN_KEY
+export const OPTISCAN_KEY = process.env.REACT_APP_OPTISCAN_KEY
+export const BSCSCAN_KEY = process.env.REACT_APP_BSCSCAN_KEY
+export const POLYGONSCAN_KEY = process.env.REACT_APP_POLYGONSCAN_KEY
+export const SNOWTRACE_KEY= process.env.REACT_APP_SNOWTRACE_KEY
+export const FTMSCAN_KEY = process.env.REACT_APP_FTMSCAN_KEY
+export const MOONSCAN_KEY = process.env.REACT_APP_MOONSCAN_KEY
+export const ARBISCAN_KEY = process.env.REACT_APP_ARBISCAN_KEY
+export const HECOSCAN_KEY = process.env.REACT_APP_HECOSCAN_KEY
+export const CRONOSCAN_KEY = process.env.REACT_APP_CRONOSCAN_KEY
+
 
 
 
@@ -114,7 +127,7 @@ export const CBW_ICON = CbWalletIcon;
 export const INFURA_ID = "946b8e72f96f41fe8154338a494de7bf";
 
 // MY ETHERSCAN_ID, SWAP IN YOURS FROM https://etherscan.io/myapikey
-export const ETHERSCAN_KEY = "QU1R5JA54XSFKQ5CS24SWZDKXWM8TIGQH2";
+// export const ETHERSCAN_KEY = "QU1R5JA54XSFKQ5CS24SWZDKXWM8TIGQH2";
 
 // BLOCKNATIVE ID FOR Notify.js:
 export const BLOCKNATIVE_DAPPID = "0b58206a-f3c0-4701-a62f-73c7243e8c77";

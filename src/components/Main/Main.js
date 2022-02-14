@@ -39,29 +39,10 @@ import Cro from '../chains/Cronos';
 import Home from '../Home/Home';
 import LineChart from '../Charts/LineChart';
 import { chain } from 'lodash';
-import { ETH_ICON, BNB_ICON, OP_ICON, MATIC_ICON, AVAX_ICON, ARBI_ICON, FTM_ICON, ONE_ICON, MOVR_ICON, SOL_ICON, CELO_ICON, GNOSIS_ICON, AURORA_ICON, METIS_ICON, BOBA_ICON, GLMR_ICON, HECO_ICON, CRONOS_ICON, LUNA_ICON} from '../App/constants';
+import { ETH_ICON, BNB_ICON, OP_ICON, MATIC_ICON, AVAX_ICON, ARBI_ICON, FTM_ICON, ONE_ICON, MOVR_ICON, SOL_ICON, CELO_ICON, GNOSIS_ICON, AURORA_ICON, METIS_ICON, BOBA_ICON, GLMR_ICON, HECO_ICON, CRONOS_ICON, LUNA_ICON, ETHERSCAN_KEY, OPTISCAN_KEY, BSCSCAN_KEY, POLYGONSCAN_KEY, SNOWTRACE_KEY, FTMSCAN_KEY, MOONSCAN_KEY, ARBISCAN_KEY, HECOSCAN_KEY, CRONOSCAN_KEY} from '../App/constants';
 import { array } from 'prop-types';
 
-// const ETHERSCAN_KEY = process.env.ETHERSCAN_KEY;
-// const OPTISCAN_KEY = process.env.OPTISCAN_KEY;
-// const BSCSCAN_KEY = process.env.BSCSCAN_KEY;
-// const POLYGONSCAN_KEY = process.env.POLYGONSCAN_KEY;
-// const SNOWTRACE_KEY = process.env.SNOWTRACE_KEY;
-// const FTMSCAN_KEY = process.env.FTMSCAN_KEY;
-// const MOONSCAN_KEY = process.env.MOONSCAN_KEY;
-// const ARBISCAN_KEY = process.env.ARBISCAN_KEY;
-// const HECOSCAN_KEY = process.env.HECOSCAN_KEY;
 
-const ETHERSCAN_KEY = "KKEHS5KMBY8KJSTBKUXRT9X33NZUNDPSHD"
-const OPTISCAN_KEY = "84EIKB5YSF17UHZK2778T1HM3Q8DPN6F29"
-const BSCSCAN_KEY = "UWB7YUCVQXT7TGFK41TNJSJBIHDQ1JGU9D"
-const POLYGONSCAN_KEY = "QDPWKASEUSSYTKX9ZVMSSQGX4PTCZGHNC8"
-const SNOWTRACE_KEY= "78X9UB1WYTRQQ9Q2G53TR6XQ8P662BDVVK"
-const FTMSCAN_KEY = "B5UU3GDR3VJYVXFYT6RPK5RA6I8J5CV6B3"
-const MOONSCAN_KEY = "54HHCHQRAEXBCTS2ZVTSJ991Q34MDB2CRD"
-const ARBISCAN_KEY = "3S4P8WRXX34R5DVCCRG3GECVF5SFV5U3QW"
-const HECOSCAN_KEY = "JIY4B62CFZBZMBVJS21TCX4U4NVGB84CVC"
-const CRONOSCAN_KEY = "ITIWUNX3A6DN2WAF181MTZMP25BQ19HXYT"
 
 const loaderCSS = css`
   background-color: #5c5c5c;
@@ -107,6 +88,7 @@ export default function Main(props) {
     return parts.join(".");
   }
 
+
   const [balanceTotal, setBalanceTotal] = useState();
   const [nativeGasFeeTotal, setNativeGasFeeTotal] = useState();
   const [usdGasFeeTotal, setUsdGasFeeTotal] = useState();
@@ -119,7 +101,7 @@ export default function Main(props) {
   const [totalSentTransactions, setTotalSentTransactions] = useState(0);
   const [totalFailedNumTransactions, setTotalFailedNumTransactions] = useState(0);
   const [totalUsdFailedTotal, setTotalUsdFailedTotal] = useState(0);
-  const [recentAddress, setRecentAddress] = useState(0);
+  const [recentAddress, setRecentAddress] = useState();
 
   const [totalSentSol, setTotalSentSol] = useState(0);
   const [solToken, setSolToken] = useState();

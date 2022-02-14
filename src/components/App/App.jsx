@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect, useRef } from 'react';
-import  Nav, { StartKitchen }  from '../Nav/Nav';
 import './App.css';
 import _ from 'lodash';
+import ReactGA from 'react-ga';
 
 import { ReactComponent as CaretIcon } from '../../assets/icons/caret.svg';
 import { ReactComponent as McPepeIcon } from '../../assets/icons/mcPepeSmol.svg';
@@ -10,6 +10,7 @@ import Home from '../Home/Home';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
+import Nav from '../Nav/Nav';
 
 
 
@@ -32,17 +33,17 @@ let useClickOutside = (handler) => {
   return domNode
 };
 
-// const web3Modal = Web3ModalSetup();
-
-
 
 export default function App(props) {
   // Constants
-
-
   const name = 'gasFees';
   const [open, setOpen] = useState(false);
   const [openNft, setOpenNft] = useState(false);
+
+  useEffect(() => {
+    ReactGA.initialize( process.env.REACT_APP_TRACKING_CODE );
+
+  }, [])
  
 
   function Navbar(props) {

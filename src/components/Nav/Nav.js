@@ -3,6 +3,7 @@ import { CSSTransition } from 'react-transition-group';
 import _ from 'lodash';
 
 
+
 import { Link } from 'react-router-dom';
 import { WalletConnectButton } from '../Connections/Button';
 import {
@@ -20,8 +21,8 @@ import { LIGHTMODE_ICON, ALGO_ICON, ARBI_ICON, ARROW_ICON, ATOM_ICON, AURORA_ICO
 
 
 
-export default function Nav(props) {
 
+export default function Nav(props) {
   
   const [activeMenu, setActiveMenu] = useState('main');
   const [menuHeight, setMenuHeight] = useState(null);
@@ -758,7 +759,7 @@ const PasteAddressConnect = () => {
   }
 
 
-  console.log("color is ", color);
+  // console.log("color is ", color);
 
 
   return (

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
+
 import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
 import { HashRouter as Router} from 'react-router-dom';
@@ -12,17 +13,11 @@ import {
   WalletStatus,
   getChainOptions,
 } from '@terra-money/wallet-provider';
-// import { Web3ReactProvider } from '@web3-react/core';
-// import { Web3Provider } from '@ethersproject/providers';
-
-// const getLibrary = provider => new Web3Provider(provider);
-{/* <Web3Provider getLibrary={getLibrary}> */}
 
 
 
-
-const moralisAppId = "vPt2n1IsrYwsq9depxVfMvSwmVwniPnMGGoy49Co";
-const moralisServerURL = "https://dcsdixcbd1kw.usemoralis.com:2053/server";
+const moralisAppId = process.env.REACT_APP_MORALIS_APP_ID;
+const moralisServerURL =process.env.REACT_APP_MORALIS_SERVER_URL;
 
 getChainOptions().then((chainOptions) => {
   ReactDOM.render(

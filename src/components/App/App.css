@@ -131,6 +131,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  z-index: 900;
 }
 
 .small-panel {
@@ -699,9 +700,58 @@
   display: flex;
   width: 100%;
   padding: 10px 0px 0px 0px;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
   border-top: 1px solid #3a3939;
   align-items: flex-start;
+}
+
+.fee-detail-popup {
+  display: flex;
+  width: 100%;
+}
+
+.popup {
+  /* color:#141414;
+  background-color: #141414; */
+  height: 15px;
+  width: 30px;
+  cursor: pointer;
+  padding-bottom: 5px;
+}
+
+.education-popup {
+  position: absolute;
+  display: flex;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #00000091;
+  min-width: fit-content;
+  z-index: 999;
+  justify-content: center;
+  align-items: center;
+}
+
+.education-content {
+  display: flex;
+  width: 100%;
+  padding: 10px;
+  max-width: 85%;
+  height: 100%;
+  max-height: 85%;
+  flex-grow: 1;
+  flex-basis: 0;
+  margin: 20px;
+  background-color: rgb(173, 173, 173);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 26px;
+  z-index: 999;
 }
 
 .f-text {
