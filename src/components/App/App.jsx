@@ -41,8 +41,10 @@ export default function App(props) {
   const [openNft, setOpenNft] = useState(false);
 
   useEffect(() => {
-    ReactGA.initialize( process.env.REACT_APP_TRACKING_CODE );
+    ReactGA.initialize(process.env.REACT_APP_TRACKING_CODE);
 
+    ReactGA.pageview(window.location.pathname)
+    console.log("google analytics should have told me a visit occured", process.env.REACT_APP_TRACKING_CODE);
   }, [])
  
 
