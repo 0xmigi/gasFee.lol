@@ -442,7 +442,7 @@ export default function Main(props) {
 
     chainConfig['0x1'] = {id: '0x1', shortname: 'eth', name:'Ethereum', symbol: 'eth', coingecko_name: 'ethereum', token: 'eth', explorer_uri: 'https://api.etherscan.io', key: `${ETHERSCAN_KEY}`}
     chainConfig['0x38'] = {id: '0x38', shortname: 'bsc', name:'Binance Smart Chain', symbol: 'bnb', coingecko_name: 'binancecoin', token: 'bsc', explorer_uri: 'https://api.bscscan.com', key: `${BSCSCAN_KEY}`}
-    chainConfig['0x64'] = {id: '0x64', shortname: 'xdai', name:'xDai', symbol: 'xdai', coingecko_name: 'gnosis', token: 'gno', explorer_uri: 'https://blockscout.com/xdai/mainnet'}
+    chainConfig['0x64'] = {id: '0x64', shortname: 'xdai', name:'xDai', symbol: 'xdai', coingecko_name: 'xdai', token: 'xdai', explorer_uri: 'https://blockscout.com/xdai/mainnet'}
     chainConfig['0x89'] = {id: '0x89', shortname: 'matic', name:'Polygon', symbol: 'matic', coingecko_name: 'matic-network', token: 'matic', explorer_uri: 'https://api.polygonscan.com', key: `${POLYGONSCAN_KEY}`}
     chainConfig['0xfa'] = {id: '0xfa', shortname: 'ftm', name:'Fantom', symbol: 'ftm', coingecko_name: 'fantom', token: 'ƒtm', explorer_uri: 'https://api.ftmscan.com', key: `${FTMSCAN_KEY}`}
     chainConfig['0xa86a'] = {id: '0xa86a', shortname: 'avax', name:'Avalanche', symbol: 'avax', coingecko_name: 'avalanche-2', token: 'avax', explorer_uri: 'https://api.snowtrace.io', key: SNOWTRACE_KEY}
@@ -489,7 +489,7 @@ export default function Main(props) {
     let bsctokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
     let matictokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=matic-network&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
     let arbitokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
-    let xdaitokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=gnosis&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
+    let xdaitokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=xdai&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
     let avaxtokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=avalanche-2&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
     let ftmtokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=fantom&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
     let celotokenusd = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=celo&vs_currencies=usd').then(response => {return response.json()}).catch(err => {console.log('Error', err)})
@@ -510,7 +510,7 @@ export default function Main(props) {
     optokenusd = optokenusd["ethereum"].usd;
     matictokenusd = matictokenusd["matic-network"].usd;
     arbitokenusd = arbitokenusd["ethereum"].usd;
-    xdaitokenusd = xdaitokenusd["gnosis"].usd;
+    xdaitokenusd = xdaitokenusd["xdai"].usd;
     avaxtokenusd = avaxtokenusd["avalanche-2"].usd;
     ftmtokenusd = ftmtokenusd["fantom"].usd;
     celotokenusd = celotokenusd["celo"].usd;
