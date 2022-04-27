@@ -113,7 +113,6 @@ export default function App(props) {
   })
   
   const [recentAccount, setRecentAccount] = useState({});
-  const [cookingStatus, setCookingStatus] = useState({});
   let displayAddress;
   useEffect(() => {
     displayAddress = recentAccount.newAddress;

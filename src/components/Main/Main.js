@@ -420,7 +420,7 @@ export default function Main(props) {
       const postLondon = testNum(chainName);
       console.log("postLondon gas >", postLondon);
       
-      let connectedGasPrice = `https://api.zapper.fi/v1/gas-price?network=${chainName}&eip1559=${postLondon}&api_key=${ZAPPER_KEY}`;
+      let connectedGasPrice = `https://api.zapper.fi/v2/gas-prices?network=${chainName}&eip1559=${postLondon}&api_key=${ZAPPER_KEY}`;
   
       // const getGasPrice = async() => {
         const chainGasPrice = await fetch(connectedGasPrice)
