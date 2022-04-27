@@ -3,7 +3,7 @@
   overflow: visible;
   height: 100%;
   display: flex;
-  background-color: rgb(20, 20, 20);
+  background-color: rgb(42, 42, 42);
   text-align: center;
   margin-bottom: 0;
   width: auto;
@@ -57,7 +57,7 @@
   display: flex;
   margin: 8px;
   width: 100%;
-  max-width: 800px;
+  max-width: 1200px;
   height: auto; 
   flex-grow: 1;
   flex-basis: 600px;
@@ -80,7 +80,7 @@
   display: flex;
   margin: 8px;
   width: 100%;
-  max-width: 800px;
+  max-width: 1200px;
   height: auto; 
   flex-grow: 1;
   flex-basis: 600px;
@@ -408,7 +408,7 @@
 .navbar {
   position: relative;
   height: var(--nav-size);
-  background-color: var(--bg);
+  background-color: rgb(42, 42, 42);
   padding: 0 1rem;
   border-bottom: var(--border);
 }

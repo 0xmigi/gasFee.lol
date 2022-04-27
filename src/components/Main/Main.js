@@ -39,7 +39,7 @@ import Cro from '../chains/Cronos';
 import Home from '../Home/Home';
 import LineChart from '../Charts/LineChart';
 import { chain } from 'lodash';
-import { ETH_ICON, BNB_ICON, OP_ICON, MATIC_ICON, AVAX_ICON, ARBI_ICON, FTM_ICON, ONE_ICON, MOVR_ICON, SOL_ICON, CELO_ICON, GNOSIS_ICON, AURORA_ICON, METIS_ICON, BOBA_ICON, GLMR_ICON, HECO_ICON, CRONOS_ICON, LUNA_ICON, ETHERSCAN_KEY, OPTISCAN_KEY, BSCSCAN_KEY, POLYGONSCAN_KEY, SNOWTRACE_KEY, FTMSCAN_KEY, MOONSCAN_KEY, ARBISCAN_KEY, HECOSCAN_KEY, CRONOSCAN_KEY, ZAPPER_KEY} from '../App/constants';
+import { ETH_ICON, BNB_ICON, OP_ICON, MATIC_ICON, AVAX_ICON, ARBI_ICON, FTM_ICON, ONE_ICON, MOVR_ICON, SOL_ICON, CELO_ICON, GNOSIS_ICON, AURORA_ICON, METIS_ICON, BOBA_ICON, GLMR_ICON, HECO_ICON, CRONOS_ICON, LUNA_ICON, ETHERSCAN_KEY, OPTISCAN_KEY, BSCSCAN_KEY, POLYGONSCAN_KEY, SNOWTRACE_KEY, FTMSCAN_KEY, MOONSCAN_KEY, ARBISCAN_KEY, HECOSCAN_KEY, CRONOSCAN_KEY, AURORASCAN_KEY, CELOSCAN_KEY, CLVSCAN_KEY, ZAPPER_KEY} from '../App/constants';
 import { array } from 'prop-types';
 
 
@@ -391,7 +391,7 @@ export default function Main(props) {
       gasChain['0xfa'] = {zapperName: "fantom"}
       gasChain['0x505'] = {zapperName: "moonriver"}
       gasChain['0xa4b1'] = {zapperName: "arbitrum"}
-      gasChain['0x64'] = {zapperName: "xdai"}
+      gasChain['0x64'] = {zapperName: "gnosis"}
       gasChain['0xa4ec'] = {zapperName: "celo"}
       gasChain['0x63564c40'] = {zapperName: "harmony"}
       gasChain['0x4e45152'] = {zapperName: "aurora"}
@@ -447,15 +447,16 @@ export default function Main(props) {
     chainConfig['0xfa'] = {id: '0xfa', shortname: 'ftm', name:'Fantom', symbol: 'ftm', coingecko_name: 'fantom', token: 'ƒtm', explorer_uri: 'https://api.ftmscan.com', key: `${FTMSCAN_KEY}`}
     chainConfig['0xa86a'] = {id: '0xa86a', shortname: 'avax', name:'Avalanche', symbol: 'avax', coingecko_name: 'avalanche-2', token: 'avax', explorer_uri: 'https://api.snowtrace.io', key: SNOWTRACE_KEY}
     chainConfig['0x63564c40'] = {id: '0x63564c40', shortname: 'one', name:'Harmoney One', symbol: 'one', coingecko_name: 'harmony', token: 'one', color: '#ec1616', explorer_uri: 'https://api.harmony.one'}
-    chainConfig['0xa4ec'] = {id: '0xa4ec', shortname: 'celo', name:'Celo', symbol: 'celo', coingecko_name: 'celo', token: 'celo', explorer_uri: 'https://explorer.celo.org'}
+    chainConfig['0xa4ec'] = {id: '0xa4ec', shortname: 'celo', name:'Celo', symbol: 'celo', coingecko_name: 'celo', token: 'celo', explorer_uri: 'https://explorer.celo.org', key: `${CELOSCAN_KEY}`}
     chainConfig['0xa4b1'] = {id: '0xa4b1', shortname: 'arbi', name:'Arbitrum', symbol: 'aeth', coingecko_name: 'ethereum', token: 'aeth', explorer_uri: 'https://api.arbiscan.io', key: `${ARBISCAN_KEY}`}
     chainConfig['0x505'] = {id: '0x505', shortname: 'movr', name:'Moonriver', symbol: 'movr', coingecko_name: 'moonriver', token: 'movr', explorer_uri: 'https://api-moonriver.moonscan.io', key: `${MOONSCAN_KEY}`}
-    chainConfig['0x4e45152'] = {id: '0x4e45152', shortname: 'aurora', name:'Aurora', symbol: 'aurora', coingecko_name: 'aurora-near', token: 'aurora', explorer_uri: 'https://explorer.mainnet.aurora.dev'}
+    chainConfig['0x4e45152'] = {id: '0x4e45152', shortname: 'aurora', name:'Aurora', symbol: 'aurora', coingecko_name: 'aurora-near', token: 'aurora', explorer_uri: 'https://explorer.mainnet.aurora.dev', key: `${AURORASCAN_KEY}`}
     chainConfig['0xa'] = {id: '0xa', shortname: 'op', name:'Optimism', symbol: 'oeth', coingecko_name: 'ethereum', token: 'oeth', explorer_uri: 'https://api-optimistic.etherscan.io', key: `${OPTISCAN_KEY}`}
     chainConfig['0x440'] = {id: '0x440', shortname: 'metis', name:'Metis', symbol: 'metis', coingecko_name: 'metis-token', token: 'metis', explorer_uri: 'https://andromeda-explorer.metis.io'}
     chainConfig['0x120'] = {id: '0x120', shortname: 'boba', name:'Boba', symbol: 'boba', coingecko_name: 'boba-network', token: 'boba', explorer_uri: 'https://blockexplorer.boba.network'}
     chainConfig['0x504'] = {id: '0x504', shortname: 'glmr', name:'Moonbeam', symbol: 'glmr', coingecko_name: 'moonbeam', token: 'glmr', explorer_uri: 'https://blockscout.moonbeam.network'}
     chainConfig['0x80'] = {id: '0x80', shortname: 'ht', name:'Heco', symbol: 'ht', coingecko_name: 'huobi-token', token: 'ht', explorer_uri: 'https://api.hecoinfo.com', key: `${HECOSCAN_KEY}`}
+    // chainConfig['0x80'] = {id: '0x80', shortname: 'ht', name:'Heco', symbol: 'ht', coingecko_name: 'huobi-token', token: 'ht', explorer_uri: 'https://api.hecoinfo.com', key: `${CLVSCAN_KEY}`}
     chainConfig['0x19'] = {id: '0x19', shortname: 'cro', name:'Cronos', symbol: 'cro', coingecko_name: 'crypto-com-chain', token: 'cro', explorer_uri: 'https://api.cronoscan.com', key: `${CRONOSCAN_KEY}`}
 
     //testnets

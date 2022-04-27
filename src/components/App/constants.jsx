@@ -104,6 +104,9 @@ export const MOONSCAN_KEY = process.env.REACT_APP_MOONSCAN_KEY
 export const ARBISCAN_KEY = process.env.REACT_APP_ARBISCAN_KEY
 export const HECOSCAN_KEY = process.env.REACT_APP_HECOSCAN_KEY
 export const CRONOSCAN_KEY = process.env.REACT_APP_CRONOSCAN_KEY
+export const AURORASCAN_KEY = process.env.REACT_APP_AURORASCAN_KEY
+export const CELOSCAN_KEY = process.env.REACT_APP_CELOSCAN_KEY
+export const CLVSCAN_KEY = process.env.REACT_APP_CLVSCAN_KEY
 
 export const ZAPPER_KEY = process.env.REACT_APP_ZAPPER_KEY
 
