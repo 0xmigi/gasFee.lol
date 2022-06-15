@@ -5,7 +5,6 @@ import _ from 'lodash';
 
 
 import { Link } from 'react-router-dom';
-import { WalletConnectButton } from '../Connections/Button';
 import {
   useMoralis,
   useMoralisWeb3Api,

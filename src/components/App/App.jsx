@@ -13,13 +13,12 @@ import Footer from '../Footer/Footer';
 import Nav from '../Nav/Nav';
 
 
-
 let useClickOutside = (handler) => {
   let domNode = useRef()
 
   useEffect(() => {
     let maybeHandler = (event) => {
-      if (domNode.current&&!domNode.current.contains(event.target)) {
+      if (domNode.current && !domNode.current.contains(event.target)) {
         handler();
       }
     };
@@ -46,7 +45,7 @@ export default function App(props) {
     ReactGA.pageview(window.location.pathname)
     console.log("google analytics should have told me a visit occured", process.env.REACT_APP_TRACKING_CODE);
   }, [])
- 
+
 
   function Navbar(props) {
     return (
@@ -55,7 +54,7 @@ export default function App(props) {
       </nav>
     );
   }
-  
+
   function NavItemChains(props) {
     return (
       recentAccount.displayAccount === undefined ?
@@ -65,7 +64,7 @@ export default function App(props) {
           </a>
           {open && props.children}
         </li>
-      :
+        :
         <li ref={domNode} className="nav-item-nft">
           <a href="#" className="icon-button-nft" onClick={() => setOpen(!open)}>
             {_.truncate(recentAccount.displayAccount, { 'length': 16 })}
@@ -84,7 +83,7 @@ export default function App(props) {
           </a>
           {openNft && PlusUltraDropdown()}
         </li>
-      :
+        :
         <li ref={domNode} className="nav-item-nft">
           <a href="#" className="icon-button" onClick={() => setOpenNft(!openNft)}>
             {<div className="connected-icon-nft">+</div>}
@@ -95,23 +94,23 @@ export default function App(props) {
   }
 
   const PlusUltraDropdown = (props) => {
-      return (
-        <div className="plus-ultra">
-          <div className="plus-ultra-panel">
-            <p className="plus-ultra-text">+Ultra NFTs coming soon, a generative svg NFT based on your unfortunate transaction history, served fresh on Optimism or Polygon</p>
-            <div className="small-pepe">
-              <img src={mcPepe} alt="McPepe"/>
-            </div>
+    return (
+      <div className="plus-ultra">
+        <div className="plus-ultra-panel">
+          <p className="plus-ultra-text">+Ultra mode coming soon, a personalized feature based on your unfortunate transaction history, served fresh on Optimism </p>
+          <div className="small-pepe">
+            <img src={mcPepe} alt="McPepe" />
           </div>
         </div>
-      );
+      </div>
+    );
   }
 
   let domNode = useClickOutside(() => {
     setOpen(false)
     setOpenNft(false)
   })
-  
+
   const [recentAccount, setRecentAccount] = useState({});
   let displayAddress;
   useEffect(() => {
@@ -121,25 +120,25 @@ export default function App(props) {
 
 
   return (
-   <div >
-     <Navbar >
-      <Header icon={<McPepeIcon/>} domain={name} />
-      <div className="nav-item-nft">
-        <NavItemNfts icon={<div>+Ultra</div>}></NavItemNfts>
-        <NavItemChains icon={<CaretIcon />} >
-          <Nav setRecentAccount={setRecentAccount} />
-        </NavItemChains>
-      </div>
-    </Navbar>
+      <div >
+        <Navbar >
+          <Header icon={<McPepeIcon />} domain={name} />
+          <div className="nav-item-nft">
+            <NavItemNfts icon={<div>+Ultra</div>}></NavItemNfts>
+            <NavItemChains icon={<CaretIcon />} >
+              <Nav setRecentAccount={setRecentAccount} />
+            </NavItemChains>
+          </div>
+        </Navbar>
 
-    <div className="App"> 
-         <main className="content">
-             <Main recentAccount={recentAccount}
-                   />
-         </main>
-         <Footer />
-    </div>
-   </div>
+        <div className="App">
+          <main className="content">
+            <Main recentAccount={recentAccount}
+            />
+          </main>
+          <Footer />
+        </div>
+      </div>
   );
 }
 
